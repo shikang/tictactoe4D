@@ -1,0 +1,90 @@
+<Test1>
+	<Info>
+		<Title>Plane 1</Title>
+		<Sprite>1 (2)</Sprite>
+		<Desc>Plane 1</Desc>
+		<Stats>10</Stats>
+		<Stats>999</Stats>
+	</Info>
+
+	<Info>
+		<Title>Plane 2</Title>
+		<Sprite>f4_1</Sprite>
+		<Desc>F4</Desc>
+		<Stats>10</Stats>
+		<Stats>999</Stats>
+	</Info>
+	
+	<Info>
+		<Title>Cargo Ship (Med)</Title>
+		<Sprite>Cargo ship_medium</Sprite>
+		<Desc>Med cargo</Desc>
+		<Stats>10</Stats>
+		<Stats>999</Stats>
+	</Info>
+	
+	<Info>
+		<Title>Cargo Ship(Small)</Title>
+		<Sprite>Cargo ship_small</Sprite>
+		<Desc>small ship</Desc>
+		<Stats>10</Stats>
+		<Stats>999</Stats>
+	</Info>
+	
+	<Info>
+		<Title>OSA Gunboat</Title>
+		<Sprite>Gunboat_Osa</Sprite>
+		<Desc>Gunboat osa</Desc>
+		<Stats>10</Stats>
+		<Stats>999</Stats>
+	</Info>
+	
+	<Info>
+		<Title>Tiger Gunboat</Title>
+		<Sprite>Gunboat_TigerClass</Sprite>
+		<Desc>Description Needed</Desc>
+		<Stats>10</Stats>
+		<Stats>999</Stats>
+	</Info>
+	
+	<Info>
+		<Title>Pirate Ship</Title>
+		<Sprite>Pirate ship_2</Sprite>
+		<Desc>Pirate ship2</Desc>
+		<Stats>10</Stats>
+		<Stats>999</Stats>
+	</Info>
+	
+	<Info>
+		<Title>Pirate Ship 2</Title>
+		<Sprite>Pirate ship_3</Sprite>
+		<Desc>pirate ship 2</Desc>
+		<Stats>10</Stats>
+		<Stats>999</Stats>
+	</Info>
+	
+	<Info>
+		<Title>Submarine</Title>
+		<Sprite>Submarine_big</Sprite>
+		<Desc>Sub</Desc>
+		<Stats>10</Stats>
+		<Stats>999</Stats>
+	</Info>
+	
+	<Info>
+		<Title>Trawler</Title>
+		<Sprite>Trawler_medium</Sprite>
+		<Desc>Trawler</Desc>
+		<Stats>10</Stats>
+		<Stats>999</Stats>
+	</Info>
+	
+	<Info>
+		<Title>Small Trawler</Title>
+		<Sprite>Trawler_small</Sprite>
+		<Desc>Plane 1</Desc>
+		<Stats>10</Stats>
+		<Stats>999</Stats>
+	</Info>
+</Test1>
+

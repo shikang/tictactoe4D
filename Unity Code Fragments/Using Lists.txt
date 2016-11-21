@@ -1,0 +1,35 @@
+class SortInDescending : IComparer<ScoreBoard>
+{
+	int IComparer<ScoreBoard>.Compare(ScoreBoard a, ScoreBoard b)
+	{
+		if(a.score > b.score)
+			return -1;
+		if (a.score < b.score)
+			return 1;
+		return 0;
+	}
+};
+
+public class ScoreBoard : IComparable<ScoreBoard>
+{
+	public int ID;
+	public int score;
+
+	public ScoreBoard(int id_, int score_)
+	{
+		ID = id_;
+		score = score_;
+	}
+
+	public int CompareTo(ScoreBoard comparePart)
+	{
+		if(comparePart == null)
+			return 1;
+		else
+			return score.CompareTo(comparePart.score);
+	}
+};
+
+List<ScoreBoard> pStats = new List<ScoreBoard>();
+pStats.Add(new ScoreBoard(elem1, elem2));
+pStats.Sort(new SortInDescending());
