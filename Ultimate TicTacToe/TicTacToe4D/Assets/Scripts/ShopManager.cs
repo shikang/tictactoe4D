@@ -14,7 +14,7 @@ public class ShopManager : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		if( Input.GetMouseButtonDown(0) )
+		//if( Input.GetMouseButtonDown(0) )
 		{
 			Buy();
 		}
@@ -33,12 +33,18 @@ public class ShopManager : MonoBehaviour
 
 			if( GameData.current.icons == null )
 			{
+				Debug.Log("Icon in save data is null!");
 				GameData.current.icons = new System.Collections.Generic.List<Defines.ICONS>();
 			}
 
 			if( !GameData.current.icons.Contains( icon ) )
 			{
 				GameData.current.icons.Add( icon );
+			}
+
+			foreach ( Defines.ICONS i in GameData.current.icons )
+			{
+				Debug.Log( "You have: " + i.ToString() );
 			}
 
 			SaveLoad.Save();

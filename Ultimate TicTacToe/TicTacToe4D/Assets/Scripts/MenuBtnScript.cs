@@ -96,8 +96,8 @@ public class MenuBtnScript : MonoBehaviour
 			Camera.main.GetComponent<MainMenuScript>().Avatar.SetActive(true);
 			Camera.main.GetComponent<MainMenuScript>().Settings.SetActive(true);
 
-	        //GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().LeaveRoom();
-	        //GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().ResetCountdown();
+	        GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().LeaveRoom();
+	        GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().ResetCountdown();
 	        break;
 
 		// Start Game!
@@ -168,9 +168,6 @@ public class MenuBtnScript : MonoBehaviour
 				Camera.main.GetComponent<MainMenuScript>().Settings.SetActive(true);
 
 				GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().network_allowButtonClicks = 0;
-
-				GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().LeaveRoom();
-		        GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().ResetCountdown();
 			}
 			else
 			{
@@ -178,8 +175,8 @@ public class MenuBtnScript : MonoBehaviour
 				Camera.main.GetComponent<MainMenuScript>().Avatar.SetActive(true);
 				Camera.main.GetComponent<MainMenuScript>().Settings.SetActive(true);
 
-		        //GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().LeaveRoom();
-		        //GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().ResetCountdown();
+		        GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().LeaveRoom();
+		        GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().ResetCountdown();
 			}
 			break;
 

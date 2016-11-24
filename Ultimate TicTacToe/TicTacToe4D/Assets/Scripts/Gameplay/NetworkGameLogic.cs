@@ -73,12 +73,6 @@ public class NetworkGameLogic : Photon.PunBehaviour
     public override void OnPhotonPlayerDisconnected(PhotonPlayer otherPlayer)
     {
 		GameObject.FindGameObjectsWithTag("GUIManager")[0].GetComponent<TurnHandler>().InformDisconnect();
-		if(GameObject.Find("Board").GetComponent<BoardScript>().gameWinner == -1)
-		{
-			SaveLoad.Load();
-			GameData.current.win += 1;
-			SaveLoad.Save();
-		}
 	}
 
     // Network game logic

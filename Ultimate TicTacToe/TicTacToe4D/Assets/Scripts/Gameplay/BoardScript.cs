@@ -41,15 +41,15 @@ public class BoardScript : MonoBehaviour
 		float offsetX = 0.0f, offsetY = 0.0f;
 		for(int i = 0; i < 9; ++i)
 		{
-			offsetX = (i%3) * 3.25f;
-			offsetY = (i/3) * 3.2f;
+			offsetX = (i%3) * Defines.BIGGRID_SPACE;
+			offsetY = (i/3) * Defines.BIGGRID_SPACE;
 
 			bigGrids[i] = (GameObject)Instantiate(bigGridObj);
 			bigGrids[i].name = "BigGrids " + i;
 			bigGrids[i].GetComponent<BigGridScript>().bigGridID = i;
 			bigGrids[i].transform.parent = boardSprite.transform;
-			bigGrids[i].transform.position = new Vector3( (boardSprite.transform.parent.position.x - 3.28f + offsetX),
-								 						  (boardSprite.transform.parent.position.y + 3.2f - offsetY),
+			bigGrids[i].transform.position = new Vector3( (boardSprite.transform.parent.position.x - Defines.BIGGRID_STARTPOS_X + offsetX),
+														  (boardSprite.transform.parent.position.y + Defines.BIGGRID_STARTPOS_Y - offsetY),
 								 						  depth);
 		}
 		ResetVars();
@@ -65,11 +65,7 @@ public class BoardScript : MonoBehaviour
         {
 			gameMode = Defines.GAMEMODE.ONLINE;
 			// same as GameObject.FindGameObjectWithTag("GlobalScript").GetComponent<GlobalScript>().gameMode == 2
-
-			SaveLoad.Load();
-			GameData.current.matchPlayed += 1;
-			SaveLoad.Save();
-		}
+        }
         else
         {
 			if(GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().gameMode == 0)
@@ -80,8 +76,6 @@ public class BoardScript : MonoBehaviour
 
 		activeBigGrid = 10;
 		UpdateActiveGridBG(0, true);
-
-		gameWinner = -1;
 	}
 
 	void Update ()
@@ -170,11 +164,11 @@ public class BoardScript : MonoBehaviour
 		}
 		else
 		{
-			Vector3 tempScale = new Vector3 (15.6f, 15.6f, 10.0f);
+			Vector3 tempScale = new Vector3 (Defines.ACTIVEGRID_SIZE_BIG, Defines.ACTIVEGRID_SIZE_BIG, 10.0f);
 			activeGridSprite.transform.localScale = tempScale;
 
-			Vector3 tempPos = new Vector3 (0.0f, -1.9f, 24.0f);
-			activeGridSprite.transform.position = tempPos;
+			Vector3 tempPos = Defines.ACTIVEGRID_POSITION_BIG;
+			activeGridSprite.transform.localPosition = tempPos;
 		}
 	}
 
@@ -222,18 +216,6 @@ public class BoardScript : MonoBehaviour
 		temp = GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().GUICfmEndGame.GetComponent<Image>().color;
 		temp.a = 1.0f;
 		GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().GUICfmEndGame.GetComponent<Image>().color = temp;
-
-		// Update online statistic
-		if(NetworkManager.IsConnected())
-		{
-			if ((NetworkManager.IsPlayerOne() && _winner == 1) ||
-			    (NetworkManager.IsPlayerOne() && _winner == 2))
-			{
-				SaveLoad.Load();
-				GameData.current.win += 1;
-				SaveLoad.Save();
-			}
-		}
 	}
 
 	void UpdateScaleLimit()
