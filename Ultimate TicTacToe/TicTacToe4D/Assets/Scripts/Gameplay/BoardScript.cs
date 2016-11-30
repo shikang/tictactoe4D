@@ -157,6 +157,7 @@ public class BoardScript : MonoBehaviour
 			activeGridSprite.transform.localScale = tempScale;
 
 			Vector3 tempPos = bigGrids[_gridID].transform.localPosition;
+			tempPos.z = -0.1f;
 			activeGridSprite.transform.localPosition = tempPos;
 		}
 		else
@@ -165,6 +166,7 @@ public class BoardScript : MonoBehaviour
 			activeGridSprite.transform.localScale = tempScale;
 
 			Vector3 tempPos = Defines.ACTIVEGRID_POSITION_BIG;
+			tempPos.z = -0.1f;
 			activeGridSprite.transform.localPosition = tempPos;
 		}
 	}
