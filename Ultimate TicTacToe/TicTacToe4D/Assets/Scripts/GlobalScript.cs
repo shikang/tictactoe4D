@@ -10,6 +10,8 @@ public class GlobalScript : MonoBehaviour
 	public float volSlider; // slider?
 	string myName;
 
+	public int avatarState; // 0 = None, 1 = LocalPlay_P1, 2 = LocalPlay_P2, 3 = Avatar
+
 	public int startingPlayer;
 	public GameObject starter1;
 	public GameObject starter2;

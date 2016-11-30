@@ -95,6 +95,7 @@ public class MenuBtnScript : MonoBehaviour
 
 			Camera.main.GetComponent<MainMenuScript>().Avatar.SetActive(true);
 			Camera.main.GetComponent<MainMenuScript>().Settings.SetActive(true);
+			GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().avatarState = 0;
 
 	        //GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().LeaveRoom();
 	        //GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().ResetCountdown();
@@ -149,6 +150,7 @@ public class MenuBtnScript : MonoBehaviour
 			Camera.main.GetComponent<MainMenuScript>().GoToScreen(4);
 			Camera.main.GetComponent<MainMenuScript>().Avatar.SetActive(false);
 			Camera.main.GetComponent<MainMenuScript>().Settings.SetActive(false);
+			GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().avatarState = 3;
 			break;
 
 		// Back (Online Play)
