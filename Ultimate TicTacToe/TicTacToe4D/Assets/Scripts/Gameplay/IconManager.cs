@@ -26,6 +26,10 @@ public class IconManager : MonoBehaviour
 		IconList[(int)Defines.ICONS.DIAMOND]	= Resources.Load<Sprite>("Icons/Diamond") as Sprite;
 
 		IconList[(int)Defines.ICONS.TREBLE]		= Resources.Load<Sprite>("Icons/Treble") as Sprite;
+
+		if (GameObject.FindGameObjectWithTag("GUIManager") != null &&
+			GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>() != null)
+			GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().UpdatePlayerIcons();
 	}
 
 	void Update ()

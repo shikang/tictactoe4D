@@ -5,6 +5,7 @@ using System.Collections;
 
 public class GlobalScript : MonoBehaviour
 {
+	public IconManager iconManager;
 	public string nameP1;
 	public string nameP2;
 	public float volSlider; // slider?
@@ -99,7 +100,7 @@ public class GlobalScript : MonoBehaviour
 	{
 		myIcon = icon;
 		Camera.main.GetComponent<MainMenuScript>().PlayerIcon.GetComponent<Image>().sprite =
-		GameObject.FindGameObjectWithTag("GUIManager").GetComponent<IconManager>().IconList[myIcon];
+			GetComponent<IconManager>().IconList[myIcon];
 	}
 
 	// Used to cycle grid sprites when choosing icons before the game starts.
@@ -107,7 +108,7 @@ public class GlobalScript : MonoBehaviour
 	{
 		myIcon = ( ( myIcon + 1 - minIcon ) % ( maxIcon - minIcon + 1 ) ) + minIcon;
 		Camera.main.GetComponent<MainMenuScript>().PlayerIcon.GetComponent<Image>().sprite = 
-			GameObject.FindGameObjectWithTag("GUIManager").GetComponent<IconManager>().IconList[myIcon];
+			GetComponent<IconManager>().IconList[myIcon];
 
 		/*if(_player == 1)
 		{

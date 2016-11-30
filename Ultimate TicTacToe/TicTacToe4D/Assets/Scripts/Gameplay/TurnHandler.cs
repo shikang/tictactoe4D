@@ -108,3 +108,4 @@ public class TurnHandler : MonoBehaviour
 		return allIcons.IconList[(int)spriteID_Highlight];
 	}
 }
+

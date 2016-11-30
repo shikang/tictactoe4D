@@ -26,33 +26,28 @@ public class BigGridScript : MonoBehaviour
 	public float depth;
 	public int gridWinner;	// 0 = Not Done, 1 = Cross, 2 = Circle, 3 = Draw
 	public WINMETHOD winMethod;	
-	public bool begin = false;
-
 	int pos1 =-1;
 	int pos2 =-1;
 	int pos3 =-1;
-
+	public bool begin =false;
 	void Start ()
 	{
 		grids = new GameObject[9]; 
 		depth = -2.0f;
 
-		transform.position = new Vector3( (bigGridID%3) * Defines.GRID_LINE_X - Defines.GRID_LINE_X, 
-										  -(bigGridID/3) * Defines.GRID_LINE_Y + Defines.GRID_LINE_Y, 0);
-
 		// Instantiate and set positions for all grids.
 		float offsetX = 0.0f, offsetY = 0.0f;
 		for(int i = 0; i < 9; ++i)
 		{
-			offsetX = (i%3) * Defines.GRID_SPACE;
-			offsetY = (i/3) * Defines.GRID_SPACE;
+			offsetX = (i%3) * 0.8f;
+			offsetY = (i/3) * 0.85f;
 				
 			grids[i] = (GameObject)Instantiate(gridObj);
 			grids[i].transform.parent = transform;
 			grids[i].GetComponent<GridScript>().gridID = i;
 			grids[i].GetComponent<GridScript>().parentGrid = gameObject;
 			grids[i].GetComponent<GridScript>().PlaceOnGrid(0);
-			grids[i].transform.position = transform.position + new Vector3(-Defines.BIGGRID_STARTPOS_X + offsetX, Defines.BIGGRID_STARTPOS_Y - offsetY, depth);
+			grids[i].transform.position = transform.position + new Vector3(-0.8f + offsetX, 0.8f - offsetY, depth);
 		}
 	}
 
