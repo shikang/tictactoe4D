@@ -16,6 +16,7 @@ public class TestMatchMaker : Photon.PunBehaviour
     {
         GUILayout.Label(PhotonNetwork.connectionStateDetailed.ToString());
 
+		/*
         if (PhotonNetwork.connectionStateDetailed == PeerState.Joined)
         {
             bool shoutMarco = TestNetworkLogic.playerWhoIsIt == PhotonNetwork.player.ID;
@@ -29,6 +30,7 @@ public class TestMatchMaker : Photon.PunBehaviour
                 myPhotonView.RPC("Polo", PhotonTargets.All);
             }
         }
+		*/
     }
 
     void JoinRoom()
