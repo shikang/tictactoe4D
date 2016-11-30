@@ -37,22 +37,23 @@ public class BigGridScript : MonoBehaviour
 		grids = new GameObject[9]; 
 		depth = -2.0f;
 
-		transform.position = new Vector3( (bigGridID%3) * Defines.GRID_LINE_X - Defines.GRID_LINE_X, 
-										  -(bigGridID/3) * Defines.GRID_LINE_Y + Defines.GRID_LINE_Y, 0);
+		transform.localPosition = new Vector3( (bigGridID%3) * Defines.BIGGRID_GAP_X - Defines.BIGGRID_GAP_X, 
+												-(bigGridID/3) * Defines.BIGGRID_GAP_Y + Defines.BIGGRID_GAP_Y, 0);
 
 		// Instantiate and set positions for all grids.
 		float offsetX = 0.0f, offsetY = 0.0f;
 		for(int i = 0; i < 9; ++i)
 		{
-			offsetX = (i%3) * Defines.GRID_SPACE;
-			offsetY = (i/3) * Defines.GRID_SPACE;
+			offsetX = ((i%3)-1) * Defines.GRID_SPACE;
+			offsetY = ((i/3)-1) * Defines.GRID_SPACE;
 				
 			grids[i] = (GameObject)Instantiate(gridObj);
 			grids[i].transform.parent = transform;
+			grids[i].transform.localScale = new Vector3(Defines.GRID_SIZE, Defines.GRID_SIZE, Defines.GRID_SIZE);
 			grids[i].GetComponent<GridScript>().gridID = i;
 			grids[i].GetComponent<GridScript>().parentGrid = gameObject;
 			grids[i].GetComponent<GridScript>().PlaceOnGrid(0);
-			grids[i].transform.position = transform.position + new Vector3(-Defines.BIGGRID_STARTPOS_X + offsetX, Defines.BIGGRID_STARTPOS_Y - offsetY, depth);
+			grids[i].transform.position = transform.position + new Vector3(offsetX, offsetY, depth);
 		}
 	}
 

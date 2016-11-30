@@ -27,6 +27,7 @@ public class Defines : Singleton<Defines>
 	{
 		EMPTY = 0,
 		HIGHLIGHT,
+		LOCKED,
 
 		CIRCLE,
 		CROSS,
@@ -40,27 +41,26 @@ public class Defines : Singleton<Defines>
 		TOTAL
 	}
 
+	// Player Colors
 	static public Color P1_ICON_COLOR = Color.blue;
 	static public Color P2_ICON_COLOR = Color.red;
 
+	// Emotes
 	static public float EMOTE_SHOW_TIME = 2.5f;						//!< In seconds
 	static public float EMOTE_SCALE_TIME = 0.25f;					//!< In seconds
 
 	static public float MATCH_MAKE_RANDOM_RETRY_INTERVAL = 10.0f;	//!< In seconds
 
-	static public float GRID_SPACE = 1.25f;
-	static public float GRID_STARTPOS_X = 1.00f;
-	static public float GRID_STARTPOS_Y = 1.0f;
+	// Grid Layout
+	static public float GRID_SPACE = 1.1f;
+	static public float GRID_SIZE = 0.5f;
+	static public float	BIGGRID_GAP_X = 3.3f;
+	static public float	BIGGRID_GAP_Y = 3.4f;
 
-	static public float BIGGRID_SPACE = 4.0f;
-	static public float BIGGRID_STARTPOS_X = 1.35f;
-	static public float BIGGRID_STARTPOS_Y = 1.2f;
-
-	static public Vector3	ACTIVEGRID_POSITION_BIG = new Vector3(0f, -0.5f, 0.0f);
+	// Active Grid Settings
+	static public Vector3	ACTIVEGRID_POSITION_BIG = new Vector3(0.0f, 0.0f, 0.0f);
 	static public float		ACTIVEGRID_SIZE_BIG = 16.3f;
-
-	static public float		GRID_LINE_X = 4.0f;
-	static public float		GRID_LINE_Y = 4.0f;
+	static public float		ACTIVEGRID_SIZE_SMALL = 5.2f;
 
 	//player point stuff
 	public int playerScore;

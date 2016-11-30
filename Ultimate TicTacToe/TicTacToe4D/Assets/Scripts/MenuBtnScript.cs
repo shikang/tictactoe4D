@@ -50,6 +50,7 @@ public class MenuBtnScript : MonoBehaviour
 			Camera.main.GetComponent<MainMenuScript>().GoToScreen(1);
 			Camera.main.GetComponent<MainMenuScript>().Avatar.SetActive(false);
 			Camera.main.GetComponent<MainMenuScript>().Settings.SetActive(false);
+			GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().avatarState = 1;
 			break;
 
 		// Networked Screen

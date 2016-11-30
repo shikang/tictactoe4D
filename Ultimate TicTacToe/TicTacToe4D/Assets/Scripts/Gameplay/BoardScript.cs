@@ -38,19 +38,12 @@ public class BoardScript : MonoBehaviour
 
 		// Instantiate and set positions for all grids.
 		bigGrids = new GameObject[9];
-		float offsetX = 0.0f, offsetY = 0.0f;
 		for(int i = 0; i < 9; ++i)
 		{
-			offsetX = (i%3) * Defines.BIGGRID_SPACE;
-			offsetY = (i/3) * Defines.BIGGRID_SPACE;
-
 			bigGrids[i] = (GameObject)Instantiate(bigGridObj);
 			bigGrids[i].name = "BigGrids " + i;
 			bigGrids[i].GetComponent<BigGridScript>().bigGridID = i;
 			bigGrids[i].transform.parent = boardSprite.transform;
-			bigGrids[i].transform.position = new Vector3( (boardSprite.transform.parent.position.x - 3.28f + offsetX),
-								 						  (boardSprite.transform.parent.position.y + 3.2f - offsetY),
-								 						  depth);
 		}
 		ResetVars();
 	}
@@ -160,13 +153,11 @@ public class BoardScript : MonoBehaviour
 
 		if(activeBigGrid != 10)
 		{
-			Vector3 tempScale = new Vector3 (5.2f, 5.2f, 10.0f);
+			Vector3 tempScale = new Vector3 (Defines.ACTIVEGRID_SIZE_SMALL, Defines.ACTIVEGRID_SIZE_SMALL, 10.0f);
 			activeGridSprite.transform.localScale = tempScale;
 
-			Vector3 tempPos = bigGrids[_gridID].transform.position;
-			tempPos.z = 24.0f;
-			tempPos.x -= 0.1f;
-			activeGridSprite.transform.position = tempPos;
+			Vector3 tempPos = bigGrids[_gridID].transform.localPosition;
+			activeGridSprite.transform.localPosition = tempPos;
 		}
 		else
 		{
