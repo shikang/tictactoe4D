@@ -61,9 +61,9 @@ public class TestMatchMaker : Photon.PunBehaviour
 
     public override void OnJoinedRoom()
     {
-        GameObject monster = PhotonNetwork.Instantiate("monsterprefab", Vector3.zero, Quaternion.identity, 0);
-        monster.GetComponent<myThirdPersonController>().isControllable = true;
-        myPhotonView = monster.GetComponent<PhotonView>();
+        //GameObject monster = PhotonNetwork.Instantiate("monsterprefab", Vector3.zero, Quaternion.identity, 0);
+        //monster.GetComponent<myThirdPersonController>().isControllable = true;
+        //myPhotonView = monster.GetComponent<PhotonView>();
     }
 
 	// Update is called once per frame
