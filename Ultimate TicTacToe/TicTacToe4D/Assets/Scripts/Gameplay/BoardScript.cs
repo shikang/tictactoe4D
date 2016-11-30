@@ -41,8 +41,8 @@ public class BoardScript : MonoBehaviour
 		float offsetX = 0.0f, offsetY = 0.0f;
 		for(int i = 0; i < 9; ++i)
 		{
-			offsetX = (i%3) * 3.25f;
-			offsetY = (i/3) * 3.2f;
+			offsetX = (i%3) * Defines.BIGGRID_SPACE;
+			offsetY = (i/3) * Defines.BIGGRID_SPACE;
 
 			bigGrids[i] = (GameObject)Instantiate(bigGridObj);
 			bigGrids[i].name = "BigGrids " + i;
@@ -170,11 +170,11 @@ public class BoardScript : MonoBehaviour
 		}
 		else
 		{
-			Vector3 tempScale = new Vector3 (15.6f, 15.6f, 10.0f);
+			Vector3 tempScale = new Vector3 (Defines.ACTIVEGRID_SIZE_BIG, Defines.ACTIVEGRID_SIZE_BIG, 10.0f);
 			activeGridSprite.transform.localScale = tempScale;
 
-			Vector3 tempPos = new Vector3 (0.0f, -1.9f, 24.0f);
-			activeGridSprite.transform.position = tempPos;
+			Vector3 tempPos = Defines.ACTIVEGRID_POSITION_BIG;
+			activeGridSprite.transform.localPosition = tempPos;
 		}
 	}
 

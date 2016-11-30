@@ -90,8 +90,6 @@ public class GUIManagerScript : MonoBehaviour
 
 	void ResetVars()
 	{
-		SetAvatar();
-
 		gridEffect_growStage = 0;
 		startTime = 300.0f;
 		timerP1 = timerP2 = startTime;
@@ -128,6 +126,12 @@ public class GUIManagerScript : MonoBehaviour
 		emoteP2DownAnimation = false;
 		emoteP1AnimTimer = 0.0f;
 		emoteP2AnimTimer = 0.0f;
+
+		if (GetComponent<TurnHandler>() != null)
+		{
+			GetComponent<TurnHandler>().UpdatePlayerIcons();
+			SetAvatar();
+		}
 	}
 
 	void Update()
@@ -461,10 +465,10 @@ public class GUIManagerScript : MonoBehaviour
 	public void SetAvatar()
 	{
 		ImageLeft.GetComponent<Image>().sprite =
-			GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().GetSpriteP1();
+			GetComponent<TurnHandler>().GetSpriteP1();
 
 		ImageRight.GetComponent<Image>().sprite =
-			GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().GetSpriteP2();
+			GetComponent<TurnHandler>().GetSpriteP2();
 	}
 
 	public void ToogleEmoteMenu()
