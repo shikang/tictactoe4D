@@ -107,6 +107,11 @@ public class BigGridScript : MonoBehaviour
 	{
 		if(IsGridCompleted(_turn))
 		{
+			//add the points
+			if (_turn == Defines.TURN.P1)
+			{
+				Defines.Instance.playerScore += Defines.smallGridWin;
+			}
 			//begin to do the shakings
 			begin = true;
 			grids[pos1].GetComponent<Shaker>().StartShaking();

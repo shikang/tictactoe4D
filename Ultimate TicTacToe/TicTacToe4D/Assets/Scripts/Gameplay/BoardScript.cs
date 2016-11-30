@@ -185,6 +185,10 @@ public class BoardScript : MonoBehaviour
 		{
 			gameWinner = (int)GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn;
 			begin = true;
+			if (GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn == Defines.TURN.P1)
+			{	
+				Defines.Instance.playerScore += Defines.bigGridWin;
+			}
 			//SetWinner((int)GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn);
 		}
 		else

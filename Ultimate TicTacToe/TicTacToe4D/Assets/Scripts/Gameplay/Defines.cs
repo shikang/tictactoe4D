@@ -61,4 +61,14 @@ public class Defines : Singleton<Defines>
 
 	static public float		GRID_LINE_X = 4.0f;
 	static public float		GRID_LINE_Y = 4.0f;
+
+	//player point stuff
+	public int playerScore;
+	static public int smallGridWin = 1;
+	static public int bigGridWin = 3;
+
+	void Start()
+	{
+		//load playerscoree
+	}
 }
