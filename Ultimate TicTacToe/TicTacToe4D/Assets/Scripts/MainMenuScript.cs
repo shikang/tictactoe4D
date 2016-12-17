@@ -4,10 +4,6 @@ using System.Collections;
 
 public class MainMenuScript : MonoBehaviour
 {
-	public Sprite sEmpty;
-	public Sprite sCross;
-	public Sprite sCircle;
-
 	public GameObject InputP1;
 	public GameObject InputP2;
 
@@ -17,6 +13,7 @@ public class MainMenuScript : MonoBehaviour
 	public GameObject OptionsScreen;
 	public GameObject HowToPlayScreen;
 	public GameObject AvatarScreen;
+	public GameObject GachaScreen;
 
 	public GameObject SettingsScreen;
 	public GameObject CreditsPage;
@@ -65,6 +62,7 @@ public class MainMenuScript : MonoBehaviour
 					GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().nameP2 = curr.gameObject.GetComponent<Text>().text;
 			}
 		}*/
+
 	}
 
 	public void GoToScreen(int _changeTo)
@@ -76,6 +74,7 @@ public class MainMenuScript : MonoBehaviour
 		StartGameNetworkedScreen.SetActive(false);
 		SettingsScreen.SetActive(false);
 		AvatarScreen.SetActive(false);
+		GachaScreen.SetActive(false);
 
 		//OptionsScreen.SetActive(false);
 		//HowToPlayScreen.SetActive(false);
@@ -113,13 +112,9 @@ public class MainMenuScript : MonoBehaviour
 			RoomNameInput.GetComponent<InputField>().enabled = true;
 			break;
 
-		/*case 2:
-			OptionsScreen.SetActive(true);
-			break;
-
 		case 3:
-			HowToPlayScreen.SetActive(true);
-			break;*/
+			GachaScreen.SetActive(true);
+			break;
 
 		case 4:
 			AvatarScreen.SetActive(true);

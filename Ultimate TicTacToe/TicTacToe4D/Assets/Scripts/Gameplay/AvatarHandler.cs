@@ -52,7 +52,7 @@ public class AvatarHandler : MonoBehaviour
 		{
 			avatarArray[i] = Instantiate(avatarPrefab);
 			avatarArray[i].transform.SetParent(avatarParent.transform);
-			avatarArray[i].GetComponent<Image>().sprite = GameObject.FindGameObjectWithTag("Global").GetComponent<IconManager>().IconList[(int)Defines.ICONS.LOCKED];
+			avatarArray[i].GetComponent<Image>().sprite = GameObject.FindGameObjectWithTag("Global").GetComponent<IconManager>().GetIcon(Defines.ICONS.LOCKED);
 			avatarArray[i].GetComponent<AvatarClick>().SetAvatarID(i);
 			
 			allFrames[i] = Instantiate(framePrefab);
@@ -84,17 +84,17 @@ public class AvatarHandler : MonoBehaviour
 	{
 	}
 
-	void UnlockAvatar(int i)
+	public void UnlockAvatar(int i)
 	{
 		isUnlocked[i] = true;
-		avatarArray[i].GetComponent<Image>().sprite = GameObject.FindGameObjectWithTag("Global").GetComponent<IconManager>().IconList[(i%7)+3];
+		avatarArray[i].GetComponent<Image>().sprite = GameObject.FindGameObjectWithTag("Global").GetComponent<IconManager>().GetIcon((i%7)+3);
 	}
 
 	void UnlockAllAvatars()
 	{
 		for (int i = 0; i < noofAvatars; ++i)
 		{
-			avatarArray[i].GetComponent<Image>().sprite = GameObject.FindGameObjectWithTag("Global").GetComponent<IconManager>().IconList[(i%7)+3];
+			avatarArray[i].GetComponent<Image>().sprite = GameObject.FindGameObjectWithTag("Global").GetComponent<IconManager>().GetIcon((i%7)+3);
 		}
 	}
 
@@ -103,9 +103,9 @@ public class AvatarHandler : MonoBehaviour
 		for (int i = 0; i < noofAvatars; ++i)
 		{
 			if(isUnlocked[i])
-				avatarArray[i].GetComponent<Image>().sprite = GameObject.FindGameObjectWithTag("Global").GetComponent<IconManager>().IconList[(i%7)+3];
+				avatarArray[i].GetComponent<Image>().sprite = GameObject.FindGameObjectWithTag("Global").GetComponent<IconManager>().GetIcon((i%7)+3);
 			else
-				avatarArray[i].GetComponent<Image>().sprite = GameObject.FindGameObjectWithTag("Global").GetComponent<IconManager>().IconList[(int)Defines.ICONS.LOCKED];
+				avatarArray[i].GetComponent<Image>().sprite = GameObject.FindGameObjectWithTag("Global").GetComponent<IconManager>().GetIcon(Defines.ICONS.LOCKED);
 		}
 	}
 
@@ -115,6 +115,26 @@ public class AvatarHandler : MonoBehaviour
 		{
 			avatarArray[i].GetComponent<Image>().color = newColor;
 		}
+	}
+
+	public bool IsUnlocked(int ID)
+	{
+		return isUnlocked[ID];
+	}
+
+	public bool UnlockedAll()
+	{
+		for(int i = 0; i < noofAvatars; ++i)
+		{
+			if(isUnlocked[i] == false)
+				return false;
+		}
+		return true;
+	}
+
+	public int GetNoofAvatars()
+	{
+		return noofAvatars;
 	}
 
 	public void OnClickLocalPlayIcon1()

@@ -67,6 +67,9 @@ public class Defines : Singleton<Defines>
 	static public int smallGridWin = 1;
 	static public int bigGridWin = 3;
 
+	// Money stuff
+	static public int GACHACOST = 100;
+
 	void Start()
 	{
 		//load playerscoree

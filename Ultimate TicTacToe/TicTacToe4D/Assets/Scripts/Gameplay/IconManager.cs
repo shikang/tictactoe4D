@@ -16,6 +16,7 @@ public class IconManager : MonoBehaviour
 
 		IconList[(int)Defines.ICONS.EMPTY]		= Resources.Load<Sprite>("Icons/Empty") as Sprite;
 		IconList[(int)Defines.ICONS.HIGHLIGHT]	= Resources.Load<Sprite>("Icons/Highlight") as Sprite;
+		IconList[(int)Defines.ICONS.LOCKED]		= Resources.Load<Sprite>("Icons/Locked") as Sprite;
 
 		IconList[(int)Defines.ICONS.CIRCLE]		= Resources.Load<Sprite>("Icons/Circle") as Sprite;
 		IconList[(int)Defines.ICONS.CROSS]		= Resources.Load<Sprite>("Icons/Cross") as Sprite;
@@ -26,6 +27,16 @@ public class IconManager : MonoBehaviour
 		IconList[(int)Defines.ICONS.DIAMOND]	= Resources.Load<Sprite>("Icons/Diamond") as Sprite;
 
 		IconList[(int)Defines.ICONS.TREBLE]		= Resources.Load<Sprite>("Icons/Treble") as Sprite;
+	}
+
+	public Sprite GetIcon(Defines.ICONS currIcon)
+	{
+		return IconList[(int)currIcon];
+	}
+
+	public Sprite GetIcon(int currIcon)
+	{
+		return IconList[currIcon];
 	}
 
 	void Update ()

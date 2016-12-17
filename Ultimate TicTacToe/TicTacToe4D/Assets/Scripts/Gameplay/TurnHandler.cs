@@ -90,21 +90,21 @@ public class TurnHandler : MonoBehaviour
 
 	public Sprite GetSpriteEmpty()
 	{
-		return allIcons.IconList[(int)spriteID_Empty];
+		return allIcons.GetIcon(Defines.ICONS.EMPTY);
 	}
 
 	public Sprite GetSpriteP1()
 	{
-		return allIcons.IconList[(int)spriteID_P1];
+		return allIcons.GetIcon(spriteID_P1);
 	}
 
 	public Sprite GetSpriteP2()
 	{
-		return allIcons.IconList[(int)spriteID_P2];
+		return allIcons.GetIcon(spriteID_P2);
 	}
 
 	public Sprite GetSpriteHighlight()
 	{
-		return allIcons.IconList[(int)spriteID_Highlight];
+		return allIcons.GetIcon(spriteID_Highlight);
 	}
 }

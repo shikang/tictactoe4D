@@ -85,8 +85,8 @@ public class GlobalScript : MonoBehaviour
 		//if(SceneManager.GetActiveScene().name == "MainMenu" && Camera.main.GetComponent<MainMenuScript>().screenState == 1)
 		if(gameInit == 0)
 		{
-			//IconP1.GetComponent<Image>().sprite = iconManager.IconList[playerIcon_1];
-			//IconP2.GetComponent<Image>().sprite = iconManager.IconList[playerIcon_2];
+			//IconP1.GetComponent<Image>().sprite = iconManager.GetIcon(playerIcon_1);
+			//IconP2.GetComponent<Image>().sprite = iconManager.GetIcon(playerIcon_2);
 			gameInit = 1;
 		}
 
@@ -101,7 +101,7 @@ public class GlobalScript : MonoBehaviour
 	{
 		myIcon = icon;
 		Camera.main.GetComponent<MainMenuScript>().PlayerIcon.GetComponent<Image>().sprite =
-		GameObject.FindGameObjectWithTag("GUIManager").GetComponent<IconManager>().IconList[myIcon];
+		GameObject.FindGameObjectWithTag("GUIManager").GetComponent<IconManager>().GetIcon(myIcon);
 	}
 
 	// Used to cycle grid sprites when choosing icons before the game starts.
@@ -109,7 +109,7 @@ public class GlobalScript : MonoBehaviour
 	{
 		myIcon = ( ( myIcon + 1 - minIcon ) % ( maxIcon - minIcon + 1 ) ) + minIcon;
 		Camera.main.GetComponent<MainMenuScript>().PlayerIcon.GetComponent<Image>().sprite = 
-			GameObject.FindGameObjectWithTag("GUIManager").GetComponent<IconManager>().IconList[myIcon];
+			GameObject.FindGameObjectWithTag("GUIManager").GetComponent<IconManager>().GetIcon(myIcon);
 
 		/*if(_player == 1)
 		{

@@ -3,23 +3,31 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections;
 
+public enum BUTTONTYPES
+{
+	MAIN_SINGLEPLAYER = 0,
+	MAIN_LOCALPLAY,
+	MAIN_NETWORK,
+	NETWORK_BACKTOMAINMENU,
+
+	MAIN_SETTINGS,	//4
+	MAIN_AVATAR,
+	MAIN_GACHA,
+
+	NETWORK_PUBLICGAME,	//7
+	NETWORK_PRIVATEGAME,
+	NETWORK_PRIVATEGAME_SEARCH,
+	LOCALPLAY_START,
+
+	SETTINGS_HOWTOPLAY,	//11
+	SETTINGS_CREDITS,
+
+	LOCAL_BACKTOMAINMENU
+};
+
 public class MenuBtnScript : MonoBehaviour
 {
-	/*
-	0 = 1P
-	1 = 2P,
-	2 = HowToPlay,
-	3 = Options,
-	4 = Credits,
-
-	5 = Icon1P,
-	6 = Icon2P,
-	7 = Start Player 1P,
-	8 = Start Player 2P,
-	9 = Back,
-	10 = Back,
-	11 = Start */
-	public int menuType;
+	public BUTTONTYPES menuType;
 	public bool isShowSettingsScreen;
 	public bool isShowCreditsScreen;
 	public bool isShowHowToPlayScreen;
@@ -36,16 +44,14 @@ public class MenuBtnScript : MonoBehaviour
 	// NGUI Mouse Handler
 	public void BtnClick(int btn_)
 	{
-		switch(btn_)
+		switch((BUTTONTYPES)btn_)
 		{
-		// Single Player
-		case 0:
+		case BUTTONTYPES.MAIN_SINGLEPLAYER:
 			GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().gameMode = 0;
 			SceneManager.LoadScene("GameScene");
 			break;
 
-		// Local Multiplayer Screen
-		case 1:
+		case BUTTONTYPES.MAIN_LOCALPLAY:
 			GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().gameMode = 1;
 			Camera.main.GetComponent<MainMenuScript>().GoToScreen(1);
 			Camera.main.GetComponent<MainMenuScript>().Avatar.SetActive(false);
@@ -53,45 +59,33 @@ public class MenuBtnScript : MonoBehaviour
 			GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().avatarState = 1;
 			break;
 
-		// Networked Screen
-		case 2:
+		case BUTTONTYPES.MAIN_NETWORK:
 			GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().gameMode = 2;
 			Camera.main.GetComponent<MainMenuScript>().GoToScreen(2);
 			break;
 
-		// Go To Options Screen
-		case 3:
+		case BUTTONTYPES.MAIN_GACHA:
+			GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().network_allowButtonClicks = 0;
 			Camera.main.GetComponent<MainMenuScript>().GoToScreen(3);
+			Camera.main.GetComponent<MainMenuScript>().Avatar.SetActive(false);
+			Camera.main.GetComponent<MainMenuScript>().Settings.SetActive(false);
 			break;
-		
-		// Go To Credits Screen
-		case 4:
+
+		case BUTTONTYPES.MAIN_SETTINGS:
+			isShowSettingsScreen = !isShowSettingsScreen;
+			Camera.main.GetComponent<MainMenuScript>().SettingsScreen.SetActive(isShowSettingsScreen);
+			break;
+
+		case BUTTONTYPES.MAIN_AVATAR:
+			GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().network_allowButtonClicks = 0;
 			Camera.main.GetComponent<MainMenuScript>().GoToScreen(4);
-			break;
-
-		// Change P1 Icon
-		case 5:
-			GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().CyclePlayerIcon();
-			break;
-
-		// Change P2 Icon
-		case 6:
-			//GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().CyclePlayerIcon(2);
-			Debug.Log( "[SHOULD NOT HAVE] - cycling 2nd player icon" );
-			break;
-
-		// Change Starting Player to P1
-		case 7:
-			GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().UpdateStartingPlayer(1);
-			break;
-		
-		// Change Starting Player to P2
-		case 8:
-			GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().UpdateStartingPlayer(2);
+			Camera.main.GetComponent<MainMenuScript>().Avatar.SetActive(false);
+			Camera.main.GetComponent<MainMenuScript>().Settings.SetActive(false);
+			GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().avatarState = 3;
 			break;
 
 		// Back To Main Menu
-		case 9:
+		case BUTTONTYPES.LOCAL_BACKTOMAINMENU:
 			Camera.main.GetComponent<MainMenuScript>().GoToScreen(0);
 
 			Camera.main.GetComponent<MainMenuScript>().Avatar.SetActive(true);
@@ -102,60 +96,38 @@ public class MenuBtnScript : MonoBehaviour
 	        //GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().ResetCountdown();
 	        break;
 
-		// Start Game!
-		case 11:
+		case BUTTONTYPES.LOCALPLAY_START:
 			SceneManager.LoadScene("GameScene");
 			break;
 
-		// Play Public
-		case 12:
+		case BUTTONTYPES.NETWORK_PUBLICGAME:
 			GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().FindPublicGame();
 			Camera.main.GetComponent<MainMenuScript>().Avatar.SetActive(false);
 			Camera.main.GetComponent<MainMenuScript>().Settings.SetActive(false);
 			break;
 
-		// Play With Friends
-		case 13:
+		case BUTTONTYPES.NETWORK_PRIVATEGAME:
 			GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().FindFriendGame();
 			break;
 
-		// Search (after keying in password)
-		case 14:
+		case BUTTONTYPES.NETWORK_PRIVATEGAME_SEARCH:
 			GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().SearchFriend();
 			Camera.main.GetComponent<MainMenuScript>().Avatar.SetActive(false);
 			Camera.main.GetComponent<MainMenuScript>().Settings.SetActive(false);
 			GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().SearchGrey.SetActive(true);
 			break;
 
-		// Settings
-		case 15:
-			isShowSettingsScreen = !isShowSettingsScreen;
-			Camera.main.GetComponent<MainMenuScript>().SettingsScreen.SetActive(isShowSettingsScreen);
-			break;
-
-		// Settings: Credits
-		case 16:
+		case BUTTONTYPES.SETTINGS_CREDITS:
 			isShowCreditsScreen = !isShowCreditsScreen;
 			Camera.main.GetComponent<MainMenuScript>().CreditsPage.SetActive(isShowCreditsScreen);
 			break;
 
-		// Settings: How To Play
-		case 17:
+		case BUTTONTYPES.SETTINGS_HOWTOPLAY:
 			isShowHowToPlayScreen = !isShowHowToPlayScreen;
 			Camera.main.GetComponent<MainMenuScript>().HowToPlayPage.SetActive(isShowHowToPlayScreen);
 			break;
 
-		// Avatar
-		case 18:
-			GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().network_allowButtonClicks = 0;
-			Camera.main.GetComponent<MainMenuScript>().GoToScreen(4);
-			Camera.main.GetComponent<MainMenuScript>().Avatar.SetActive(false);
-			Camera.main.GetComponent<MainMenuScript>().Settings.SetActive(false);
-			GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().avatarState = 3;
-			break;
-
-		// Back (Online Play)
-		case 19:
+		case BUTTONTYPES.NETWORK_BACKTOMAINMENU:
 			if(GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().network_allowButtonClicks == 1)
 			{
 				Camera.main.GetComponent<MainMenuScript>().JoinPublicGrey.SetActive(false);
