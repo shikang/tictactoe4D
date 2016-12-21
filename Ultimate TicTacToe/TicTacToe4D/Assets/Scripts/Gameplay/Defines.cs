@@ -55,7 +55,7 @@ public class Defines : Singleton<Defines>
 	static public float GRID_SPACE = 1.1f;
 	static public float GRID_SIZE = 0.5f;
 	static public float	BIGGRID_GAP_X = 3.3f;
-	static public float	BIGGRID_GAP_Y = 3.4f;
+	static public float	BIGGRID_GAP_Y = 3.3f;
 
 	// Active Grid Settings
 	static public Vector3	ACTIVEGRID_POSITION_BIG = new Vector3(0.0f, 0.0f, -0.1f);

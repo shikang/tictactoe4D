@@ -45,7 +45,7 @@ public class BigGridScript : MonoBehaviour
 		for(int i = 0; i < 9; ++i)
 		{
 			offsetX = ((i%3)-1) * Defines.GRID_SPACE;
-			offsetY = ((i/3)-1) * Defines.GRID_SPACE;
+			offsetY = ((i/3)-1) * -Defines.GRID_SPACE;
 				
 			grids[i] = (GameObject)Instantiate(gridObj);
 			grids[i].transform.parent = transform;
