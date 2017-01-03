@@ -7,6 +7,10 @@ public class GachaScript : MonoBehaviour
 	public GameObject currIcon;
 	public GameObject IconFX;
 
+	public GameObject BuyIcon;
+	public GameObject BuyIconFX;
+	int BuyID;
+
 	public GameObject moneyText;
 
 	int [] randomList;
@@ -18,20 +22,27 @@ public class GachaScript : MonoBehaviour
 
 	bool isGachaing;
 	bool isAnimating;
+	bool isAnimatingBuy;
 
 	public GameObject GreyBG;
 	int GreyFadeState;
 
+	public GameObject GachaPage;
+	public GameObject BuyPage;
+
 	void Start()
 	{
 		currIcon.GetComponent<Image>().sprite =
-			GameObject.FindGameObjectWithTag("Global").GetComponent<IconManager>().GetIcon(Defines.ICONS.LOCKED);
-		currIcon.GetComponent<Image>().color = IconFX.GetComponent<Image>().color = Defines.P1_ICON_COLOR;
+			IconManager.Instance.GetIcon(Defines.ICONS.LOCKED);
+		currIcon.GetComponent<Image>().color = IconFX.GetComponent<Image>().color =
+		BuyIcon.GetComponent<Image>().color = BuyIconFX.GetComponent<Image>().color = Defines.ICON_COLOR_P1;
+
 		IconFX.SetActive(false);
+		BuyIcon.SetActive(false);
+		BuyIconFX.SetActive(false);
 
 		noofChanges = 20;
 		randomList = new int[noofChanges];
-		changeTimer = new float[noofChanges];
 
 		isGachaing = false;
 		isAnimating = false;
@@ -48,13 +59,17 @@ public class GachaScript : MonoBehaviour
 			UpdateGacha();
 
 		if(isAnimating)
-			UpdateAnimation();
+			UpdateAnimation(IconFX);
+
+		if(isAnimatingBuy)
+			UpdateAnimation(BuyIconFX);
 
 		UpdateGreyBG();
 	}
 
 	void InitTiming()
 	{
+		changeTimer = new float[noofChanges];
 		changeTimer[0] = 0.08f;
 		changeTimer[1] = 0.09f;
 		changeTimer[2] = 0.1f;
@@ -88,16 +103,16 @@ public class GachaScript : MonoBehaviour
 			// Set Grey BG
 			SetGreyBG(true);
 
-			// Generate Random List (Don't show already unlocked icons)
-			if(!GameObject.FindGameObjectWithTag("AvatarHandler").GetComponent<AvatarHandler>().UnlockedAll())
+			// Generate Random List
+			if(!AvatarHandler.Instance.UnlockedAll())
 			{
 				for(int i = 0; i < noofChanges; ++i)
 				{
 					do
 					{
-						randomList[i] = Random.Range(0, GameObject.FindGameObjectWithTag("AvatarHandler").GetComponent<AvatarHandler>().GetNoofAvatars());
+						randomList[i] = Random.Range(Defines.Avatar_FirstIcon, AvatarHandler.Instance.GetNoofAvatars());
 					}
-					while(GameObject.FindGameObjectWithTag("AvatarHandler").GetComponent<AvatarHandler>().IsUnlocked(randomList[i]));
+					while(IconManager.Instance.GetIsBuy(randomList[i]));
 				}
 			}
 			else
@@ -124,7 +139,7 @@ public class GachaScript : MonoBehaviour
 			if(currCounter == noofChanges-1)
 			{
 				isGachaing = false;
-				GameObject.FindGameObjectWithTag("AvatarHandler").GetComponent<AvatarHandler>().UnlockAvatar(randomList[currCounter]);
+				AvatarHandler.Instance.UnlockAvatar(randomList[currCounter]);
 
 				// Starts FX
 				isAnimating = true;
@@ -140,23 +155,24 @@ public class GachaScript : MonoBehaviour
 			{
 				currCounter += 1;
 				currIcon.GetComponent<Image>().sprite =
-					GameObject.FindGameObjectWithTag("Global").GetComponent<IconManager>().GetIcon((randomList[currCounter]%7)+3);
+					IconManager.Instance.GetIcon(randomList[currCounter]);
 				currTime = changeTimer[currCounter];
 			}
 		}
 	}
 
-	void UpdateAnimation()
+	void UpdateAnimation(GameObject curr)
 	{
-		IconFX.transform.localScale += new Vector3(0.008f, 0.008f, 0.008f);
-		IconFX.GetComponent<Image>().color -= new Color(0.0f, 0.0f, 0.0f, 0.03f);
+		curr.transform.localScale += new Vector3(0.008f, 0.008f, 0.008f);
+		curr.GetComponent<Image>().color -= new Color(0.0f, 0.0f, 0.0f, 0.03f);
 
-		if(IconFX.GetComponent<Image>().color.a <= 0f)
+		if(curr.GetComponent<Image>().color.a <= 0f)
 		{
-			IconFX.transform.localScale = new Vector3(0.08f, 0.08f, 0.08f);
-			IconFX.GetComponent<Image>().color = Defines.P1_ICON_COLOR;
-			IconFX.SetActive(false);
-			isAnimating = false;
+			curr.transform.localScale = new Vector3(0.08f, 0.08f, 0.08f);
+			curr.GetComponent<Image>().color = Defines.ICON_COLOR_P1;
+			curr.SetActive(false);
+
+			isAnimating = isAnimatingBuy = false;
 		}
 	}
 
@@ -187,6 +203,42 @@ public class GachaScript : MonoBehaviour
 			GreyFadeState = 1;
 		else
 			GreyFadeState = 2;
+	}
+
+	public void BuyButtonClick()
+	{
+		GachaPage.SetActive(false);
+		BuyPage.SetActive(true);
+	}
+
+	public void BackBuyButtonClick()
+	{
+		GachaPage.SetActive(true);
+		BuyPage.SetActive(false);
+		BuyIcon.SetActive(false);
+	}
+
+	public void SetBuyIcon(int i)
+	{
+		BuyIcon.SetActive(true);
+		BuyIcon.GetComponent<Image>().sprite = IconManager.Instance.GetIcon(i);
+		BuyID = i;
+	}
+
+	public void BuyCurrentIcon()
+	{
+		if(IconManager.Instance.GetIsUnlocked(BuyID))
+		{
+			return;
+		}
+
+		if(BuyIcon.GetActive())
+		{
+			AvatarHandler.Instance.UnlockAvatar(BuyID);
+			BuyIconFX.SetActive(true);
+			BuyIconFX.GetComponent<Image>().sprite = BuyIcon.GetComponent<Image>().sprite;
+			isAnimatingBuy = true;
+		}
 	}
 }
 

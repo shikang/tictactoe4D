@@ -40,10 +40,13 @@ public class Defines : Singleton<Defines>
 		TREBLE,
 		TOTAL
 	}
+	static public int Avatar_NoofColumns = 5;
+	static public int Avatar_FirstIcon = 3;	// Need to exclude the first few non avatar icons.
 
 	// Player Colors
-	static public Color P1_ICON_COLOR = Color.blue;
-	static public Color P2_ICON_COLOR = Color.red;
+	static public Color ICON_COLOR_P1 = Color.blue;
+	static public Color ICON_COLOR_P2 = Color.red;
+	static public Color ICON_COLOR_GREY = Color.grey;
 
 	// Emotes
 	static public float EMOTE_SHOW_TIME = 2.5f;						//!< In seconds

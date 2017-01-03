@@ -37,8 +37,21 @@ public class GlobalScript : MonoBehaviour
 	public int iconP1 = (int)Defines.ICONS.SPADE;
 	public int iconP2 = (int)Defines.ICONS.SPADE;
 
+	// Singleton pattern
+	static GlobalScript instance;
+	public static GlobalScript Instance
+	{
+		get { return instance; }
+	}
+
 	void Awake()
 	{
+		if (instance != null)
+			throw new System.Exception("You have more than 1 GlobalScript in the scene.");
+
+		// Initialize the static class variables
+		instance = this;
+
 		DontDestroyOnLoad(gameObject);
 	}
 
@@ -101,7 +114,7 @@ public class GlobalScript : MonoBehaviour
 	{
 		myIcon = icon;
 		Camera.main.GetComponent<MainMenuScript>().PlayerIcon.GetComponent<Image>().sprite =
-		GameObject.FindGameObjectWithTag("GUIManager").GetComponent<IconManager>().GetIcon(myIcon);
+		IconManager.Instance.GetIcon(myIcon);
 	}
 
 	// Used to cycle grid sprites when choosing icons before the game starts.
@@ -109,7 +122,7 @@ public class GlobalScript : MonoBehaviour
 	{
 		myIcon = ( ( myIcon + 1 - minIcon ) % ( maxIcon - minIcon + 1 ) ) + minIcon;
 		Camera.main.GetComponent<MainMenuScript>().PlayerIcon.GetComponent<Image>().sprite = 
-			GameObject.FindGameObjectWithTag("GUIManager").GetComponent<IconManager>().GetIcon(myIcon);
+			IconManager.Instance.GetIcon(myIcon);
 
 		/*if(_player == 1)
 		{

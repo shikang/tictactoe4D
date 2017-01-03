@@ -31,6 +31,7 @@ public class MenuBtnScript : MonoBehaviour
 	public bool isShowSettingsScreen;
 	public bool isShowCreditsScreen;
 	public bool isShowHowToPlayScreen;
+	public GameObject avatarObject;
 
 	void Start ()
 	{
@@ -44,28 +45,32 @@ public class MenuBtnScript : MonoBehaviour
 	// NGUI Mouse Handler
 	public void BtnClick(int btn_)
 	{
+		// Default set to not appear until the case updates it
+		avatarObject.SetActive(false);
+
 		switch((BUTTONTYPES)btn_)
 		{
 		case BUTTONTYPES.MAIN_SINGLEPLAYER:
-			GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().gameMode = 0;
+			GlobalScript.Instance.gameMode = 0;
 			SceneManager.LoadScene("GameScene");
 			break;
 
 		case BUTTONTYPES.MAIN_LOCALPLAY:
-			GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().gameMode = 1;
+			GlobalScript.Instance.gameMode = 1;
 			Camera.main.GetComponent<MainMenuScript>().GoToScreen(1);
 			Camera.main.GetComponent<MainMenuScript>().Avatar.SetActive(false);
 			Camera.main.GetComponent<MainMenuScript>().Settings.SetActive(false);
-			GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().avatarState = 1;
+			GlobalScript.Instance.avatarState = 1;
+			avatarObject.SetActive(true);
 			break;
 
 		case BUTTONTYPES.MAIN_NETWORK:
-			GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().gameMode = 2;
+			GlobalScript.Instance.gameMode = 2;
 			Camera.main.GetComponent<MainMenuScript>().GoToScreen(2);
 			break;
 
 		case BUTTONTYPES.MAIN_GACHA:
-			GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().network_allowButtonClicks = 0;
+			GlobalScript.Instance.network_allowButtonClicks = 0;
 			Camera.main.GetComponent<MainMenuScript>().GoToScreen(3);
 			Camera.main.GetComponent<MainMenuScript>().Avatar.SetActive(false);
 			Camera.main.GetComponent<MainMenuScript>().Settings.SetActive(false);
@@ -77,11 +82,12 @@ public class MenuBtnScript : MonoBehaviour
 			break;
 
 		case BUTTONTYPES.MAIN_AVATAR:
-			GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().network_allowButtonClicks = 0;
+			GlobalScript.Instance.network_allowButtonClicks = 0;
 			Camera.main.GetComponent<MainMenuScript>().GoToScreen(4);
 			Camera.main.GetComponent<MainMenuScript>().Avatar.SetActive(false);
 			Camera.main.GetComponent<MainMenuScript>().Settings.SetActive(false);
-			GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().avatarState = 3;
+			GlobalScript.Instance.avatarState = 3;
+			avatarObject.SetActive(true);
 			break;
 
 		// Back To Main Menu
@@ -90,10 +96,12 @@ public class MenuBtnScript : MonoBehaviour
 
 			Camera.main.GetComponent<MainMenuScript>().Avatar.SetActive(true);
 			Camera.main.GetComponent<MainMenuScript>().Settings.SetActive(true);
-			GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().avatarState = 0;
+			GlobalScript.Instance.avatarState = 0;
 
-	        //GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().LeaveRoom();
-	        //GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().ResetCountdown();
+			AvatarHandler.Instance.OnClickLocalPlayIcon1();
+
+	        //GlobalScript.Instance.LeaveRoom();
+	        //GlobalScript.Instance.ResetCountdown();
 	        break;
 
 		case BUTTONTYPES.LOCALPLAY_START:
@@ -101,17 +109,17 @@ public class MenuBtnScript : MonoBehaviour
 			break;
 
 		case BUTTONTYPES.NETWORK_PUBLICGAME:
-			GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().FindPublicGame();
+			GlobalScript.Instance.FindPublicGame();
 			Camera.main.GetComponent<MainMenuScript>().Avatar.SetActive(false);
 			Camera.main.GetComponent<MainMenuScript>().Settings.SetActive(false);
 			break;
 
 		case BUTTONTYPES.NETWORK_PRIVATEGAME:
-			GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().FindFriendGame();
+			GlobalScript.Instance.FindFriendGame();
 			break;
 
 		case BUTTONTYPES.NETWORK_PRIVATEGAME_SEARCH:
-			GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().SearchFriend();
+			GlobalScript.Instance.SearchFriend();
 			Camera.main.GetComponent<MainMenuScript>().Avatar.SetActive(false);
 			Camera.main.GetComponent<MainMenuScript>().Settings.SetActive(false);
 			GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().SearchGrey.SetActive(true);
@@ -128,7 +136,7 @@ public class MenuBtnScript : MonoBehaviour
 			break;
 
 		case BUTTONTYPES.NETWORK_BACKTOMAINMENU:
-			if(GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().network_allowButtonClicks == 1)
+			if(GlobalScript.Instance.network_allowButtonClicks == 1)
 			{
 				Camera.main.GetComponent<MainMenuScript>().JoinPublicGrey.SetActive(false);
 				Camera.main.GetComponent<MainMenuScript>().FindFriendGrey.SetActive(false);
@@ -142,10 +150,10 @@ public class MenuBtnScript : MonoBehaviour
 				Camera.main.GetComponent<MainMenuScript>().Avatar.SetActive(true);
 				Camera.main.GetComponent<MainMenuScript>().Settings.SetActive(true);
 
-				GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().network_allowButtonClicks = 0;
+				GlobalScript.Instance.network_allowButtonClicks = 0;
 
-				GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().LeaveRoom();
-		        GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().ResetCountdown();
+				GlobalScript.Instance.LeaveRoom();
+		        GlobalScript.Instance.ResetCountdown();
 			}
 			else
 			{
@@ -153,8 +161,8 @@ public class MenuBtnScript : MonoBehaviour
 				Camera.main.GetComponent<MainMenuScript>().Avatar.SetActive(true);
 				Camera.main.GetComponent<MainMenuScript>().Settings.SetActive(true);
 
-		        //GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().LeaveRoom();
-		        //GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().ResetCountdown();
+		        //GlobalScript.Instance.LeaveRoom();
+		        //GlobalScript.Instance.ResetCountdown();
 			}
 			break;
 

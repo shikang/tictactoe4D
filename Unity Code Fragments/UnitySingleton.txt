@@ -1,29 +1,52 @@
 using UnityEngine;
 using System.Collections;
 
+
+
 public class WWISEAudioManager : MonoBehaviour
+
 {
+
 	// Singleton pattern
+
 	static SoundManager instance;
+
 	public static SoundManager Instance
+
 	{
+
 		get { return instance; }
+
 	}
+
 
 	void Awake()
+
 	{
+
 		if (instance != null)
+
 			throw new System.Exception("You have more than 1 WWISEAudioManager in the scene.");
+
 		
 		// Initialize the static class variables
+
 		instance = this;
+
 	}
+
 
 	void Start()
+
 	{
+
 	}
 
+
 	void Update()
+
 	{
+
 	}
+
 }

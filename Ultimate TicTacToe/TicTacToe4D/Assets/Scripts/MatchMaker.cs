@@ -32,7 +32,7 @@ public class MatchMaker : Photon.PunBehaviour
 
         PhotonNetwork.player.name = "Player2";
 
-		GameObject.Find("Global").GetComponent<GlobalScript>().matchMaker = this.gameObject;
+		GlobalScript.Instance.matchMaker = this.gameObject;
 
 		fRandomTimer = 0.0f;
 		bStartRandomTimer = false;
@@ -146,8 +146,8 @@ public class MatchMaker : Photon.PunBehaviour
         int count = 1 + PhotonNetwork.otherPlayers.Length;
         PhotonNetwork.player.name = "Player" + count;
 
-		GameObject.Find("Global").GetComponent<GlobalScript>().SetMyPlayerName();
-		GameObject.Find("Global").GetComponent<GlobalScript>().SetMyPlayerIcon();
+		GlobalScript.Instance.SetMyPlayerName();
+		GlobalScript.Instance.SetMyPlayerIcon();
 		ProceedToGame();
 	}
 
@@ -260,33 +260,33 @@ public class MatchMaker : Photon.PunBehaviour
 
 		if ( IsPlayerOne() )
 		{
-			GameObject.Find("Global").GetComponent<GlobalScript>().iconP2 = playerIcon;
+			GlobalScript.Instance.iconP2 = playerIcon;
 
 			string name = playerName;
-			if ( GameObject.Find( "Global" ).GetComponent<GlobalScript>().nameP1 == playerName )
+			if ( GlobalScript.Instance.nameP1 == playerName )
 			{
 				name += 2;
 				SendPlayerNewName( name );
 			}
 
-			GameObject.Find( "Global" ).GetComponent<GlobalScript>().UpdatePlayer2Name( name );
+			GlobalScript.Instance.UpdatePlayer2Name( name );
 		}
 		else
 		{
-			GameObject.Find("Global").GetComponent<GlobalScript>().iconP1 = playerIcon;
+			GlobalScript.Instance.iconP1 = playerIcon;
 
-			if ( GameObject.Find( "Global" ).GetComponent<GlobalScript>().nameP2 == playerName )
+			if ( GlobalScript.Instance.nameP2 == playerName )
 			{
 				// Wait for new name
 				return;
 			}
 			else
 			{
-				GameObject.Find( "Global" ).GetComponent<GlobalScript>().UpdatePlayer1Name( playerName );
+				GlobalScript.Instance.UpdatePlayer1Name( playerName );
 			}
 		}
 
-		GameObject.Find( "Global" ).GetComponent<GlobalScript>().StartCountdown();
+		GlobalScript.Instance.StartCountdown();
 	}
 
 	[PunRPC]
@@ -301,10 +301,10 @@ public class MatchMaker : Photon.PunBehaviour
 		}
 		else
 		{
-			GameObject.Find("Global").GetComponent<GlobalScript>().UpdatePlayer2Name(playerName);
+			GlobalScript.Instance.UpdatePlayer2Name(playerName);
 		}
 
-		GameObject.Find("Global").GetComponent<GlobalScript>().StartCountdown();
+		GlobalScript.Instance.StartCountdown();
 	}
 
 	public void StartConnecting()

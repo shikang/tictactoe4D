@@ -44,7 +44,7 @@ public class MainMenuScript : MonoBehaviour
 	void Start ()
 	{
 		GoToScreen(0);
-		//PlayerIcon.GetComponent<Image>().color = Defines.P1_ICON_COLOR;
+		//PlayerIcon.GetComponent<Image>().color = Defines.ICON_COLOR_P1;
 	}
 
 	void Update ()
@@ -54,12 +54,12 @@ public class MainMenuScript : MonoBehaviour
 			foreach(Transform curr in InputP1.GetComponentsInChildren<Transform>())
 			{
 				if(curr.gameObject.GetComponent<Text>())
-					GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().nameP1 = curr.gameObject.GetComponent<Text>().text;
+					GlobalScript.Instance.nameP1 = curr.gameObject.GetComponent<Text>().text;
 			}
 			foreach(Transform curr in InputP2.GetComponentsInChildren<Transform>())
 			{
 				if(curr.gameObject.GetComponent<Text>())
-					GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().nameP2 = curr.gameObject.GetComponent<Text>().text;
+					GlobalScript.Instance.nameP2 = curr.gameObject.GetComponent<Text>().text;
 			}
 		}*/
 
@@ -89,7 +89,7 @@ public class MainMenuScript : MonoBehaviour
 		case 1:
 		// Local Multiplayer
 			StartGameLocalMultiplayerScreen.SetActive(true);
-			//GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().gameMode = 2;
+			//GlobalScript.Instance.gameMode = 2;
 			break;
 
 		case 2:

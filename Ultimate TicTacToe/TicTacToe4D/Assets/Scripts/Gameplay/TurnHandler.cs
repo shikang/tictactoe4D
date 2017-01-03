@@ -8,7 +8,6 @@ public class TurnHandler : MonoBehaviour
 	public Defines.ICONS spriteID_P2;
 	public Defines.ICONS spriteID_Empty;
 	public Defines.ICONS spriteID_Highlight;
-	public IconManager allIcons;
 
 	public Color ColorP1;
 	public Color ColorP2;
@@ -20,15 +19,13 @@ public class TurnHandler : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		allIcons = GameObject.FindGameObjectWithTag("Global").GetComponent<IconManager>();
-
-		ColorP1 = Defines.P1_ICON_COLOR;
-		ColorP2 = Defines.P2_ICON_COLOR;
+		ColorP1 = Defines.ICON_COLOR_P1;
+		ColorP2 = Defines.ICON_COLOR_P2;
 
 		if ( NetworkManager.IsConnected() )
 		{
-			spriteID_P1 = (Defines.ICONS)GameObject.Find("Global").GetComponent<GlobalScript>().iconP1;
-			spriteID_P2 = (Defines.ICONS)GameObject.Find("Global").GetComponent<GlobalScript>().iconP2;
+			spriteID_P1 = (Defines.ICONS)GlobalScript.Instance.iconP1;
+			spriteID_P2 = (Defines.ICONS)GlobalScript.Instance.iconP2;
 		}
 
 		ResetVars();
@@ -90,21 +87,21 @@ public class TurnHandler : MonoBehaviour
 
 	public Sprite GetSpriteEmpty()
 	{
-		return allIcons.GetIcon(Defines.ICONS.EMPTY);
+		return IconManager.Instance.GetIcon(Defines.ICONS.EMPTY);
 	}
 
 	public Sprite GetSpriteP1()
 	{
-		return allIcons.GetIcon(spriteID_P1);
+		return IconManager.Instance.GetIcon(spriteID_P1);
 	}
 
 	public Sprite GetSpriteP2()
 	{
-		return allIcons.GetIcon(spriteID_P2);
+		return IconManager.Instance.GetIcon(spriteID_P2);
 	}
 
 	public Sprite GetSpriteHighlight()
 	{
-		return allIcons.GetIcon(spriteID_Highlight);
+		return IconManager.Instance.GetIcon(spriteID_Highlight);
 	}
 }

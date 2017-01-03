@@ -94,8 +94,8 @@ public class GUIManagerScript : MonoBehaviour
 		startTime = 300.0f;
 		timerP1 = timerP2 = startTime;
 
-		nameP1 = GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().nameP1;
-		nameP2 = GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().nameP2;
+		nameP1 = GlobalScript.Instance.nameP1;
+		nameP2 = GlobalScript.Instance.nameP2;
 
 		GUINameP1.GetComponent<Text>().text = nameP1;
 		GUINameP2.GetComponent<Text>().text = nameP2;

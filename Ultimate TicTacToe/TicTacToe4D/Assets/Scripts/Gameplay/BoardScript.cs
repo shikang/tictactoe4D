@@ -65,9 +65,9 @@ public class BoardScript : MonoBehaviour
 		}
         else
         {
-			if(GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().gameMode == 0)
+			if(GlobalScript.Instance.gameMode == 0)
 				gameMode = Defines.GAMEMODE.AI;
-			else if(GameObject.FindGameObjectWithTag("Global").GetComponent<GlobalScript>().gameMode == 1)
+			else if(GlobalScript.Instance.gameMode == 1)
 				gameMode = Defines.GAMEMODE.LOCAL;
         }
 
