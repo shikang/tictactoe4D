@@ -8,6 +8,8 @@ public class BoardScript : MonoBehaviour
 	public GameObject	boardSprite;
 	public GameObject	activeGridSprite;
 	public GameObject [] bigGrids;
+	public GameObject   scrollingText;
+	public GameObject   canvas;
 
 	public float 		minScale;
 	public float		maxScale;
@@ -181,6 +183,14 @@ public class BoardScript : MonoBehaviour
 			if (GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn == Defines.TURN.P1)
 			{	
 				Defines.Instance.playerScore += Defines.bigGridWin;
+				GameObject tmp;
+
+				tmp = (GameObject)Instantiate(scrollingText);//.gameObject.GetComponent<FloatingText>().BeginScrolling(" + " + Defines.smallGridWin + "!");
+				tmp.transform.SetParent(canvas.transform.transform);
+				tmp.transform.localScale = new Vector3(1,1,1);	
+				tmp.transform.localPosition =  new Vector3(-200,700,0);
+				tmp.GetComponent<Text>().text = "+ " + Defines.bigGridWin + "!";
+
 			}
 			//SetWinner((int)GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn);
 		}

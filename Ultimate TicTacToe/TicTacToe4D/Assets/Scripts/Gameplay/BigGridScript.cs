@@ -21,6 +21,8 @@ public class BigGridScript : MonoBehaviour
 	public GameObject gridObj;
 	public GameObject sWinIcon;
 	public GameObject [] grids;
+	public GameObject scrollingText;
+	public GameObject canvas;
 
 	public int bigGridID;
 	public float depth;
@@ -112,6 +114,14 @@ public class BigGridScript : MonoBehaviour
 			if (_turn == Defines.TURN.P1)
 			{
 				Defines.Instance.playerScore += Defines.smallGridWin;
+				GameObject tmp;
+
+				tmp = (GameObject)Instantiate(scrollingText);//.gameObject.GetComponent<FloatingText>().BeginScrolling(" + " + Defines.smallGridWin + "!");
+				canvas = transform.parent.parent.gameObject.GetComponent<BoardScript>().canvas;
+				tmp.transform.SetParent(canvas.transform);
+				tmp.transform.localScale = new Vector3(1,1,1);
+				tmp.transform.localPosition =  new Vector3(-200,700,0);
+				tmp.GetComponent<Text>().text = "+ " + Defines.smallGridWin + "!";
 			}
 			//begin to do the shakings
 			begin = true;
