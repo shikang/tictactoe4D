@@ -27,6 +27,7 @@ public class Defines : Singleton<Defines>
 	{
 		EMPTY = 0,
 		HIGHLIGHT,
+		INVALID,
 		LOCKED,
 
 		CIRCLE,
@@ -41,7 +42,7 @@ public class Defines : Singleton<Defines>
 		TOTAL
 	}
 	static public int Avatar_NoofColumns = 5;
-	static public int Avatar_FirstIcon = 3;	// Need to exclude the first few non avatar icons.
+	static public int Avatar_FirstIcon = 4;	// Need to exclude the first few non avatar icons.
 
 	// Player Colors
 	static public Color ICON_COLOR_P1 = Color.blue;

@@ -8,6 +8,7 @@ public class TurnHandler : MonoBehaviour
 	public Defines.ICONS spriteID_P2;
 	public Defines.ICONS spriteID_Empty;
 	public Defines.ICONS spriteID_Highlight;
+	public Defines.ICONS spriteID_Invalid;
 
 	public Color ColorP1;
 	public Color ColorP2;
@@ -79,6 +80,7 @@ public class TurnHandler : MonoBehaviour
 	{
 		spriteID_Empty = Defines.ICONS.EMPTY;
 		spriteID_Highlight = Defines.ICONS.HIGHLIGHT;
+		spriteID_Invalid = Defines.ICONS.INVALID;
 
 		// Read from main menus
 		spriteID_P1 = Defines.ICONS.SPADE;
@@ -103,5 +105,10 @@ public class TurnHandler : MonoBehaviour
 	public Sprite GetSpriteHighlight()
 	{
 		return IconManager.Instance.GetIcon(spriteID_Highlight);
+	}
+
+	public Sprite GetSpriteInvalid()
+	{
+		return IconManager.Instance.GetIcon(spriteID_Invalid);
 	}
 }

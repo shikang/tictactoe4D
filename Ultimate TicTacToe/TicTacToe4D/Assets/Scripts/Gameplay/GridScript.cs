@@ -25,6 +25,8 @@ public class GridScript : MonoBehaviour
 		{
 			return;
 		}
+
+
         if ( GetBoardScript().gameMode == Defines.GAMEMODE.ONLINE &&
             ( (  NetworkManager.IsPlayerOne() && GetTurnHandler().turn != Defines.TURN.P1 ) ||
               ( !NetworkManager.IsPlayerOne() && GetTurnHandler().turn != Defines.TURN.P2 ) ) )
@@ -76,6 +78,18 @@ public class GridScript : MonoBehaviour
                 }
 			}
 		}
+		else
+		{
+			if(gridState == 0)
+				PlaceOnGrid(4); // Current grid is invalid (red)
+		}
+	}
+
+	void OnMouseUp()
+	{
+		if(gridState == 4)
+			PlaceOnGrid(0);
+			
 	}
 
 	public void HighlightGrid()
@@ -90,22 +104,26 @@ public class GridScript : MonoBehaviour
 
 		switch(gridState)
 		{
-		case 0:
+		case 0:	// Nothing (Black)
 			GetComponent<SpriteRenderer>().sprite = GetTurnHandler().GetSpriteEmpty();
 			break;
 
-		case 1:
+		case 1:	// P1 Icon
 			GetComponent<SpriteRenderer>().sprite = GetTurnHandler().GetSpriteP1();
 			GetComponent<SpriteRenderer>().color = 	GetTurnHandler().ColorP1;
 			break;
 
-		case 2:
+		case 2:	// P2 Icon
 			GetComponent<SpriteRenderer>().sprite = GetTurnHandler().GetSpriteP2();
 			GetComponent<SpriteRenderer>().color = 	GetTurnHandler().ColorP2;
 			break;
 
-		case 3:
+		case 3:	// Highlighting (Yellow)
 			GetComponent<SpriteRenderer>().sprite =	GetTurnHandler().GetSpriteHighlight();
+			break;
+
+		case 4:	// Invalid (Red)
+			GetComponent<SpriteRenderer>().sprite =	GetTurnHandler().GetSpriteInvalid();
 			break;
 
 		default:
