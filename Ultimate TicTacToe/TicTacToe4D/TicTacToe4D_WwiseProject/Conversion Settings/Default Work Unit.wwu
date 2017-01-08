@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{0E6DBB91-347C-4A8B-9422-C9CAE6C0F0B9}" SchemaVersion="75">
+	<Conversions>
+		<WorkUnit Name="Default Work Unit" ID="{0E6DBB91-347C-4A8B-9422-C9CAE6C0F0B9}" PersistMode="Standalone">
+			<ChildrenList>
+				<Conversion Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}">
+					<PropertyList>
+						<Property Name="Channels" Type="int32">
+							<ValueList>
+								<Value Platform="Mac">4</Value>
+								<Value Platform="Android">4</Value>
+								<Value Platform="Windows">4</Value>
+							</ValueList>
+						</Property>
+						<Property Name="LRMix" Type="Real64">
+							<ValueList>
+								<Value Platform="Mac">0</Value>
+								<Value Platform="Android">0</Value>
+								<Value Platform="Windows">0</Value>
+							</ValueList>
+						</Property>
+						<Property Name="MaxSampleRate" Type="int32">
+							<ValueList>
+								<Value Platform="Mac">0</Value>
+								<Value Platform="Android">0</Value>
+								<Value Platform="Windows">0</Value>
+							</ValueList>
+						</Property>
+						<Property Name="MinSampleRate" Type="int32">
+							<ValueList>
+								<Value Platform="Mac">0</Value>
+								<Value Platform="Android">0</Value>
+								<Value Platform="Windows">0</Value>
+							</ValueList>
+						</Property>
+						<Property Name="SampleRate" Type="int32">
+							<ValueList>
+								<Value Platform="Mac">0</Value>
+								<Value Platform="Android">0</Value>
+								<Value Platform="Windows">0</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ConversionPluginInfoList>
+						<ConversionPluginInfo Platform="Mac">
+							<ConversionPlugin Name="" ID="{F3769AD9-C687-4D20-B1F0-C29F802E0FBE}" PluginName="PCM" CompanyID="0" PluginID="1"/>
+						</ConversionPluginInfo>
+						<ConversionPluginInfo Platform="Android">
+							<ConversionPlugin Name="" ID="{3B71FE50-565E-46BB-B66A-8DBB48B92B44}" PluginName="PCM" CompanyID="0" PluginID="1"/>
+						</ConversionPluginInfo>
+						<ConversionPluginInfo Platform="Windows">
+							<ConversionPlugin Name="" ID="{47BB9F36-AFD6-46BA-85E8-39FE45C260E5}" PluginName="PCM" CompanyID="0" PluginID="1"/>
+						</ConversionPluginInfo>
+					</ConversionPluginInfoList>
+				</Conversion>
+			</ChildrenList>
+		</WorkUnit>
+	</Conversions>
+</WwiseDocument>
