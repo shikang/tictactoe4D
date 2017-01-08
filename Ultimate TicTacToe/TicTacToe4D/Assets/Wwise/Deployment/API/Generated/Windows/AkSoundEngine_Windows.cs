@@ -2024,7 +2024,7 @@ public class AkSoundEngine {
     return ret;
   }
 
-  public static AKRESULT PostCode(ErrorCode in_eError, ErrorLevel in_eErrorLevel) {
+  public static AKRESULT PostCode(AkErrorCode in_eError, ErrorLevel in_eErrorLevel) {
     AKRESULT ret = (AKRESULT)AkSoundEnginePINVOKE.CSharp_PostCode((int)in_eError, (int)in_eErrorLevel);
 
     return ret;

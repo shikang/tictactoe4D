@@ -261,7 +261,7 @@ public class AkInitializer : MonoBehaviour
     }
 
     
-    void CopyMonitoringInConsole(ErrorCode in_errorCode, ErrorLevel in_errorLevel, uint in_playingID, IntPtr in_gameObjID, string in_msg)
+    void CopyMonitoringInConsole(AkErrorCode in_AkErrorCode, ErrorLevel in_errorLevel, uint in_playingID, IntPtr in_gameObjID, string in_msg)
     {
         // Only log when logging from the engine is enabled. The callback remains active when the flag is disabled to ensure
         // it can be toggled on and off in a lively manner in Unity.
