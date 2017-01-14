@@ -143,6 +143,7 @@ public class GridScript : MonoBehaviour
 		GetBoardScript().UpdateActiveGridBG(gridID);
 		GetGUIManagerScript().UpdateClick();
 		GameObject.FindGameObjectWithTag("AIMiniMax").GetComponent<AIMiniMax>().UpdateAI();
+		AudioManager.Instance.PlaySoundEvent(SOUNDID.ICONPLACED);
 	}
 
 	public void ResetHighlight()
