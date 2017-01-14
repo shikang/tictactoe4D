@@ -38,16 +38,19 @@ public class AudioManager : MonoBehaviour
 	
 	}
 
-	public void PlaySoundEvent(SOUNDID go)
+	public void PlaySoundEvent(SOUNDID sid, GameObject go = null)
 	{
-		switch(go)
+		if(!go)
+			go = gameObject;
+
+		switch(sid)
 		{
 		case SOUNDID.ICONPLACED:
-			SoundEventWrapper("IconPlaced");
+			SoundEventWrapper("Play_IconClicked", gameObject);
 			break;
 
 		case SOUNDID.WONBIGGRID:
-			SoundEventWrapper("WonBigGrid");
+			SoundEventWrapper("Play_BigGridWon", go);
 			break;
 
 		default:
@@ -56,9 +59,26 @@ public class AudioManager : MonoBehaviour
 		}
 	}
 
-	void SoundEventWrapper(string s)
+	void SoundEventWrapper(string s, GameObject go)
 	{
-		AkSoundEngine.PostEvent(s, gameObject);
+		AkSoundEngine.PostEvent(s, go);
 	}
+
+	public void SetMasterVol(float vol)
+	{
+		//AkSoundEngine.SetRTPCValue("MasterVol", vol);
+	}
+
+	public void SetBGMVol(float vol)
+	{
+		//AkSoundEngine.SetRTPCValue("BGMVol", vol);
+	}
+
+	public void SetSFXVol(float vol)
+	{
+		//AkSoundEngine.SetRTPCValue("SFXVol", vol);
+	}
+
+	//AkSoundEngine.SetState("GameState", "MainMenu");
 }
 

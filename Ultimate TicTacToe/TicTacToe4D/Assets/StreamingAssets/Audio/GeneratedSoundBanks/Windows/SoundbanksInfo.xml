@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SoundBanksInfo Platform="Windows" BasePlatform="Windows" SchemaVersion="11" SoundbankVersion="120">
+<SoundBanksInfo Platform="Windows" BasePlatform="Windows" SchemaVersion="11" SoundbankVersion="118">
 	<RootPaths>
 		<ProjectRoot>C:\Users\SolidRocker\Documents\WwiseProjects\UltimateTicTacToe\</ProjectRoot>
 		<SourceFilesRoot>C:\Users\SolidRocker\Documents\WwiseProjects\UltimateTicTacToe\.cache\Windows\</SourceFilesRoot>
-		<SoundBanksRoot>C:\Users\SolidRocker\Desktop\WhyWool\trunk\Ultimate TicTacToe\TicTacToe4D\Assets\StreamingAssets\Audio\GeneratedSoundBanks\</SoundBanksRoot>
+		<SoundBanksRoot>C:\Users\SolidRocker\Desktop\WhyWool\trunk\Ultimate TicTacToe\TicTacToe4D\Assets\StreamingAssets\Audio\GeneratedSoundBanks\Windows\</SoundBanksRoot>
 		<ExternalSourcesInputFile></ExternalSourcesInputFile>
 		<ExternalSourcesOutputRoot>C:\Users\SolidRocker\Documents\WwiseProjects\UltimateTicTacToe\GeneratedSoundBanks\Windows\</ExternalSourcesOutputRoot>
 	</RootPaths>
@@ -16,34 +16,34 @@
 			<ShortName>Init</ShortName>
 			<Path>Init.bnk</Path>
 		</SoundBank>
-		<SoundBank Id="3604647259" Language="SFX">
-			<ObjectPath>\SoundBanks\Default Work Unit\MainMenu</ObjectPath>
-			<ShortName>MainMenu</ShortName>
-			<Path>MainMenu.bnk</Path>
+		<SoundBank Id="3161908922" Language="SFX">
+			<ObjectPath>\SoundBanks\Default Work Unit\Main</ObjectPath>
+			<ShortName>Main</ShortName>
+			<Path>Main.bnk</Path>
 			<IncludedEvents>
-				<Event Id="1349849919" Name="BigGridWon" ObjectPath="\Events\Default Work Unit\Gameplay\BigGridWon"/>
-				<Event Id="46765141" Name="IconPlaced" ObjectPath="\Events\Default Work Unit\Gameplay\IconPlaced"/>
+				<Event Id="3531387288" Name="Play_BigGridWon" ObjectPath="\Events\Default Work Unit\Play_BigGridWon"/>
+				<Event Id="4230025780" Name="Play_IconClicked" ObjectPath="\Events\Default Work Unit\Play_IconClicked"/>
 			</IncludedEvents>
 			<IncludedMemoryFiles>
-				<File Id="20629289" Language="SFX">
+				<File Id="73170105" Language="SFX">
 					<ShortName>sms-alert-4-daniel_simon.wav</ShortName>
 					<Path>SFX\sms-alert-4-daniel_simon_9E69E797.wem</Path>
 				</File>
-				<File Id="501492325" Language="SFX">
-					<ShortName>sms-alert-1-daniel_simon.wav</ShortName>
-					<Path>SFX\sms-alert-1-daniel_simon_9E69E797.wem</Path>
+				<File Id="201071765" Language="SFX">
+					<ShortName>sms-alert-2-daniel_simon.wav</ShortName>
+					<Path>SFX\sms-alert-2-daniel_simon_9E69E797.wem</Path>
 				</File>
-				<File Id="556612449" Language="SFX">
+				<File Id="242906530" Language="SFX">
 					<ShortName>sms-alert-5-daniel_simon.wav</ShortName>
 					<Path>SFX\sms-alert-5-daniel_simon_9E69E797.wem</Path>
 				</File>
-				<File Id="822967529" Language="SFX">
+				<File Id="324050968" Language="SFX">
 					<ShortName>sms-alert-3-daniel_simon.wav</ShortName>
 					<Path>SFX\sms-alert-3-daniel_simon_9E69E797.wem</Path>
 				</File>
-				<File Id="936051402" Language="SFX">
-					<ShortName>sms-alert-2-daniel_simon.wav</ShortName>
-					<Path>SFX\sms-alert-2-daniel_simon_9E69E797.wem</Path>
+				<File Id="959689374" Language="SFX">
+					<ShortName>sms-alert-1-daniel_simon.wav</ShortName>
+					<Path>SFX\sms-alert-1-daniel_simon_9E69E797.wem</Path>
 				</File>
 			</IncludedMemoryFiles>
 		</SoundBank>
