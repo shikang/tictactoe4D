@@ -111,13 +111,13 @@ public class GridScript : MonoBehaviour
 		case 1:	// P1 Icon
 			GetComponent<SpriteRenderer>().sprite = GetTurnHandler().GetSpriteP1();
 			GetComponent<SpriteRenderer>().color = 	GetTurnHandler().ColorP1;
-			GetComponent<Animator>().SetBool("isIconPlaced", true);
+			GetComponent<Animator>().SetTrigger("isIconPlaced");
 			break;
 
 		case 2:	// P2 Icon
 			GetComponent<SpriteRenderer>().sprite = GetTurnHandler().GetSpriteP2();
 			GetComponent<SpriteRenderer>().color = 	GetTurnHandler().ColorP2;
-			GetComponent<Animator>().SetBool("isIconPlaced", true);
+			GetComponent<Animator>().SetTrigger("isIconPlaced");
 			break;
 
 		case 3:	// Highlighting (Yellow)
@@ -127,6 +127,7 @@ public class GridScript : MonoBehaviour
 
 		case 4:	// Invalid (Red)
 			GetComponent<SpriteRenderer>().sprite =	GetTurnHandler().GetSpriteInvalid();
+			GetComponent<Animator>().SetTrigger("isHighlighted");
 			break;
 
 		default:
