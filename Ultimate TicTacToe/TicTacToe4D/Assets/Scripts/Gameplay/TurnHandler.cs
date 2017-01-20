@@ -83,8 +83,8 @@ public class TurnHandler : MonoBehaviour
 		spriteID_Invalid = Defines.ICONS.INVALID;
 
 		// Read from main menus
-		spriteID_P1 = Defines.ICONS.SPADE;
-		spriteID_P2 = Defines.ICONS.HEART;
+		//spriteID_P1 = Defines.ICONS.SPADE;
+		//spriteID_P2 = Defines.ICONS.HEART;
 	}
 
 	public Sprite GetSpriteEmpty()

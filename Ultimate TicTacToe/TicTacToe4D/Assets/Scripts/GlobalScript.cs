@@ -47,7 +47,11 @@ public class GlobalScript : MonoBehaviour
 	void Awake()
 	{
 		if (instance != null)
-			throw new System.Exception("You have more than 1 GlobalScript in the scene.");
+		{
+			//throw new System.Exception("You have more than 1 GlobalScript in the scene.");
+			Destroy(this);
+			return;
+		}
 
 		// Initialize the static class variables
 		instance = this;
@@ -191,25 +195,29 @@ public class GlobalScript : MonoBehaviour
 
 	void SetPlayerName()
 	{
-		string playerName = "Dick"; //GameObject.Find("Player Info").GetComponentInChildren<InputField>().text;
+		//string playerName = "Dick"; //GameObject.Find("Player Info").GetComponentInChildren<InputField>().text;
+		string playerName = AvatarHandler.Instance.currAvatarText.text;
 		if (playerName == "")
 		{
 			playerName = RandomAName();
-			GameObject.Find("Player Info").GetComponentInChildren<InputField>().text = playerName;
+			//GameObject.Find("Player Info").GetComponentInChildren<InputField>().text = playerName;
+			AvatarHandler.Instance.currAvatarText.text = playerName;
 		}
 
-		myName = playerName;
+		//myName = playerName;
 	}
 
 	public void SetMyPlayerName()
 	{
 		if (MatchMaker.IsPlayerOne())
 		{
-			UpdatePlayer1Name(myName);
+			//UpdatePlayer1Name(myName);
+			UpdatePlayer1Name(AvatarHandler.Instance.currAvatarText.text);
 		}
 		else
 		{
-			UpdatePlayer2Name(myName);
+			//UpdatePlayer2Name(myName);
+			UpdatePlayer2Name(AvatarHandler.Instance.currAvatarText.text);
 		}
 	}
 
@@ -222,17 +230,20 @@ public class GlobalScript : MonoBehaviour
 	{
 		if (MatchMaker.IsPlayerOne())
 		{
-			iconP1 = myIcon;
+			//iconP1 = myIcon;
+			iconP1 = GameData.current.avatarIcon;
 		}
 		else
 		{
-			iconP2 = myIcon;
+			//iconP2 = myIcon;
+			iconP2 = GameData.current.avatarIcon;
 		}
 	}
 
 	public int GetMyPlayerIcon()
 	{
-		return myIcon;
+		//return myIcon;
+		return GameData.current.avatarIcon;
 	}
 
 	static public void ShowRoomChoice(bool show)

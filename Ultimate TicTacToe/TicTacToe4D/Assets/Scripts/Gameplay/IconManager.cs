@@ -25,7 +25,11 @@ public class IconManager : MonoBehaviour
 	void Awake()
 	{
 		if (instance != null)
-			throw new System.Exception("You have more than 1 IconManager in the scene.");
+		{
+			//throw new System.Exception("You have more than 1 IconManager in the scene.");
+			Destroy(this);
+			return;
+		}
 
 		// Initialize the static class variables
 		instance = this;

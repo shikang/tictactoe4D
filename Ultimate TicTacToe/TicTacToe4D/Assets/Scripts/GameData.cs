@@ -10,6 +10,8 @@ public class GameData
 	public List<Defines.ICONS> icons;
 	public int win;
 	public int matchPlayed;
+	public string avatarName;
+	public int avatarIcon;
 
 	public GameData()
 	{
@@ -17,5 +19,7 @@ public class GameData
 		icons = new List<Defines.ICONS>();
 		win = 0;
 		matchPlayed = 0;
+		avatarName = "";
+		avatarIcon = 0;
 	}
 }

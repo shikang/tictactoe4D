@@ -5,6 +5,8 @@ using UnityEngine;
 
 public static class SaveLoad
 {
+	static bool loaded = false;
+
 	public static void Save()
 	{
 		BinaryFormatter bf = new BinaryFormatter();
@@ -15,8 +17,8 @@ public static class SaveLoad
 
 	public static void Load()
 	{
-		//Debug.Log("Loading: " + Application.persistentDataPath + "/savedGames.gd");
-		if (File.Exists(Application.persistentDataPath + "/savedGames.gd"))
+		Debug.Log("Loading: " + Application.persistentDataPath + "/savedGames.gd");
+		if (!loaded && File.Exists(Application.persistentDataPath + "/savedGames.gd"))
 		{
 			BinaryFormatter bf = new BinaryFormatter();
 			FileStream file = File.Open(Application.persistentDataPath + "/savedGames.gd", FileMode.Open);
@@ -25,6 +27,8 @@ public static class SaveLoad
 
 			Debug.Log("Save loaded");
 			Print();
+
+			loaded = true;
 		}
 	}
 
@@ -33,6 +37,8 @@ public static class SaveLoad
 		Debug.Log("Coins: " + GameData.current.coin);
 		Debug.Log("Match played: " + GameData.current.matchPlayed);
 		Debug.Log("Match win: " + GameData.current.win);
+		Debug.Log("Avatar Name: " + GameData.current.avatarName);
+		Debug.Log("Avatar Icon: " + GameData.current.avatarIcon);
 
 		foreach (Defines.ICONS i in GameData.current.icons)
 		{

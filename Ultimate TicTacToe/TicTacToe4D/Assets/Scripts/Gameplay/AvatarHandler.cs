@@ -210,27 +210,70 @@ public class AvatarHandler : MonoBehaviour
 	{
 		if(GetIconManager().GetIsUnlocked(i))
 		{
-			if(GlobalScript.Instance.avatarState == 1)
+			if (GlobalScript.Instance.avatarState == 1)
+			{
 				avatarLocalPlay1.GetComponent<Image>().sprite = avatarArray[i].GetComponent<Image>().sprite;
-
-			else if(GlobalScript.Instance.avatarState == 2)
+			}
+			else if (GlobalScript.Instance.avatarState == 2)
+			{
 				avatarLocalPlay2.GetComponent<Image>().sprite = avatarArray[i].GetComponent<Image>().sprite;
-
-			else if(GlobalScript.Instance.avatarState == 3)
+			}
+			else if (GlobalScript.Instance.avatarState == 3)
+			{
 				currAvatar.GetComponent<Image>().sprite = avatarArray[i].GetComponent<Image>().sprite;
+
+				SaveLoad.Load();
+				GameData.current.avatarIcon = i;
+				SaveLoad.Save();
+			}
 		}
 	}
 
 	public void SetAvatarName()
 	{
-		if(GlobalScript.Instance.avatarState == 1)
-			localAvatarName_P1 = avatarLocalPlay1Text.text;
+		if (GlobalScript.Instance.avatarState == 1)
+		{
+			SetAvatarName1( avatarLocalPlay1Text.text );
+		}
+		else if (GlobalScript.Instance.avatarState == 2)
+		{
+			SetAvatarName2( avatarLocalPlay2Text.text );
+		}
+		else if (GlobalScript.Instance.avatarState == 3)
+		{
+			SetAvatarName3( currAvatarText.text );
+		}
+	}
 
-		else if(GlobalScript.Instance.avatarState == 2)
-			localAvatarName_P2 = avatarLocalPlay2Text.text;
+	public void SetAvatarName1(string name)
+	{
+		localAvatarName_P1 = name;
+	}
 
-		else if(GlobalScript.Instance.avatarState == 3)
-			currAvatarName = currAvatarText.text;
+	public void SetAvatarName2(string name)
+	{
+		localAvatarName_P2 = name;
+	}
+
+	public void SetAvatarName3(string name)
+	{
+		currAvatarName = name;
+
+		SaveLoad.Load();
+		GameData.current.avatarName = currAvatarName;
+		SaveLoad.Save();
+	}
+
+	public void SetMyAvatarName(string name)
+	{
+		currAvatarName = (name == null) ? "" : name;
+		//currAvatarText.text = currAvatarName;
+		currAvatarText.transform.parent.GetComponent<InputField>().text = currAvatarName;
+	}
+
+	public void SetMyAvatarIcon(int icon)
+	{
+		currAvatar.GetComponent<Image>().sprite = avatarArray[icon].GetComponent<Image>().sprite;
 	}
 
 	public IconManager GetIconManager()
