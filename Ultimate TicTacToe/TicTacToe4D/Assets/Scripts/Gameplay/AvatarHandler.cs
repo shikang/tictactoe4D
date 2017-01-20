@@ -34,8 +34,10 @@ public class AvatarHandler : MonoBehaviour
 	int avatarColumns;
 
 	string currAvatarName;
-	string localAvatarName_P1;
-	string localAvatarName_P2;
+	public string localAvatarName_P1;
+	public string localAvatarName_P2;
+	public int localAvatar_P1;
+	public int localAvatar_P2;
 
 	Vector2 startPos;
 	Vector2 avatarGap;
@@ -213,10 +215,12 @@ public class AvatarHandler : MonoBehaviour
 			if (GlobalScript.Instance.avatarState == 1)
 			{
 				avatarLocalPlay1.GetComponent<Image>().sprite = avatarArray[i].GetComponent<Image>().sprite;
+				localAvatar_P1 = i;
 			}
 			else if (GlobalScript.Instance.avatarState == 2)
 			{
 				avatarLocalPlay2.GetComponent<Image>().sprite = avatarArray[i].GetComponent<Image>().sprite;
+				localAvatar_P2 = i;
 			}
 			else if (GlobalScript.Instance.avatarState == 3)
 			{
@@ -242,6 +246,18 @@ public class AvatarHandler : MonoBehaviour
 		else if (GlobalScript.Instance.avatarState == 3)
 		{
 			SetAvatarName3( currAvatarText.text );
+		}
+	}
+
+	public void SetLocalAvatarName(int player)
+	{
+		if (player == 1)
+		{
+			SetAvatarName1(avatarLocalPlay1Text.text);
+		}
+		else if (player == 2)
+		{
+			SetAvatarName2(avatarLocalPlay2Text.text);
 		}
 	}
 

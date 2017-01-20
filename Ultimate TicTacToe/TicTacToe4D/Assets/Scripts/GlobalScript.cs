@@ -193,7 +193,7 @@ public class GlobalScript : MonoBehaviour
 		return randomName[index];
 	}
 
-	void SetPlayerName()
+	public void SetPlayerName()
 	{
 		//string playerName = "Dick"; //GameObject.Find("Player Info").GetComponentInChildren<InputField>().text;
 		string playerName = AvatarHandler.Instance.currAvatarText.text;
@@ -238,6 +238,34 @@ public class GlobalScript : MonoBehaviour
 			//iconP2 = myIcon;
 			iconP2 = GameData.current.avatarIcon;
 		}
+	}
+
+	public void SetSinglePlayerName()
+	{
+		//iconP1 = myIcon;
+		UpdatePlayer1Name(AvatarHandler.Instance.currAvatarText.text);
+		UpdatePlayer2Name("Trainer Garret");
+	}
+
+	public void SetSinglePlayerIcon()
+	{
+		//iconP1 = myIcon;
+		iconP1 = GameData.current.avatarIcon;
+		iconP2 = (int)Defines.ICONS.CROSS;
+	}
+
+	public void SetLocalMultiPlayerName()
+	{
+		//iconP1 = myIcon;
+		UpdatePlayer1Name(AvatarHandler.Instance.localAvatarName_P1);
+		UpdatePlayer2Name(AvatarHandler.Instance.localAvatarName_P2);
+	}
+
+	public void SetLocalMultiPlayerIcon()
+	{
+		//iconP1 = myIcon;
+		iconP1 = AvatarHandler.Instance.localAvatar_P1;
+		iconP2 = AvatarHandler.Instance.localAvatar_P2;
 	}
 
 	public int GetMyPlayerIcon()

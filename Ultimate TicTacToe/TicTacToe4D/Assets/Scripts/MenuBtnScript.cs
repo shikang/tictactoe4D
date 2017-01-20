@@ -53,6 +53,8 @@ public class MenuBtnScript : MonoBehaviour
 		case BUTTONTYPES.MAIN_SINGLEPLAYER:
 			GlobalScript.Instance.gameMode = 0;
 			SceneManager.LoadScene("GameScene");
+			GlobalScript.Instance.SetSinglePlayerName();
+			GlobalScript.Instance.SetSinglePlayerIcon();
 			break;
 
 		case BUTTONTYPES.MAIN_LOCALPLAY:
@@ -106,6 +108,8 @@ public class MenuBtnScript : MonoBehaviour
 
 		case BUTTONTYPES.LOCALPLAY_START:
 			SceneManager.LoadScene("GameScene");
+			GlobalScript.Instance.SetLocalMultiPlayerName();
+			GlobalScript.Instance.SetLocalMultiPlayerIcon();
 			break;
 
 		case BUTTONTYPES.NETWORK_PUBLICGAME:
