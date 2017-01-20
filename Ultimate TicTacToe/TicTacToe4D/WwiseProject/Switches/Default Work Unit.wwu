@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{7B060C8D-6504-4967-9FD8-319F946541BB}" SchemaVersion="72">
+	<Switches>
+		<WorkUnit Name="Default Work Unit" ID="{7B060C8D-6504-4967-9FD8-319F946541BB}" PersistMode="Standalone">
+			<ChildrenList>
+				<SwitchGroup Name="IconType" ID="{BCE44E0D-0694-40D5-965A-D60CC2C36BB2}">
+					<ChildrenList>
+						<Switch Name="Suits" ID="{DC73AEDC-8F03-4BC5-93A1-239CD46D1694}"/>
+						<Switch Name="Treble" ID="{85315D92-FE17-4EBB-9913-6ACC6E253A68}"/>
+					</ChildrenList>
+				</SwitchGroup>
+			</ChildrenList>
+		</WorkUnit>
+	</Switches>
+</WwiseDocument>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{6A7C2D62-B612-4DB3-80F6-A4B44802CD0F}" SchemaVersion="72">
+	<Events>
+		<WorkUnit Name="Default Work Unit" ID="{6A7C2D62-B612-4DB3-80F6-A4B44802CD0F}" PersistMode="Standalone">
+			<ChildrenList>
+				<Event Name="Play_IconClicked" ID="{AA688C07-1860-470F-BD1B-77F2681A9229}">
+					<ChildrenList>
+						<Action Name="Play" ID="{D1CD18E4-E144-4E7D-83C6-68D199F24FAD}" ShortID="366849468" Type="Play" Scope="One" Global="false">
+							<ElementList>
+								<Element ID="{49180AB8-5709-4FCF-B374-A57E048BAD8B}" Global="false">
+									<ObjectRef Name="Icon_Click_Type" ID="{6C22D17C-D1BC-4114-BD38-36D205B71591}" WorkUnitID="{CD1003B8-494B-4D9B-879D-2143A6A6A94A}"/>
+								</Element>
+							</ElementList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_BigGridWon" ID="{11F83D2A-12F7-4AF0-94C8-7BA6D62D93D0}">
+					<ChildrenList>
+						<Action Name="Play" ID="{CAF988E2-4F9A-486A-8679-8B0C6ACB9895}" ShortID="465272660" Type="Play" Scope="One" Global="false">
+							<ElementList>
+								<Element ID="{05793B7B-6DCD-4C0C-9DB1-14D0E6E27FB5}" Global="false">
+									<ObjectRef Name="BigGrid_Win_Type" ID="{5C3A2529-7410-4DB4-ADF8-A7B591A4DFA4}" WorkUnitID="{CD1003B8-494B-4D9B-879D-2143A6A6A94A}"/>
+								</Element>
+							</ElementList>
+						</Action>
+					</ChildrenList>
+				</Event>
+			</ChildrenList>
+		</WorkUnit>
+	</Events>
+</WwiseDocument>

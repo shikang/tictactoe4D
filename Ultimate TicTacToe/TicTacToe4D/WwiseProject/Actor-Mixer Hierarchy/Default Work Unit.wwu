@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{CD1003B8-494B-4D9B-879D-2143A6A6A94A}" SchemaVersion="72">
+	<AudioObjects>
+		<WorkUnit Name="Default Work Unit" ID="{CD1003B8-494B-4D9B-879D-2143A6A6A94A}" PersistMode="Standalone">
+			<ChildrenList>
+				<Folder Name="MainMenu" ID="{74056AD6-2822-42E6-B1A5-29E12B8056D7}" ShortID="71806578"/>
+				<Folder Name="Gameplay" ID="{41BF6D7F-FE51-44C0-A1D8-C71799D5D5CF}" ShortID="541765304">
+					<ChildrenList>
+						<SwitchContainer Name="Icon_Click_Type" ID="{6C22D17C-D1BC-4114-BD38-36D205B71591}" ShortID="714882033">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{BF1BA719-4690-45DF-A70F-DCBF6370D547}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{1C01DE5B-F13F-46EC-B971-A2A4BE127915}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<RandomSequenceContainer Name="Suits" ID="{C8BB080B-E3DF-4977-A277-BDA4003ACD4B}" ShortID="772462468">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{BF1BA719-4690-45DF-A70F-DCBF6370D547}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{1C01DE5B-F13F-46EC-B971-A2A4BE127915}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<Sound Name="sms-alert-1-daniel_simon" ID="{982495C4-2F38-4059-91B2-91E4287285B2}" ShortID="860306585" Type="SoundFX">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{BF1BA719-4690-45DF-A70F-DCBF6370D547}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{1C01DE5B-F13F-46EC-B971-A2A4BE127915}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="sms-alert-1-daniel_simon" ID="{071868A3-E282-4D0D-89D3-C9EF9936EE69}" ShortID="959689374">
+													<Language>SFX</Language>
+													<AudioFile>sms-alert-1-daniel_simon.wav</AudioFile>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="sms-alert-1-daniel_simon" ID="{071868A3-E282-4D0D-89D3-C9EF9936EE69}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+									</ChildrenList>
+								</RandomSequenceContainer>
+								<RandomSequenceContainer Name="Treble" ID="{3F76D364-091E-436F-843C-76F4455D59F6}" ShortID="519914897">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{BF1BA719-4690-45DF-A70F-DCBF6370D547}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{1C01DE5B-F13F-46EC-B971-A2A4BE127915}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<Sound Name="sms-alert-3-daniel_simon" ID="{FC6BDDAF-2935-448D-8E57-5B5BB8C9B058}" ShortID="460713834" Type="SoundFX">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{BF1BA719-4690-45DF-A70F-DCBF6370D547}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{1C01DE5B-F13F-46EC-B971-A2A4BE127915}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="sms-alert-3-daniel_simon" ID="{F12B5326-BAD1-40A2-B816-CBAE4EB9F5FA}" ShortID="324050968">
+													<Language>SFX</Language>
+													<AudioFile>sms-alert-3-daniel_simon.wav</AudioFile>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="sms-alert-3-daniel_simon" ID="{F12B5326-BAD1-40A2-B816-CBAE4EB9F5FA}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="sms-alert-4-daniel_simon" ID="{FFE6DB30-8073-452C-96F5-FD27E645836C}" ShortID="211811842" Type="SoundFX">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{BF1BA719-4690-45DF-A70F-DCBF6370D547}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{1C01DE5B-F13F-46EC-B971-A2A4BE127915}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="sms-alert-4-daniel_simon" ID="{E90BB756-0862-46F8-AC72-0D53FB6A6150}" ShortID="73170105">
+													<Language>SFX</Language>
+													<AudioFile>sms-alert-4-daniel_simon.wav</AudioFile>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="sms-alert-4-daniel_simon" ID="{E90BB756-0862-46F8-AC72-0D53FB6A6150}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+									</ChildrenList>
+								</RandomSequenceContainer>
+							</ChildrenList>
+							<GroupingInfo>
+								<GroupRef Name="IconType" ID="{BCE44E0D-0694-40D5-965A-D60CC2C36BB2}"/>
+								<DefaultSwitchRef Name="Treble" ID="{85315D92-FE17-4EBB-9913-6ACC6E253A68}"/>
+								<GroupingBehaviorList>
+									<GroupingBehavior>
+										<ItemRef Name="Suits" ID="{C8BB080B-E3DF-4977-A277-BDA4003ACD4B}"/>
+									</GroupingBehavior>
+									<GroupingBehavior>
+										<ItemRef Name="Treble" ID="{3F76D364-091E-436F-843C-76F4455D59F6}"/>
+									</GroupingBehavior>
+								</GroupingBehaviorList>
+								<GroupingList>
+									<Grouping>
+										<SwitchRef Name="Treble" ID="{85315D92-FE17-4EBB-9913-6ACC6E253A68}"/>
+										<ItemList>
+											<ItemRef Name="Treble" ID="{3F76D364-091E-436F-843C-76F4455D59F6}"/>
+										</ItemList>
+									</Grouping>
+									<Grouping>
+										<SwitchRef Name="Suits" ID="{DC73AEDC-8F03-4BC5-93A1-239CD46D1694}"/>
+										<ItemList>
+											<ItemRef Name="Suits" ID="{C8BB080B-E3DF-4977-A277-BDA4003ACD4B}"/>
+										</ItemList>
+									</Grouping>
+								</GroupingList>
+							</GroupingInfo>
+						</SwitchContainer>
+						<SwitchContainer Name="BigGrid_Win_Type" ID="{5C3A2529-7410-4DB4-ADF8-A7B591A4DFA4}" ShortID="267877281">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{BF1BA719-4690-45DF-A70F-DCBF6370D547}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{1C01DE5B-F13F-46EC-B971-A2A4BE127915}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<RandomSequenceContainer Name="Suits" ID="{D8AF9C40-A5D1-44FD-A439-EE9264CDCF2C}" ShortID="312371728">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{BF1BA719-4690-45DF-A70F-DCBF6370D547}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{1C01DE5B-F13F-46EC-B971-A2A4BE127915}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<Sound Name="sms-alert-5-daniel_simon" ID="{FA8A3B70-867E-4287-B433-F914AF5173E2}" ShortID="6935375" Type="SoundFX">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{BF1BA719-4690-45DF-A70F-DCBF6370D547}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{1C01DE5B-F13F-46EC-B971-A2A4BE127915}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="sms-alert-5-daniel_simon" ID="{5196EF41-F117-4B29-814A-5E32A059EF1D}" ShortID="242906530">
+													<Language>SFX</Language>
+													<AudioFile>sms-alert-5-daniel_simon.wav</AudioFile>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="sms-alert-5-daniel_simon" ID="{5196EF41-F117-4B29-814A-5E32A059EF1D}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+									</ChildrenList>
+								</RandomSequenceContainer>
+								<RandomSequenceContainer Name="Treble" ID="{AD70B3F4-4A23-4747-9D15-33EE1E570446}" ShortID="631139505">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{BF1BA719-4690-45DF-A70F-DCBF6370D547}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{1C01DE5B-F13F-46EC-B971-A2A4BE127915}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<Sound Name="sms-alert-2-daniel_simon" ID="{8BFDE829-266A-4244-BC34-0FB6D4911674}" ShortID="1031431503" Type="SoundFX">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{BF1BA719-4690-45DF-A70F-DCBF6370D547}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{1C01DE5B-F13F-46EC-B971-A2A4BE127915}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="sms-alert-2-daniel_simon" ID="{DDDE871C-9865-46B6-BE24-1F847831F90C}" ShortID="201071765">
+													<Language>SFX</Language>
+													<AudioFile>sms-alert-2-daniel_simon.wav</AudioFile>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="sms-alert-2-daniel_simon" ID="{DDDE871C-9865-46B6-BE24-1F847831F90C}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+									</ChildrenList>
+								</RandomSequenceContainer>
+							</ChildrenList>
+							<GroupingInfo>
+								<GroupRef Name="IconType" ID="{BCE44E0D-0694-40D5-965A-D60CC2C36BB2}"/>
+								<DefaultSwitchRef Name="Suits" ID="{DC73AEDC-8F03-4BC5-93A1-239CD46D1694}"/>
+								<GroupingBehaviorList>
+									<GroupingBehavior>
+										<ItemRef Name="Suits" ID="{D8AF9C40-A5D1-44FD-A439-EE9264CDCF2C}"/>
+									</GroupingBehavior>
+									<GroupingBehavior>
+										<ItemRef Name="Treble" ID="{AD70B3F4-4A23-4747-9D15-33EE1E570446}"/>
+									</GroupingBehavior>
+								</GroupingBehaviorList>
+								<GroupingList>
+									<Grouping>
+										<SwitchRef Name="Treble" ID="{85315D92-FE17-4EBB-9913-6ACC6E253A68}"/>
+										<ItemList>
+											<ItemRef Name="Treble" ID="{AD70B3F4-4A23-4747-9D15-33EE1E570446}"/>
+										</ItemList>
+									</Grouping>
+									<Grouping>
+										<SwitchRef Name="Suits" ID="{DC73AEDC-8F03-4BC5-93A1-239CD46D1694}"/>
+										<ItemList>
+											<ItemRef Name="Suits" ID="{D8AF9C40-A5D1-44FD-A439-EE9264CDCF2C}"/>
+										</ItemList>
+									</Grouping>
+								</GroupingList>
+							</GroupingInfo>
+						</SwitchContainer>
+					</ChildrenList>
+				</Folder>
+			</ChildrenList>
+		</WorkUnit>
+	</AudioObjects>
+</WwiseDocument>
