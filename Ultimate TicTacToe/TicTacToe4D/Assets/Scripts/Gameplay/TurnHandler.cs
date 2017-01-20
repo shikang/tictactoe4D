@@ -28,6 +28,11 @@ public class TurnHandler : MonoBehaviour
 			spriteID_P1 = (Defines.ICONS)GlobalScript.Instance.iconP1;
 			spriteID_P2 = (Defines.ICONS)GlobalScript.Instance.iconP2;
 		}
+		else
+		{
+			spriteID_P1 = (Defines.ICONS)GlobalScript.Instance.iconP1;
+			spriteID_P2 = (Defines.ICONS)GlobalScript.Instance.iconP2;
+		}
 
 		ResetVars();
 	}

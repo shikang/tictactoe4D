@@ -18,7 +18,7 @@ public class AvatarHandler : MonoBehaviour
 	public Text avatarLocalPlay1Text;
 	public Text avatarLocalPlay2Text;
 
-	GameObject [] avatarArray;
+	public GameObject [] avatarArray;
 	GameObject [] allFrames;
 
 	// Buy Page

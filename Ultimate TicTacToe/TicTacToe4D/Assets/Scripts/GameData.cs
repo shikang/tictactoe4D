@@ -15,11 +15,11 @@ public class GameData
 
 	public GameData()
 	{
-		coin = 0;
+		coin = 1000;
 		icons = new List<Defines.ICONS>();
 		win = 0;
 		matchPlayed = 0;
 		avatarName = "";
-		avatarIcon = 0;
+		avatarIcon = 6;
 	}
 }

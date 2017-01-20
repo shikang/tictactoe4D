@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SoundBanksInfo Platform="Windows" BasePlatform="Windows" SchemaVersion="11" SoundbankVersion="118">
+<SoundBanksInfo Platform="Android" BasePlatform="Android" SchemaVersion="11" SoundbankVersion="118">
 	<RootPaths>
 		<ProjectRoot>C:\Users\SolidRocker\Desktop\WhyWool\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\</ProjectRoot>
-		<SourceFilesRoot>C:\Users\SolidRocker\Desktop\WhyWool\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\.cache\Windows\</SourceFilesRoot>
-		<SoundBanksRoot>C:\Users\SolidRocker\Desktop\WhyWool\trunk\Ultimate TicTacToe\TicTacToe4D\Assets\StreamingAssets\Audio\GeneratedSoundBanks\Windows\</SoundBanksRoot>
+		<SourceFilesRoot>C:\Users\SolidRocker\Desktop\WhyWool\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\.cache\Android\</SourceFilesRoot>
+		<SoundBanksRoot>C:\Users\SolidRocker\Desktop\WhyWool\trunk\Ultimate TicTacToe\TicTacToe4D\Assets\StreamingAssets\Audio\GeneratedSoundBanks\Android\</SoundBanksRoot>
 		<ExternalSourcesInputFile></ExternalSourcesInputFile>
-		<ExternalSourcesOutputRoot>C:\Users\SolidRocker\Desktop\WhyWool\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\GeneratedSoundBanks\Windows\</ExternalSourcesOutputRoot>
+		<ExternalSourcesOutputRoot>C:\Users\SolidRocker\Desktop\WhyWool\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\GeneratedSoundBanks\Android\</ExternalSourcesOutputRoot>
 	</RootPaths>
 	<DialogueEvents/>
 	<StreamedFiles/>
