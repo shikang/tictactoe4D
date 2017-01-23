@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MainMenuLoader : MonoBehaviour {
+public class MainMenuLoader : MonoBehaviour
+{
 
 	// Use this for initialization
 	void Start ()
@@ -12,7 +13,8 @@ public class MainMenuLoader : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+	{
 	
 	}
 }

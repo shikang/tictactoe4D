@@ -96,33 +96,41 @@ public class GachaScript : MonoBehaviour
 	{
 		if(GameData.current.coin >= Defines.GACHACOST)
 		{
-			// Deduct Money
-			GameData.current.coin -= Defines.GACHACOST;
-			moneyText.GetComponent<Text>().text = GameData.current.coin.ToString();
-
 			// Set Grey BG
 			SetGreyBG(true);
 
 			// Generate Random List
-			if(!AvatarHandler.Instance.UnlockedAll())
-			{
-				for(int i = 0; i < noofChanges; ++i)
-				{
-					do
-					{
-						randomList[i] = Random.Range(Defines.Avatar_FirstIcon, AvatarHandler.Instance.GetNoofAvatars());
-					}
-					while(IconManager.Instance.GetIsBuy(randomList[i]));
-				}
-			}
-			else
+			if(AvatarHandler.Instance.UnlockedAll())
 			{
 				Debug.Log("Unlocked All!");
+			}
+
+			for (int i = 0; i < noofChanges; ++i)
+			{
+				do
+				{
+					randomList[i] = Random.Range(Defines.Avatar_FirstIcon, AvatarHandler.Instance.GetNoofAvatars());
+				}
+				while (IconManager.Instance.GetIsBuy(randomList[i]));
 			}
 
 			currTime = 0.0f;
 			currCounter = -1;
 			isGachaing = true;
+
+			// Deduct Money
+			GameData.current.coin -= Defines.GACHACOST;
+			moneyText.GetComponent<Text>().text = GameData.current.coin.ToString();
+
+			// Unlock avatar
+			int unlockIcon = randomList[noofChanges - 1];
+			Debug.Log("Bought avatar: " + unlockIcon);
+			AvatarHandler.Instance.UnlockAvatar(unlockIcon);
+			if(!GameData.current.icons.Contains((Defines.ICONS)unlockIcon))
+			{
+				GameData.current.icons.Add((Defines.ICONS)unlockIcon);
+			}
+			SaveLoad.Save();
 		}
 		else
 		{
@@ -139,7 +147,6 @@ public class GachaScript : MonoBehaviour
 			if(currCounter == noofChanges-1)
 			{
 				isGachaing = false;
-				AvatarHandler.Instance.UnlockAvatar(randomList[currCounter]);
 
 				// Starts FX
 				isAnimating = true;

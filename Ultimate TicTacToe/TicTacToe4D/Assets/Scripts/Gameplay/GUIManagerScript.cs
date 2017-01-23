@@ -174,6 +174,11 @@ public class GUIManagerScript : MonoBehaviour
 			GUICenterText.GetComponent<Text>().color = temp;
 
 			GUIEmoteScreen.SetActive(false);
+
+			// Add money
+			Debug.Log("Recieve coin: " + Defines.Instance.playerScore);
+			GameData.current.coin += Defines.Instance.playerScore;
+			SaveLoad.Save();
 		}
 		else if (GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn == Defines.TURN.WAITING)
 		{
