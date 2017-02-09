@@ -8,6 +8,7 @@ public class FloatingText : MonoBehaviour
 	public float fadeTime = 1.25f;
 	public float floatSpeed;
 	Text tmp;
+
 	// Use this for initialization
 	void Start () 
 	{

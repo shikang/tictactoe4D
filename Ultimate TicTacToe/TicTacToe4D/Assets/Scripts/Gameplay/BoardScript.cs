@@ -252,7 +252,7 @@ public class BoardScript : MonoBehaviour
 		Vector3 tempScale = boardSprite.transform.localScale;
 
 		// Moving
-		if(Input.touchCount == 1)
+		/*if(Input.touchCount == 1)
 		{
 			if(Input.GetTouch(0).phase == TouchPhase.Began)
 			{
@@ -278,10 +278,10 @@ public class BoardScript : MonoBehaviour
 				if(finalPos.x < 0.0f)
 					tempPos.x -= 0.4f;
 			}
-		}
+		}*/
 
 		// Scaling
-		if(Input.touchCount == 2)
+		/*if(Input.touchCount == 2)
 		{
 			if(Input.GetTouch(0).phase == TouchPhase.Began)
 			{
@@ -338,7 +338,7 @@ public class BoardScript : MonoBehaviour
 			tempPos.y = scaleLimitY;
 
 		boardSprite.transform.localPosition = tempPos;
-		boardSprite.transform.localScale = tempScale;
+		boardSprite.transform.localScale = tempScale; */
 	}
 
 	bool IsBigGridCompleted()

@@ -48,6 +48,8 @@ public class IconManager : MonoBehaviour
 
 		SetIconData(Defines.ICONS.EMPTY,		"Icons/Empty",		false, false, false, 0);
 		SetIconData(Defines.ICONS.HIGHLIGHT,	"Icons/Highlight",	false, false, false, 0);
+		SetIconData(Defines.ICONS.BLUEFRAME,	"Icons/BlueFrame",	false, false, false, 0);
+		SetIconData(Defines.ICONS.REDFRAME,		"Icons/RedFrame",	false, false, false, 0);
 		SetIconData(Defines.ICONS.INVALID,		"Icons/Invalid",	false, false, false, 0);
 		SetIconData(Defines.ICONS.LOCKED,		"Icons/Locked",		false, false, false, 0);
 

@@ -9,6 +9,7 @@ public class GridScript : MonoBehaviour
 
 	public GameObject gridEffect;
 	public GameObject parentGrid;
+	public GameObject mainIcon;
 
 	void Start ()
 	{
@@ -106,28 +107,33 @@ public class GridScript : MonoBehaviour
 		{
 		case 0:	// Nothing (Black)
 			GetComponent<SpriteRenderer>().sprite = GetTurnHandler().GetSpriteEmpty();
+			mainIcon.SetActive(false);
 			break;
 
 		case 1:	// P1 Icon
-			GetComponent<SpriteRenderer>().sprite = GetTurnHandler().GetSpriteP1();
-			GetComponent<SpriteRenderer>().color = 	GetTurnHandler().ColorP1;
+			GetComponent<SpriteRenderer>().sprite = GetTurnHandler().GetFrameP1();
+			mainIcon.GetComponent<SpriteRenderer>().sprite = GetTurnHandler().GetSpriteP1();
+			mainIcon.SetActive(true);
 			GetComponent<Animator>().SetTrigger("isIconPlaced");
 			break;
 
 		case 2:	// P2 Icon
-			GetComponent<SpriteRenderer>().sprite = GetTurnHandler().GetSpriteP2();
-			GetComponent<SpriteRenderer>().color = 	GetTurnHandler().ColorP2;
+			GetComponent<SpriteRenderer>().sprite = GetTurnHandler().GetFrameP2();
+			mainIcon.GetComponent<SpriteRenderer>().sprite = GetTurnHandler().GetSpriteP2();
+			mainIcon.SetActive(true);
 			GetComponent<Animator>().SetTrigger("isIconPlaced");
 			break;
 
 		case 3:	// Highlighting (Yellow)
 			GetComponent<SpriteRenderer>().sprite =	GetTurnHandler().GetSpriteHighlight();
 			GetComponent<Animator>().SetTrigger("isHighlighted");
+			mainIcon.SetActive(false);
 			break;
 
 		case 4:	// Invalid (Red)
 			GetComponent<SpriteRenderer>().sprite =	GetTurnHandler().GetSpriteInvalid();
 			GetComponent<Animator>().SetTrigger("isHighlighted");
+			mainIcon.SetActive(false);
 			break;
 
 		default:
@@ -147,7 +153,7 @@ public class GridScript : MonoBehaviour
 		GetBoardScript().UpdateActiveGridBG(gridID);
 		GetGUIManagerScript().UpdateClick();
 		GameObject.FindGameObjectWithTag("AIMiniMax").GetComponent<AIMiniMax>().UpdateAI();
-		AudioManager.Instance.PlaySoundEvent(SOUNDID.ICONPLACED);
+		//AudioManager.Instance.PlaySoundEvent(SOUNDID.ICONPLACED);
 	}
 
 	public void ResetHighlight()

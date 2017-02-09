@@ -34,8 +34,11 @@ public class GlobalScript : MonoBehaviour
 	public const int minIcon = (int)Defines.ICONS.CIRCLE;
 	public const int maxIcon = (int)Defines.ICONS.TREBLE;
 	public int myIcon = (int)Defines.ICONS.SPADE;
-	public int iconP1 = (int)Defines.ICONS.SPADE;
-	public int iconP2 = (int)Defines.ICONS.SPADE;
+	public int iconP1 = (int)Defines.ICONS.BLUEFRAME;
+	public int iconP2 = (int)Defines.ICONS.REDFRAME;
+
+	public int iconFrameP1 = (int)Defines.ICONS.BLUEFRAME;
+	public int iconFrameP2 = (int)Defines.ICONS.REDFRAME;
 
 	// Singleton pattern
 	static GlobalScript instance;

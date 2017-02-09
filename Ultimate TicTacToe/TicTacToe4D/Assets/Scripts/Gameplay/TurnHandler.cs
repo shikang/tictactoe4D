@@ -13,6 +13,9 @@ public class TurnHandler : MonoBehaviour
 	public Color ColorP1;
 	public Color ColorP2;
 
+	public Defines.ICONS spriteID_FrameP1;
+	public Defines.ICONS spriteID_FrameP2;
+
 	public int pausedState;		// 0 = Gameplay, 1 = RestartClicked, 2 = MenuClicked
 	public float countdownToStart;
 	public Defines.TURN turn;
@@ -20,19 +23,14 @@ public class TurnHandler : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
+		spriteID_P1 = (Defines.ICONS)GlobalScript.Instance.iconP1;
+		spriteID_P2 = (Defines.ICONS)GlobalScript.Instance.iconP2;
+
 		ColorP1 = Defines.ICON_COLOR_P1;
 		ColorP2 = Defines.ICON_COLOR_P2;
 
-		if ( NetworkManager.IsConnected() )
-		{
-			spriteID_P1 = (Defines.ICONS)GlobalScript.Instance.iconP1;
-			spriteID_P2 = (Defines.ICONS)GlobalScript.Instance.iconP2;
-		}
-		else
-		{
-			spriteID_P1 = (Defines.ICONS)GlobalScript.Instance.iconP1;
-			spriteID_P2 = (Defines.ICONS)GlobalScript.Instance.iconP2;
-		}
+		spriteID_FrameP1 = Defines.ICONS.BLUEFRAME;
+		spriteID_FrameP2 = Defines.ICONS.REDFRAME;
 
 		ResetVars();
 	}
@@ -105,6 +103,16 @@ public class TurnHandler : MonoBehaviour
 	public Sprite GetSpriteP2()
 	{
 		return IconManager.Instance.GetIcon(spriteID_P2);
+	}
+
+	public Sprite GetFrameP1()
+	{
+		return IconManager.Instance.GetIcon(spriteID_FrameP1);
+	}
+
+	public Sprite GetFrameP2()
+	{
+		return IconManager.Instance.GetIcon(spriteID_FrameP2);
 	}
 
 	public Sprite GetSpriteHighlight()

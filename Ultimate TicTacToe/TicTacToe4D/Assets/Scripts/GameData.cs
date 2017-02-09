@@ -19,7 +19,7 @@ public class GameData
 		icons = new List<Defines.ICONS>();
 		win = 0;
 		matchPlayed = 0;
-		avatarName = "";
-		avatarIcon = 6;
+		avatarName = "abc";
+		avatarIcon = 8;
 	}
 }
