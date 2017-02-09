@@ -122,8 +122,8 @@ public class AvatarHandler : MonoBehaviour
 		currAvatar.GetComponent<Image>().color = Defines.ICON_COLOR_P1;
 
 		// The Local Multiplay Icon default colors.
-		avatarLocalPlay1.GetComponent<Image>().color = Defines.ICON_COLOR_P1;
-		avatarLocalPlay2.GetComponent<Image>().color = Defines.ICON_COLOR_P2;
+		//avatarLocalPlay1.GetComponent<Image>().color = Defines.ICON_COLOR_P1;
+		//avatarLocalPlay2.GetComponent<Image>().color = Defines.ICON_COLOR_P2;
 
 		UpdateUnlockedAvatarsStatus();
 	}
