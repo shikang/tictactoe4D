@@ -12,6 +12,9 @@ public class AvatarHandler : MonoBehaviour
 	public GameObject frameParent;
 	public GameObject scrollParent;
 
+	public Sprite Frame1;
+	public Sprite Frame2;
+
 	public GameObject avatarLocalPlay1;
 	public GameObject avatarLocalPlay2;
 
@@ -63,8 +66,8 @@ public class AvatarHandler : MonoBehaviour
 		noofAvatars = (int)Defines.ICONS.TOTAL;
 		avatarColumns = Defines.Avatar_NoofColumns;
 
-		startPos = new Vector3(-48.0f, 45.0f, 0.0f);
-		avatarGap = new Vector3(25.0f, 25.0f, 0.0f);
+		startPos = new Vector3(-55.0f, 48.0f, 0.0f);
+		avatarGap = new Vector3(27.0f, 27.0f, 0.0f);
 
 		avatarArray = new GameObject[noofAvatars];
 		allFrames = new GameObject[noofAvatars];
@@ -74,12 +77,12 @@ public class AvatarHandler : MonoBehaviour
 		for(int i = Defines.Avatar_FirstIcon; i < noofAvatars; ++i)
 		{
 			avatarArray[i] = Instantiate(avatarPrefab);
-			avatarArray[i].transform.SetParent(avatarParent.transform);
+			avatarArray[i].transform.SetParent(avatarParent.transform, false);
 			avatarArray[i].GetComponent<Image>().sprite = GetIconManager().GetIcon(Defines.ICONS.LOCKED);
 			avatarArray[i].GetComponent<AvatarClick>().SetAvatar(i, 1);
 
 			allFrames[i] = Instantiate(framePrefab);
-			allFrames[i].transform.SetParent(frameParent.transform);
+			allFrames[i].transform.SetParent(frameParent.transform, false);
 
 			Vector3 temp = avatarArray[i].transform.localPosition;
 			temp.x = startPos.x + (avatarGap.x *( (i-Defines.Avatar_FirstIcon) % avatarColumns));
@@ -119,7 +122,7 @@ public class AvatarHandler : MonoBehaviour
 		}
 
 		// Set the current avatar to blue.
-		currAvatar.GetComponent<Image>().color = Defines.ICON_COLOR_P1;
+		//currAvatar.GetComponent<Image>().color = Defines.ICON_COLOR_P1;
 
 		// The Local Multiplay Icon default colors.
 		//avatarLocalPlay1.GetComponent<Image>().color = Defines.ICON_COLOR_P1;
@@ -169,15 +172,19 @@ public class AvatarHandler : MonoBehaviour
 			if( GetIconManager().GetIsUnlocked(buyID[i]) )
 				buyArray[i].GetComponent<Image>().color = Defines.ICON_COLOR_GREY;
 			else
-				buyArray[i].GetComponent<Image>().color = Defines.ICON_COLOR_P1;
+				buyArray[i].GetComponent<Image>().color = Defines.ICON_COLOR_WHITE;
 		}
 	}
 
-	void ChangeAllAvatarColor(Color newColor)
+	void ChangeAllAvatarColor(int player)
 	{
+		Sprite curr = Frame1;
+		if(player == 2)
+			curr = Frame2;
+
 		for (int i = Defines.Avatar_FirstIcon; i < noofAvatars; ++i)
 		{
-			avatarArray[i].GetComponent<Image>().color = newColor;
+			allFrames[i].GetComponent<Image>().sprite = curr;
 		}
 	}
 
@@ -199,13 +206,13 @@ public class AvatarHandler : MonoBehaviour
 	public void OnClickLocalPlayIcon1()
 	{
 		GlobalScript.Instance.avatarState = 1;
-		ChangeAllAvatarColor(Defines.ICON_COLOR_P1);
+		ChangeAllAvatarColor(1);
 	}
 
 	public void OnClickLocalPlayIcon2()
 	{
 		GlobalScript.Instance.avatarState = 2;
-		ChangeAllAvatarColor(Defines.ICON_COLOR_P2);
+		ChangeAllAvatarColor(2);
 	}
 		
 	public void SetAvatarIcon(int i)

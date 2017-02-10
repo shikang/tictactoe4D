@@ -142,7 +142,7 @@ public class GUIManagerScript : MonoBehaviour
 		UpdateTimer();
 		GridEffectAnim();
 
-		UpdateTurnGUI();
+		//UpdateTurnGUI();
 		UpdateAIGUI();
 
 		// Center Text
@@ -216,7 +216,7 @@ public class GUIManagerScript : MonoBehaviour
 		}
 	}
 
-	void UpdateTurnGUI()
+	/*void UpdateTurnGUI()
 	{
 		// Whose Turn
 		if(GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn == Defines.TURN.P1)
@@ -291,7 +291,7 @@ public class GUIManagerScript : MonoBehaviour
 		{
 			GUITurn.GetComponent<Text>().text = "";
 		}
-	}
+	}*/
 
 	void UpdateAIGUI()
 	{

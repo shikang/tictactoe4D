@@ -50,6 +50,7 @@ public class Defines : Singleton<Defines>
 	static public Color ICON_COLOR_P1 = Color.blue;
 	static public Color ICON_COLOR_P2 = Color.red;
 	static public Color ICON_COLOR_GREY = Color.grey;
+	static public Color ICON_COLOR_WHITE = Color.white;
 
 	// Emotes
 	static public float EMOTE_SHOW_TIME = 2.5f;						//!< In seconds
