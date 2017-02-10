@@ -43,8 +43,11 @@ public class InAppProcessor : Singleton<InAppProcessor>
 					// @todo Some feedback
 					break;
 				case InAppProductList.ProductType.AVATAR:
-					
-					// @todo Some feedback
+					Debug.Log( string.Format( "InAppProcessor::ProcessPurchase: PASS. Product: '{0}'", productIdentifier ) );
+
+					GameObject go = GameObject.FindGameObjectWithTag( "Gacha" );
+					GachaScript gacha = go.GetComponent<GachaScript>();
+					gacha.ProcessBuyIcon(productParam.m_nProductParam);
 					break;
 				default:
 					Debug.Log( string.Format( "InAppProcessor::ProcessPurchase: FAIL. Invalid product type: '{0}'", productParam.m_ProductType.ToString() ) );

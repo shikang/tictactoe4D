@@ -25,7 +25,7 @@ public class AvatarHandler : MonoBehaviour
 	GameObject [] allFrames;
 
 	// Buy Page
-	GameObject [] buyArray;
+	public GameObject [] buyArray;
 	GameObject [] buyAllFrames;
 	public GameObject buyParent;
 	public GameObject buyFrameParent;
@@ -45,6 +45,11 @@ public class AvatarHandler : MonoBehaviour
 	Vector2 startPos;
 	Vector2 avatarGap;
 
+	public int[] BuyID
+	{
+		get { return buyID; }
+	}
+
 	// Singleton pattern
 	static AvatarHandler instance;
 	public static AvatarHandler Instance
@@ -63,6 +68,14 @@ public class AvatarHandler : MonoBehaviour
 
 	void Start()
 	{
+		// hack!
+		SaveLoad.Load();
+		for (int i = 0; i < GameData.current.icons.Count; ++i)
+		{
+			Defines.ICONS icon = GameData.current.icons[i];
+			IconManager.Instance.SetUnlocked((int)icon, true);
+		}
+
 		noofAvatars = (int)Defines.ICONS.TOTAL;
 		avatarColumns = Defines.Avatar_NoofColumns;
 

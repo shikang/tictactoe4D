@@ -241,10 +241,60 @@ public class GachaScript : MonoBehaviour
 
 		if(BuyIcon.GetActive())
 		{
-			AvatarHandler.Instance.UnlockAvatar(BuyID);
-			BuyIconFX.SetActive(true);
-			BuyIconFX.GetComponent<Image>().sprite = BuyIcon.GetComponent<Image>().sprite;
-			isAnimatingBuy = true;
+			// Disable UI
+			EnableBuyUI(false);
+
+			// Then buy
+			GameObject go = GameObject.FindGameObjectWithTag("IAPManager");
+			InAppPurchaser purchaser = go.GetComponent<InAppPurchaser>();
+			purchaser.BuyProduct(InAppProductList.ProductType.AVATAR, BuyID);
+		}
+	}
+
+	public void ProcessBuyIcon(int buyID)
+	{
+		if (buyID != BuyID)
+		{
+			Debug.Log("BuyID not match! | buyID: " + buyID + " | BuyID: " + BuyID);
+		}
+		else
+		{
+			Debug.Log("BuyID match! | buyID&BuyID: " + buyID);
+		}
+
+		AvatarHandler.Instance.UnlockAvatar(BuyID);
+		if (!GameData.current.icons.Contains((Defines.ICONS)BuyID))
+		{
+			GameData.current.icons.Add((Defines.ICONS)BuyID);
+		}
+		SaveLoad.Save();
+
+		BuyIconFX.SetActive(true);
+		BuyIconFX.GetComponent<Image>().sprite = BuyIcon.GetComponent<Image>().sprite;
+		isAnimatingBuy = true;
+
+		// Enable UI
+		EnableBuyUI(true);
+	}
+
+	void EnableBuyUI(bool enable)
+	{
+		Transform back = BuyPage.transform.FindChild("Back");
+		Transform confirmBuy = BuyPage.transform.FindChild("ConfirmBuy");
+
+		GameObject backObject = back.gameObject;
+		GameObject confirmBuyObject = confirmBuy.gameObject;
+
+		Button backButton = backObject.GetComponent<Button>();
+		Button confirmBuyButton = confirmBuyObject.GetComponent<Button>();
+
+		backButton.enabled = enable;
+		confirmBuyButton.enabled = enable;
+
+		for ( int i = 0; i < AvatarHandler.Instance.buyArray.Length; ++i )
+		{
+			Button button = AvatarHandler.Instance.buyArray[i].GetComponent<Button>();
+			button.enabled = enable;
 		}
 	}
 }

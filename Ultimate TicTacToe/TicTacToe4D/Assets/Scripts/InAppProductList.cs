@@ -6,7 +6,7 @@ public class InAppProductList : Singleton<InAppProductList>
 {
 	// Info constants
 	public const string COMPANY_NAME = "whywool";
-	public const string PROJECT_NAME = "linkit";
+	public const string PROJECT_NAME = "ultimatetictactoe";
 
 	public const string PRODUCT_PREFIX = "com." + COMPANY_NAME + "." + PROJECT_NAME + ".";
 
@@ -20,7 +20,7 @@ public class InAppProductList : Singleton<InAppProductList>
 	// Comsumables
 	Dictionary<ProductType, List<int>> m_ConsumableMap = new Dictionary<ProductType, List<int>>
 														{
-															{ ProductType.COIN, new List<int>{ 100, 200 } },
+															// Empty for now
 														};
 
 	[Flags]
@@ -66,6 +66,15 @@ public class InAppProductList : Singleton<InAppProductList>
 		}
 		
 		// Non-consumables
+		for ( int i = 0; i < AvatarHandler.Instance.buyArray.Length; ++i )
+		{
+			int buyID = AvatarHandler.Instance.BuyID[i];
+			string productIdentifier = GetProductIdentifier( ProductType.AVATAR, buyID );
+			Debug.Log( "Non consumable: " + productIdentifier );
+			m_NonConsumableList.Add( new ProductInfo( productIdentifier, Store.ALL ) );
+
+			InAppProcessor.Instance.AddProductParam( productIdentifier, ProductType.AVATAR, buyID );
+		}
 
 		// Subscriptions
 	}
@@ -78,7 +87,7 @@ public class InAppProductList : Singleton<InAppProductList>
 			case InAppProductList.ProductType.COIN:
 				return PRODUCT_PREFIX + productType.ToString().ToLower() + "." + productParam.ToString();
 			case InAppProductList.ProductType.AVATAR:
-				return "";
+				return PRODUCT_PREFIX + productType.ToString().ToLower() + "." + ((Defines.ICONS)productParam).ToString().ToLower();
 			default:
 				Debug.Log( string.Format( "InAppProcessor::GetProductIdentifier: FAIL. Invalid product type: '{0}'", productType.ToString() ) );
 				return "";
