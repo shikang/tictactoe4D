@@ -22,7 +22,9 @@ public enum BUTTONTYPES
 	SETTINGS_HOWTOPLAY,	//11
 	SETTINGS_CREDITS,
 
-	LOCAL_BACKTOMAINMENU
+	LOCAL_BACKTOMAINMENU,
+
+	ADS_WATCH_VIDEO //14
 };
 
 public class MenuBtnScript : MonoBehaviour
@@ -137,6 +139,11 @@ public class MenuBtnScript : MonoBehaviour
 		case BUTTONTYPES.SETTINGS_HOWTOPLAY:
 			isShowHowToPlayScreen = !isShowHowToPlayScreen;
 			Camera.main.GetComponent<MainMenuScript>().HowToPlayPage.SetActive(isShowHowToPlayScreen);
+			break;
+
+		case BUTTONTYPES.ADS_WATCH_VIDEO:
+			Adverts.Instance.ShowAd(AdVidType.video);
+			Debug.Log("Pressed");
 			break;
 
 		case BUTTONTYPES.NETWORK_BACKTOMAINMENU:
