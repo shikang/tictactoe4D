@@ -24,8 +24,29 @@ public class AvatarClick : MonoBehaviour
 		// Buy Page
 		else if(btnType == 2)
 		{
-			if( !IconManager.Instance.GetIsUnlocked(ID) )
-				GameObject.FindGameObjectWithTag("Gacha").GetComponent<GachaScript>().SetBuyIcon(ID);
+			GameObject gacha = GameObject.FindGameObjectWithTag("Gacha");
+
+			Transform buyPage = gacha.transform.FindChild("BuyPage");
+			Transform confirmBuy = buyPage.FindChild("ConfirmBuy");
+			Button confirmBuyButton = confirmBuy.GetComponent<Button>();
+			Text confirmBuyText = confirmBuy.GetComponentInChildren<Text>();
+
+			if (!IconManager.Instance.GetIsUnlocked(ID))
+			{
+				gacha.GetComponent<GachaScript>().SetBuyIcon(ID);
+				confirmBuyButton.enabled = true;
+
+				string productIdentifier = InAppProductList.GetProductIdentifier( InAppProductList.ProductType.AVATAR, ID );
+				if (InAppProductList.Instance.NonConsumableList.ContainsKey(productIdentifier))
+				{
+					confirmBuyText.text = "Buy for " + InAppProductList.Instance.NonConsumableList[productIdentifier].m_sPrice + "!";
+				}
+			}
+			else
+			{
+				confirmBuyText.text = "Already bought!";
+				confirmBuyButton.enabled = false;
+			}
 		}
 	}
 

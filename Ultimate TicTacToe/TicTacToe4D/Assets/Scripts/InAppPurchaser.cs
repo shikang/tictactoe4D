@@ -34,21 +34,21 @@ public class InAppPurchaser : MonoBehaviour, IStoreListener
 		InAppProductList.Instance.InitialiseProductList();
 
 		// Add Consumable
-		foreach ( InAppProductList.ProductInfo product in InAppProductList.Instance.ConsumableList )
+		foreach ( KeyValuePair<string, InAppProductList.ProductInfo> product in InAppProductList.Instance.ConsumableList )
 		{
-			AddProduct( builder, product, ProductType.Consumable );
+			AddProduct( builder, product.Value, ProductType.Consumable );
 		}
 
 		// Continue adding the non-consumable product.
-		foreach ( InAppProductList.ProductInfo product in InAppProductList.Instance.NonConsumableList )
+		foreach ( KeyValuePair<string, InAppProductList.ProductInfo> product in InAppProductList.Instance.NonConsumableList )
 		{
-			AddProduct( builder, product, ProductType.NonConsumable );
+			AddProduct( builder, product.Value, ProductType.NonConsumable );
 		}
 
 		// Adding subscription
-		foreach ( InAppProductList.ProductInfo product in InAppProductList.Instance.SubscriptionList )
+		foreach ( KeyValuePair<string, InAppProductList.ProductInfo> product in InAppProductList.Instance.SubscriptionList )
 		{
-			AddProduct( builder, product, ProductType.Subscription );
+			AddProduct( builder, product.Value, ProductType.Subscription );
 		}
 
 		// Kick off the remainder of the set-up with an asynchrounous call, passing the configuration 
@@ -92,6 +92,16 @@ public class InAppPurchaser : MonoBehaviour, IStoreListener
 				{ product.m_sProductGoogleIdentifier, GooglePlay.Name },
 			});
 		*/
+	}
+
+	public string GetProductLocalisePrice( InAppProductList.ProductType productType, int productParam )
+	{
+		return GetProductLocalisePrice( InAppProductList.GetProductIdentifier( productType, productParam ) );
+	}
+
+	string GetProductLocalisePrice( string productId )
+	{
+		return m_StoreController.products.WithID( productId ).metadata.localizedPriceString;
 	}
 
 	public void BuyProduct( InAppProductList.ProductType productType, int productParam )
@@ -184,6 +194,27 @@ public class InAppPurchaser : MonoBehaviour, IStoreListener
 		m_StoreController = controller;
 		// Store specific subsystem, for accessing device-specific store features.
 		m_StoreExtensionProvider = extensions;
+
+		// Update consumable product price
+		foreach ( KeyValuePair<string, InAppProductList.ProductInfo> product in InAppProductList.Instance.ConsumableList )
+		{
+			product.Value.m_sPrice = GetProductLocalisePrice( product.Value.m_sProductIdentifier );
+			Debug.Log( "InAppPurchaser::OnInitialized: Update price[" + product.Value.m_sProductIdentifier + "," + product.Value.m_sPrice + "]" );
+		}
+
+		// Continue updating non-consumable product price.
+		foreach ( KeyValuePair<string, InAppProductList.ProductInfo> product in InAppProductList.Instance.NonConsumableList )
+		{
+			product.Value.m_sPrice = GetProductLocalisePrice( product.Value.m_sProductIdentifier );
+			Debug.Log( "InAppPurchaser::OnInitialized: Update price[" + product.Value.m_sProductIdentifier + "," + product.Value.m_sPrice + "]" );
+		}
+
+		// Updateing subscription price
+		foreach ( KeyValuePair<string, InAppProductList.ProductInfo> product in InAppProductList.Instance.SubscriptionList )
+		{
+			product.Value.m_sPrice = GetProductLocalisePrice( product.Value.m_sProductIdentifier );
+			Debug.Log( "InAppPurchaser::OnInitialized: Update price[" + product.Value.m_sProductIdentifier + "," + product.Value.m_sPrice + "]" );
+		}
 	}
 
 

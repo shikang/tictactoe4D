@@ -275,6 +275,13 @@ public class GachaScript : MonoBehaviour
 
 		// Enable UI
 		EnableBuyUI(true);
+
+		// Update UI
+		Transform confirmBuy = BuyPage.transform.FindChild("ConfirmBuy");
+		Button confirmBuyButton = confirmBuy.GetComponent<Button>();
+		Text confirmBuyText = confirmBuy.GetComponentInChildren<Text>();
+		confirmBuyText.text = "Already bought!";
+		confirmBuyButton.enabled = false;
 	}
 
 	void EnableBuyUI(bool enable)
