@@ -27,8 +27,6 @@ public class Defines : Singleton<Defines>
 	{
 		EMPTY = 0,
 		HIGHLIGHT,
-		BLUEFRAME,
-		REDFRAME,
 		INVALID,
 		LOCKED,
 
@@ -47,8 +45,10 @@ public class Defines : Singleton<Defines>
 	static public int Avatar_FirstIcon = (int)ICONS.LOCKED + 1;	// Need to exclude the first few non avatar icons.
 
 	// Player Colors
-	static public Color ICON_COLOR_P1 = Color.blue;
-	static public Color ICON_COLOR_P2 = Color.red;
+	static public Color ICON_COLOR_P1 = new Color(0.102f, 0.675f, 0.686f);
+	static public Color ICON_COLOR_P2 = new Color(0.871f, 0.447f, 0.204f);
+	static public Color ICON_COLOR_HIGHLIGHT = new Color(0.984f, 0.851f, 0.098f);
+	static public Color ICON_COLOR_INVALID = new Color(0.886f, 0.118f, 0.043f);
 	static public Color ICON_COLOR_GREY = Color.grey;
 	static public Color ICON_COLOR_WHITE = Color.white;
 

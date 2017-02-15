@@ -142,19 +142,19 @@ public class GUIManagerScript : MonoBehaviour
 		UpdateTimer();
 		GridEffectAnim();
 
-		//UpdateTurnGUI();
+		UpdateTurnGUI();
 		UpdateAIGUI();
 
 		// Center Text
 		//   Game Start
-		if (GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn == Defines.TURN.NOTSTARTED)
+		if (GetComponent<TurnHandler>().turn == Defines.TURN.NOTSTARTED)
 		{
 			GUITurn.GetComponent<Text>().text = "";
 			GUICenterText.GetComponent<Text>().text = "GAME START!";
 		}
 
 		//   Game End
-		else if(GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn == Defines.TURN.GAMEOVER)
+		else if(GetComponent<TurnHandler>().turn == Defines.TURN.GAMEOVER)
 		{
 			if(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().gameWinner == 0)
 				GUICenterText.GetComponent<Text>().text = "Draw!";
@@ -179,8 +179,9 @@ public class GUIManagerScript : MonoBehaviour
 			Debug.Log("Recieve coin: " + Defines.Instance.playerScore);
 			GameData.current.coin += Defines.Instance.playerScore;
 			SaveLoad.Save();
+
 		}
-		else if (GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn == Defines.TURN.WAITING)
+		else if (GetComponent<TurnHandler>().turn == Defines.TURN.WAITING)
 		{
 			GUICenterText.GetComponent<Text>().text = "Waiting for other player...";
 			GUICfmNewGame.SetActive(false);
@@ -188,7 +189,7 @@ public class GUIManagerScript : MonoBehaviour
 
 			GUIEmoteScreen.SetActive(false);
 		}
-		else if (GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn == Defines.TURN.DISCONNECTED)
+		else if (GetComponent<TurnHandler>().turn == Defines.TURN.DISCONNECTED)
 		{
 			GUICfmText.GetComponent<Text>().text = "Other player has disconnected! T.T";
 
@@ -216,7 +217,7 @@ public class GUIManagerScript : MonoBehaviour
 		}
 	}
 
-	/*void UpdateTurnGUI()
+	void UpdateTurnGUI()
 	{
 		// Whose Turn
 		if(GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn == Defines.TURN.P1)
@@ -231,7 +232,11 @@ public class GUIManagerScript : MonoBehaviour
 			GUITimerP2.GetComponent<Text>().color = Color.grey;
 			GUITurn.GetComponent<Text>().text = nameP1 + "'s Turn";
 
-			if(FrameLeft.transform.localScale.x < currMax)
+			// Icon Frame Animation during the player's turn
+			FrameLeft.GetComponent<Animator>().SetBool("isMoving", true);
+			FrameRight.GetComponent<Animator>().SetBool("isMoving", false);
+
+			/*if(FrameLeft.transform.localScale.x < currMax)
 			{
 				FrameLeft.transform.localScale = new Vector3(FrameLeft.transform.localScale.x + (frameScaleSpeed * Time.deltaTime),
 										FrameLeft.transform.localScale.y + (frameScaleSpeed * Time.deltaTime),
@@ -251,7 +256,7 @@ public class GUIManagerScript : MonoBehaviour
 				ImageRight.transform.localScale = new Vector3(ImageRight.transform.localScale.x + (frameScaleSpeed * Time.deltaTime),
 										ImageRight.transform.localScale.y - (frameScaleSpeed * Time.deltaTime),
 										ImageRight.transform.localScale.z);
-			}
+			}*/
 		}
 		else if(GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn == Defines.TURN.P2)
 		{
@@ -264,8 +269,12 @@ public class GUIManagerScript : MonoBehaviour
 			GUINameP2.GetComponent<Text>().color = Color.green;
 			GUITimerP2.GetComponent<Text>().color = Color.green;
 			GUITurn.GetComponent<Text>().text = nameP2 + "'s Turn";
+
+			// Icon Frame Animation during the player's turn
+			FrameLeft.GetComponent<Animator>().SetBool("isMoving", false);
+			FrameRight.GetComponent<Animator>().SetBool("isMoving", true);
 	
-			if(FrameLeft.transform.localScale.y > currMin)
+			/*if(FrameLeft.transform.localScale.y > currMin)
 			{
 				FrameLeft.transform.localScale = new Vector3(FrameLeft.transform.localScale.x - (frameScaleSpeed * Time.deltaTime),
 										FrameLeft.transform.localScale.y - (frameScaleSpeed * Time.deltaTime),
@@ -285,13 +294,13 @@ public class GUIManagerScript : MonoBehaviour
 				ImageRight.transform.localScale = new Vector3(ImageRight.transform.localScale.x - (frameScaleSpeed * Time.deltaTime),
 										ImageRight.transform.localScale.y + (frameScaleSpeed * Time.deltaTime),
 										ImageRight.transform.localScale.z);
-			}
+			}*/
 		}
 		else
 		{
 			GUITurn.GetComponent<Text>().text = "";
 		}
-	}*/
+	}
 
 	void UpdateAIGUI()
 	{
@@ -401,15 +410,13 @@ public class GUIManagerScript : MonoBehaviour
 			{
 				gridEffect.GetComponent<SpriteRenderer>().sprite =
 					GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().GetSpriteP2();
-				gridEffect.GetComponent<SpriteRenderer>().color = 
-					GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().ColorP2;
+				gridEffect.GetComponent<SpriteRenderer>().color = Defines.ICON_COLOR_P2;
 			}
 			else if(GetComponent<TurnHandler>().turn == Defines.TURN.P2)
 			{
 				gridEffect.GetComponent<SpriteRenderer>().sprite =
 					GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().GetSpriteP1();
-				gridEffect.GetComponent<SpriteRenderer>().color = 
-					GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().ColorP1;
+				gridEffect.GetComponent<SpriteRenderer>().color =  Defines.ICON_COLOR_P1;
 			}
 
 			// Scale

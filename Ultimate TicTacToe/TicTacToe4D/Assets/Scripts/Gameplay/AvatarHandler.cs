@@ -95,6 +95,7 @@ public class AvatarHandler : MonoBehaviour
 			avatarArray[i].GetComponent<AvatarClick>().SetAvatar(i, 1);
 
 			allFrames[i] = Instantiate(framePrefab);
+			allFrames[i].GetComponent<Image>().color = Defines.ICON_COLOR_P1;
 			allFrames[i].transform.SetParent(frameParent.transform, false);
 
 			Vector3 temp = avatarArray[i].transform.localPosition;
@@ -116,12 +117,13 @@ public class AvatarHandler : MonoBehaviour
 			if(GetIconManager().GetIsBuy(i))
 			{
 				buyArray[count] = Instantiate(avatarPrefab);
-				buyArray[count].transform.SetParent(buyParent.transform);
+				buyArray[count].transform.SetParent(buyParent.transform, false);
 				buyArray[count].GetComponent<Image>().sprite = GetIconManager().GetIcon(i);
 				buyArray[count].GetComponent<AvatarClick>().SetAvatar(i, 2);
 
 				buyAllFrames[count] = Instantiate(framePrefab);
-				buyAllFrames[count].transform.SetParent(buyFrameParent.transform);
+				buyAllFrames[count].GetComponent<Image>().color = Defines.ICON_COLOR_P1;
+				buyAllFrames[count].transform.SetParent(buyFrameParent.transform, false);
 
 				buyID[count] = i;
 
@@ -136,10 +138,6 @@ public class AvatarHandler : MonoBehaviour
 
 		// Set the current avatar to blue.
 		//currAvatar.GetComponent<Image>().color = Defines.ICON_COLOR_P1;
-
-		// The Local Multiplay Icon default colors.
-		//avatarLocalPlay1.GetComponent<Image>().color = Defines.ICON_COLOR_P1;
-		//avatarLocalPlay2.GetComponent<Image>().color = Defines.ICON_COLOR_P2;
 
 		UpdateUnlockedAvatarsStatus();
 	}
@@ -191,13 +189,13 @@ public class AvatarHandler : MonoBehaviour
 
 	void ChangeAllAvatarColor(int player)
 	{
-		Sprite curr = Frame1;
+		Color curr = Defines.ICON_COLOR_P1;
 		if(player == 2)
-			curr = Frame2;
+			curr = Defines.ICON_COLOR_P2;
 
 		for (int i = Defines.Avatar_FirstIcon; i < noofAvatars; ++i)
 		{
-			allFrames[i].GetComponent<Image>().sprite = curr;
+			allFrames[i].GetComponent<Image>().color = curr;
 		}
 	}
 

@@ -87,15 +87,13 @@ public class BigGridScript : MonoBehaviour
 				{
 					sWinIcon.GetComponent<SpriteRenderer>().sprite =
 						GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().GetSpriteP1();
-					sWinIcon.GetComponent<SpriteRenderer>().color =
-						GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().ColorP1;
+					sWinIcon.GetComponent<SpriteRenderer>().color = Defines.ICON_COLOR_P1;
 				}
 				else if(gridWinner == (int)Defines.TURN.P2)
 				{
 					sWinIcon.GetComponent<SpriteRenderer>().sprite =
 						GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().GetSpriteP2();
-					sWinIcon.GetComponent<SpriteRenderer>().color =
-						GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().ColorP2;
+					sWinIcon.GetComponent<SpriteRenderer>().color = Defines.ICON_COLOR_P2;
 				}
 				begin = false;
 				for(int i = 0; i <9;++i)

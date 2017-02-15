@@ -106,32 +106,32 @@ public class GridScript : MonoBehaviour
 		switch(gridState)
 		{
 		case 0:	// Nothing (Black)
-			GetComponent<SpriteRenderer>().sprite = GetTurnHandler().GetSpriteEmpty();
+			GetComponent<SpriteRenderer>().color = Defines.ICON_COLOR_GREY;
 			mainIcon.SetActive(false);
 			break;
 
 		case 1:	// P1 Icon
-			GetComponent<SpriteRenderer>().sprite = GetTurnHandler().GetFrameP1();
+			GetComponent<SpriteRenderer>().color = Defines.ICON_COLOR_P1;
 			mainIcon.GetComponent<SpriteRenderer>().sprite = GetTurnHandler().GetSpriteP1();
 			mainIcon.SetActive(true);
 			GetComponent<Animator>().SetTrigger("isIconPlaced");
 			break;
 
 		case 2:	// P2 Icon
-			GetComponent<SpriteRenderer>().sprite = GetTurnHandler().GetFrameP2();
+			GetComponent<SpriteRenderer>().color = Defines.ICON_COLOR_P2;
 			mainIcon.GetComponent<SpriteRenderer>().sprite = GetTurnHandler().GetSpriteP2();
 			mainIcon.SetActive(true);
 			GetComponent<Animator>().SetTrigger("isIconPlaced");
 			break;
 
 		case 3:	// Highlighting (Yellow)
-			GetComponent<SpriteRenderer>().sprite =	GetTurnHandler().GetSpriteHighlight();
+			GetComponent<SpriteRenderer>().color = Defines.ICON_COLOR_HIGHLIGHT;
 			GetComponent<Animator>().SetTrigger("isHighlighted");
 			mainIcon.SetActive(false);
 			break;
 
 		case 4:	// Invalid (Red)
-			GetComponent<SpriteRenderer>().sprite =	GetTurnHandler().GetSpriteInvalid();
+			GetComponent<SpriteRenderer>().color = Defines.ICON_COLOR_INVALID;
 			GetComponent<Animator>().SetTrigger("isHighlighted");
 			mainIcon.SetActive(false);
 			break;
@@ -161,7 +161,7 @@ public class GridScript : MonoBehaviour
 		if(gridState == 3)
 		{
 			gridState = 0;
-			GetComponent<SpriteRenderer>().sprite = GetTurnHandler().GetSpriteEmpty();;
+			GetComponent<SpriteRenderer>().color = Defines.ICON_COLOR_GREY;
 		}
 	}
 
