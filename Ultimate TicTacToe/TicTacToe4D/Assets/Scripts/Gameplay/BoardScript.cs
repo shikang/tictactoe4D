@@ -28,10 +28,16 @@ public class BoardScript : MonoBehaviour
 	public int			activeBigGrid;	// 0-8 = respective grids, 10 = all available
     public Defines.GAMEMODE 	gameMode;
 
+    float jerkTimerP1;
+	float jerkTimerP2;
+	int jerkTypeP1;
+	int jerkTypeP2;
+
     WINMETHOD winMethod = WINMETHOD.NIL;
     int pos1,pos2,pos3;
     bool begin = false;
     float time= 0.8f;
+
 	void Start ()
 	{
 		minScale = 0.5f;
@@ -47,6 +53,7 @@ public class BoardScript : MonoBehaviour
 			bigGrids[i].GetComponent<BigGridScript>().bigGridID = i;
 			bigGrids[i].transform.parent = boardSprite.transform;
 		}
+
 		ResetVars();
 	}
 
@@ -77,6 +84,11 @@ public class BoardScript : MonoBehaviour
 		UpdateActiveGridBG(0, true);
 
 		gameWinner = -1;
+
+		jerkTypeP1 = Random.Range(1, 3);
+		jerkTypeP2 = Random.Range(1, 3);
+		jerkTimerP1 = Random.Range(18.0f, 35.0f);
+		jerkTimerP2 = Random.Range(18.0f, 35.0f);
 	}
 
 	void Update ()
@@ -91,6 +103,7 @@ public class BoardScript : MonoBehaviour
 						//Debug.Log(bigGrids[pos1].name);
 			
 		}
+
 		if(begin)
 		{
 			time-=Time.deltaTime;
@@ -131,7 +144,9 @@ public class BoardScript : MonoBehaviour
 			}
 
 		}
+
 		UpdateScaleLimit();
+
 		if(Input.GetKeyDown("t"))
 			SetWinner(0);
 
@@ -140,6 +155,9 @@ public class BoardScript : MonoBehaviour
 		{
 			GameObject.FindGameObjectWithTag("AIMiniMax").GetComponent<AIMiniMax>().UpdateAI();
 		}
+
+		UpdateJerkTimer(1, ref jerkTimerP1, ref jerkTypeP1);
+		UpdateJerkTimer(2, ref jerkTimerP2, ref jerkTypeP2);
 	}
 
 	public void UpdateActiveGridBG(int _gridID, bool firstTime = false)
@@ -170,6 +188,32 @@ public class BoardScript : MonoBehaviour
 			Vector3 tempPos = Defines.ACTIVEGRID_POSITION_BIG;
 			tempPos.z = -0.1f;
 			activeGridSprite.transform.localPosition = tempPos;
+		}
+	}
+
+	// Random pulse of animation
+	void UpdateJerkTimer(int _player, ref float _animTimer, ref int _animType)
+	{
+		_animTimer -= Time.deltaTime;
+
+		if(_animTimer <= 0.0f)
+		{
+			for(int i = 0; i < 9; ++i)
+			{
+				for(int j = 0; j < 9; ++j)
+				{
+					if(bigGrids[i].GetComponent<BigGridScript>().grids[j].GetComponent<GridScript>().gridState == _player)
+					{
+						if(_animType == 1)
+							bigGrids[i].GetComponent<BigGridScript>().grids[j].GetComponent<Animator>().SetTrigger("isIconJerk1");
+						else
+							bigGrids[i].GetComponent<BigGridScript>().grids[j].GetComponent<Animator>().SetTrigger("isIconJerk2");
+
+						_animTimer = Random.Range(18.0f, 35.0f);
+						_animType = Random.Range(1, 3);
+					}
+				}
+			}
 		}
 	}
 

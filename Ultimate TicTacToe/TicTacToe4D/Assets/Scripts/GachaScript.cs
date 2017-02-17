@@ -12,6 +12,7 @@ public class GachaScript : MonoBehaviour
 	int BuyID;
 
 	public GameObject moneyText;
+	public GameObject gachaInfoText;
 
 	int [] randomList;
 	float [] changeTimer;
@@ -125,6 +126,14 @@ public class GachaScript : MonoBehaviour
 			// Unlock avatar
 			int unlockIcon = randomList[noofChanges - 1];
 			Debug.Log("Bought avatar: " + unlockIcon);
+
+			gachaInfoText.SetActive(false);
+			if(IconManager.Instance.GetIsUnlocked(unlockIcon))
+				gachaInfoText.GetComponent<Text>().text = "You already have this icon!";
+			else
+				gachaInfoText.GetComponent<Text>().text = "You got a new " +  ((Defines.ICONS)unlockIcon).ToString() + " icon!";
+
+				
 			AvatarHandler.Instance.UnlockAvatar(unlockIcon);
 			if(!GameData.current.icons.Contains((Defines.ICONS)unlockIcon))
 			{
@@ -180,6 +189,7 @@ public class GachaScript : MonoBehaviour
 			curr.SetActive(false);
 
 			isAnimating = isAnimatingBuy = false;
+			gachaInfoText.SetActive(true);
 		}
 	}
 

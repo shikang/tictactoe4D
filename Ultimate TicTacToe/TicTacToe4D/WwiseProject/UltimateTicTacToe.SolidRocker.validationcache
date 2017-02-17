@@ -1,5 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ValidationCache Version="1" SchemaVersion="72">
+	<ValidationCacheItem File="C:\Users\SolidRocker\Desktop\WhyWool\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\Actor-Mixer Hierarchy\Default Work Unit.wwu" DateLow="1635770036" DateHigh="30568060"/>
+	<ValidationCacheItem File="C:\Users\SolidRocker\Desktop\WhyWool\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\Actor-Mixer Hierarchy\Factory SoundSeed Air Objects.wwu" DateLow="1958126950" DateHigh="30568056"/>
+	<ValidationCacheItem File="C:\Users\SolidRocker\Desktop\WhyWool\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\Actor-Mixer Hierarchy\Factory Synth One.wwu" DateLow="1958277054" DateHigh="30568056"/>
+	<ValidationCacheItem File="C:\Users\SolidRocker\Desktop\WhyWool\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\Attenuations\Default Work Unit.wwu" DateLow="4163120059" DateHigh="30568056"/>
+	<ValidationCacheItem File="C:\Users\SolidRocker\Desktop\WhyWool\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\Audio Devices\Default Work Unit.wwu" DateLow="4163602611" DateHigh="30568056"/>
+	<ValidationCacheItem File="C:\Users\SolidRocker\Desktop\WhyWool\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\Control Surface Sessions\Default Work Unit.wwu" DateLow="4163642652" DateHigh="30568056"/>
+	<ValidationCacheItem File="C:\Users\SolidRocker\Desktop\WhyWool\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\Conversion Settings\Default Work Unit.wwu" DateLow="4163677794" DateHigh="30568056"/>
+	<ValidationCacheItem File="C:\Users\SolidRocker\Desktop\WhyWool\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\Conversion Settings\Factory Conversion Settings.wwu" DateLow="1957736664" DateHigh="30568056"/>
+	<ValidationCacheItem File="C:\Users\SolidRocker\Desktop\WhyWool\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\Dynamic Dialogue\Default Work Unit.wwu" DateLow="4163782866" DateHigh="30568056"/>
+	<ValidationCacheItem File="C:\Users\SolidRocker\Desktop\WhyWool\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\Effects\Default Work Unit.wwu" DateLow="4163225147" DateHigh="30568056"/>
+	<ValidationCacheItem File="C:\Users\SolidRocker\Desktop\WhyWool\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\Effects\Factory Auro Headphone.wwu" DateLow="2112470981" DateHigh="30568056"/>
+	<ValidationCacheItem File="C:\Users\SolidRocker\Desktop\WhyWool\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\Effects\Factory Effects.wwu" DateLow="1957761810" DateHigh="30568056"/>
+	<ValidationCacheItem File="C:\Users\SolidRocker\Desktop\WhyWool\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\Effects\Factory iZotope Box Modeler.wwu" DateLow="692280262" DateHigh="30568058"/>
+	<ValidationCacheItem File="C:\Users\SolidRocker\Desktop\WhyWool\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\Effects\Factory iZotope Delay.wwu" DateLow="2850187646" DateHigh="30568056"/>
+	<ValidationCacheItem File="C:\Users\SolidRocker\Desktop\WhyWool\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\Effects\Factory iZotope Dynamics.wwu" DateLow="2850182642" DateHigh="30568056"/>
+	<ValidationCacheItem File="C:\Users\SolidRocker\Desktop\WhyWool\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\Effects\Factory iZotope Filters.wwu" DateLow="2850207656" DateHigh="30568056"/>
+	<ValidationCacheItem File="C:\Users\SolidRocker\Desktop\WhyWool\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\Effects\Factory iZotope Hybrid Reverb Effects.wwu" DateLow="2850217669" DateHigh="30568056"/>
+	<ValidationCacheItem File="C:\Users\SolidRocker\Desktop\WhyWool\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\Effects\Factory iZotope Multiband Distortion.wwu" DateLow="2850262998" DateHigh="30568056"/>
+	<ValidationCacheItem File="C:\Users\SolidRocker\Desktop\WhyWool\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\Effects\Factory iZotope Singleband Distortion.wwu" DateLow="2850247684" DateHigh="30568056"/>
+	<ValidationCacheItem File="C:\Users\SolidRocker\Desktop\WhyWool\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\Effects\Factory McDSP Effects.wwu" DateLow="2399720178" DateHigh="30568056"/>
+	<ValidationCacheItem File="C:\Users\SolidRocker\Desktop\WhyWool\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\Events\Default Work Unit.wwu" DateLow="2605198960" DateHigh="30568059"/>
+	<ValidationCacheItem File="C:\Users\SolidRocker\Desktop\WhyWool\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\Game Parameters\Default Work Unit.wwu" DateLow="4163090167" DateHigh="30568056"/>
+	<ValidationCacheItem File="C:\Users\SolidRocker\Desktop\WhyWool\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\Game Parameters\Factory SoundSeed Air Game Syncs.wwu" DateLow="1957836735" DateHigh="30568056"/>
+	<ValidationCacheItem File="C:\Users\SolidRocker\Desktop\WhyWool\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\Interactive Music Hierarchy\Default Work Unit.wwu" DateLow="4163452626" DateHigh="30568056"/>
+	<ValidationCacheItem File="C:\Users\SolidRocker\Desktop\WhyWool\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\Master-Mixer Hierarchy\Default Work Unit.wwu" DateLow="4163492544" DateHigh="30568056"/>
+	<ValidationCacheItem File="C:\Users\SolidRocker\Desktop\WhyWool\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\Mixing Sessions\Default Work Unit.wwu" DateLow="4163747838" DateHigh="30568056"/>
+	<ValidationCacheItem File="C:\Users\SolidRocker\Desktop\WhyWool\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\Modulators\Default Work Unit.wwu" DateLow="4163712810" DateHigh="30568056"/>
+	<ValidationCacheItem File="C:\Users\SolidRocker\Desktop\WhyWool\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\Presets\Default Work Unit.wwu" DateLow="4163190106" DateHigh="30568056"/>
+	<ValidationCacheItem File="C:\Users\SolidRocker\Desktop\WhyWool\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\Queries\Default Work Unit.wwu" DateLow="4163160202" DateHigh="30568056"/>
+	<ValidationCacheItem File="C:\Users\SolidRocker\Desktop\WhyWool\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\Queries\Factory Queries.wwu" DateLow="1957751801" DateHigh="30568056"/>
+	<ValidationCacheItem File="C:\Users\SolidRocker\Desktop\WhyWool\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\SoundBanks\Default Work Unit.wwu" DateLow="2605138926" DateHigh="30568059"/>
+	<ValidationCacheItem File="C:\Users\SolidRocker\Desktop\WhyWool\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\Soundcaster Sessions\Default Work Unit.wwu" DateLow="4163412602" DateHigh="30568056"/>
+	<ValidationCacheItem File="C:\Users\SolidRocker\Desktop\WhyWool\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\States\Default Work Unit.wwu" DateLow="4163295186" DateHigh="30568056"/>
+	<ValidationCacheItem File="C:\Users\SolidRocker\Desktop\WhyWool\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\Switches\Default Work Unit.wwu" DateLow="692545442" DateHigh="30568058"/>
+	<ValidationCacheItem File="C:\Users\SolidRocker\Desktop\WhyWool\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\Triggers\Default Work Unit.wwu" DateLow="4163527682" DateHigh="30568056"/>
+	<ValidationCacheItem File="C:\Users\SolidRocker\Desktop\WhyWool\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\UltimateTicTacToe.SolidRocker.wsettings" DateLow="1488150929" DateHigh="30569275"/>
+	<ValidationCacheItem File="C:\Users\SolidRocker\Desktop\WhyWool\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\UltimateTicTacToe.wproj" DateLow="4163040003" DateHigh="30568056"/>
 	<ValidationCacheItem File="C:\Users\SolidRocker\Documents\WwiseProjects\UltimateTicTacToe\Actor-Mixer Hierarchy\Default Work Unit.wwu" DateLow="2605033978" DateHigh="30568059"/>
 	<ValidationCacheItem File="C:\Users\SolidRocker\Documents\WwiseProjects\UltimateTicTacToe\Actor-Mixer Hierarchy\Factory SoundSeed Air Objects.wwu" DateLow="1958126950" DateHigh="30568056"/>
 	<ValidationCacheItem File="C:\Users\SolidRocker\Documents\WwiseProjects\UltimateTicTacToe\Actor-Mixer Hierarchy\Factory Synth One.wwu" DateLow="1958277054" DateHigh="30568056"/>

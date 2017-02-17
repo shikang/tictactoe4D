@@ -33,7 +33,7 @@ public class MenuBtnScript : MonoBehaviour
 	public bool isShowSettingsScreen;
 	public bool isShowCreditsScreen;
 	public bool isShowHowToPlayScreen;
-	public GameObject avatarObject;
+	public GameObject MenuHandler;
 
 	void Start ()
 	{
@@ -47,8 +47,9 @@ public class MenuBtnScript : MonoBehaviour
 	// NGUI Mouse Handler
 	public void BtnClick(int btn_)
 	{
-		// Default set to not appear until the case updates it
-		avatarObject.SetActive(false);
+		// No buttons should work while the screen is transiting.
+		if(MenuHandler.GetComponent<MainMenuScript>().moveScreen)
+			return;
 
 		switch((BUTTONTYPES)btn_)
 		{
@@ -61,21 +62,20 @@ public class MenuBtnScript : MonoBehaviour
 
 		case BUTTONTYPES.MAIN_LOCALPLAY:
 			GlobalScript.Instance.gameMode = 1;
-			Camera.main.GetComponent<MainMenuScript>().GoToScreen(1);
+			Camera.main.GetComponent<MainMenuScript>().ChangeScreen(1);
 			Camera.main.GetComponent<MainMenuScript>().Avatar.SetActive(false);
 			Camera.main.GetComponent<MainMenuScript>().Settings.SetActive(false);
 			GlobalScript.Instance.avatarState = 1;
-			avatarObject.SetActive(true);
 			break;
 
 		case BUTTONTYPES.MAIN_NETWORK:
 			GlobalScript.Instance.gameMode = 2;
-			Camera.main.GetComponent<MainMenuScript>().GoToScreen(2);
+			Camera.main.GetComponent<MainMenuScript>().ChangeScreen(2);
 			break;
 
 		case BUTTONTYPES.MAIN_GACHA:
 			GlobalScript.Instance.network_allowButtonClicks = 0;
-			Camera.main.GetComponent<MainMenuScript>().GoToScreen(3);
+			Camera.main.GetComponent<MainMenuScript>().ChangeScreen(3);
 			Camera.main.GetComponent<MainMenuScript>().Avatar.SetActive(false);
 			Camera.main.GetComponent<MainMenuScript>().Settings.SetActive(false);
 			break;
@@ -87,16 +87,15 @@ public class MenuBtnScript : MonoBehaviour
 
 		case BUTTONTYPES.MAIN_AVATAR:
 			GlobalScript.Instance.network_allowButtonClicks = 0;
-			Camera.main.GetComponent<MainMenuScript>().GoToScreen(4);
+			Camera.main.GetComponent<MainMenuScript>().ChangeScreen(4);
 			Camera.main.GetComponent<MainMenuScript>().Avatar.SetActive(false);
 			Camera.main.GetComponent<MainMenuScript>().Settings.SetActive(false);
 			GlobalScript.Instance.avatarState = 3;
-			avatarObject.SetActive(true);
 			break;
 
 		// Back To Main Menu
 		case BUTTONTYPES.LOCAL_BACKTOMAINMENU:
-			Camera.main.GetComponent<MainMenuScript>().GoToScreen(0);
+			Camera.main.GetComponent<MainMenuScript>().ChangeScreen(0, true);
 
 			Camera.main.GetComponent<MainMenuScript>().Avatar.SetActive(true);
 			Camera.main.GetComponent<MainMenuScript>().Settings.SetActive(true);
@@ -168,7 +167,7 @@ public class MenuBtnScript : MonoBehaviour
 			}
 			else
 			{
-				Camera.main.GetComponent<MainMenuScript>().GoToScreen(0);
+				Camera.main.GetComponent<MainMenuScript>().ChangeScreen(0, true);
 				Camera.main.GetComponent<MainMenuScript>().Avatar.SetActive(true);
 				Camera.main.GetComponent<MainMenuScript>().Settings.SetActive(true);
 
