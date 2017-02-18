@@ -352,7 +352,7 @@ public class GachaScript : MonoBehaviour
 		confirmBuyButton.enabled = false;
 	}
 
-	void EnableBuyUI(bool enable)
+	public void EnableBuyUI(bool enable)
 	{
 		Transform back = BuyPage.transform.FindChild("Back");
 		Transform confirmBuy = BuyPage.transform.FindChild("ConfirmBuy");
