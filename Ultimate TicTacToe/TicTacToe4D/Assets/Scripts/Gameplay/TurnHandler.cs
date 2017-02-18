@@ -35,14 +35,7 @@ public class TurnHandler : MonoBehaviour
 	{
 		if(turn == Defines.TURN.NOTSTARTED)
 		{
-			countdownToStart -= Time.deltaTime;
-			if(countdownToStart < 0.5f)
-			{
-				Color temp = GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().GUICenterText.GetComponent<Text>().color;
-				temp.a -= 0.1f;
-				GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().GUICenterText.GetComponent<Text>().color = temp;
-			}
-			if(countdownToStart <= 0.0f)
+			if(GameStartAnim.Instance.GameStartAnimEnded())
 			{
 				turn = Defines.TURN.P1;
 			}

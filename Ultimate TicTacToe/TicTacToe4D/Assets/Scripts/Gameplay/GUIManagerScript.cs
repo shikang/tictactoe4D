@@ -145,12 +145,10 @@ public class GUIManagerScript : MonoBehaviour
 		UpdateTurnGUI();
 		UpdateAIGUI();
 
-		// Center Text
-		//   Game Start
+		// Game Start
 		if (GetComponent<TurnHandler>().turn == Defines.TURN.NOTSTARTED)
 		{
 			GUITurn.GetComponent<Text>().text = "";
-			GUICenterText.GetComponent<Text>().text = "GAME START!";
 		}
 
 		//   Game End
