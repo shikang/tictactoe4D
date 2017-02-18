@@ -93,9 +93,9 @@ public class GachaScript : MonoBehaviour
 		changeTimer[19] = 0.4f;
 	}
 
-	public void StartGacha()
+	public void StartGacha(bool free = false)
 	{
-		if(GameData.current.coin >= Defines.GACHACOST)
+		if(GameData.current.coin >= Defines.GACHACOST || free)
 		{
 			// Set Grey BG
 			SetGreyBG(true);
@@ -120,7 +120,8 @@ public class GachaScript : MonoBehaviour
 			isGachaing = true;
 
 			// Deduct Money
-			GameData.current.coin -= Defines.GACHACOST;
+			if(!free)
+				GameData.current.coin -= Defines.GACHACOST;
 			moneyText.GetComponent<Text>().text = GameData.current.coin.ToString();
 
 			// Unlock avatar

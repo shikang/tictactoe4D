@@ -2,6 +2,7 @@
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.Advertisements;
 
 public enum BUTTONTYPES
 {
@@ -141,7 +142,11 @@ public class MenuBtnScript : MonoBehaviour
 			break;
 
 		case BUTTONTYPES.ADS_WATCH_VIDEO:
-			Adverts.Instance.ShowAd(AdVidType.video);
+			var options = new ShowOptions { resultCallback = Adverts.Instance.FreeGachaHandler};
+			Adverts.Instance.ShowAd(AdVidType.video,options);
+			//begin the timer
+			Adverts.Instance.freeGacha = true;
+			Adverts.Instance.beginReward = true;
 			Debug.Log("Pressed");
 			break;
 

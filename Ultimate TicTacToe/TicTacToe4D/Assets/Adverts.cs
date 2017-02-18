@@ -8,8 +8,9 @@ public enum AdVidType
 };
 public class Adverts : MonoBehaviour
 {
-	bool show = false;
-
+	//bool show = false;
+	public bool freeGacha = false;
+	public bool beginReward = false;
 	public bool support;
 	// Singleton pattern
 	static Adverts instance;
@@ -40,14 +41,24 @@ public class Adverts : MonoBehaviour
 	}
 	void Start()
 	{
-		
 	}
 	void Update()
 	{
+		/*if(freeGacha)
+		{
+			//this means the transit has completed and we are going to call the roll
+			//if(GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().moveScreen == false
+			//   &&  beginReward)
+			   {
+			   		GameObject.FindGameObjectWithTag("Gacha").GetComponent<GachaScript>().StartGacha(true);
+			   		freeGacha = beginReward = false;
+			   	}
+		}*/
 		/*if(!show)
 			if(ShowAd())
 				show = true;
 		Debug.Log(Advertisement.IsReady());*/
+
 	}
 	public bool GetInit()
 	{
@@ -61,25 +72,32 @@ public class Adverts : MonoBehaviour
 	{
 		return Advertisement.IsReady("rewardedVideo");
 	}
-	public bool ShowAd(AdVidType type = AdVidType.rewardedVideo)
+	public bool ShowAd(AdVidType type , ShowOptions SO)
 	{
 		//Debug.Log(Advertisement.IsReady());
 		if(Advertisement.IsReady("rewardedVideo"))
 		{
 			//Debug.Log("showing");
-				Advertisement.Show("rewardedVideo");
+				Advertisement.Show("rewardedVideo",SO);
 			return true;
 		}
 		return false;
 	}
-	void AdCallbackhandler(ShowResult result)
+	public void FreeGachaHandler(ShowResult result)
 	{
 	     switch (result)
 	     {
 		     case ShowResult.Finished:
 		         Debug.Log ("Ad Finished. Rewarding player...");
-		         GameData.current.coin += 10;
-		         SaveLoad.Save();
+		         if(freeGacha)
+		         {
+		         	//transit to gacha
+		         	//freeGacha = false;
+					GameObject.FindGameObjectWithTag("Gacha").GetComponent<GachaScript>().StartGacha(true);
+		         }
+		         //GameData.current.coin += 10;
+		         //SaveLoad.Save();
+
 		         //TODO: NEEEDIUI
 		         //NEED UI HERE
 		         break;
@@ -87,6 +105,8 @@ public class Adverts : MonoBehaviour
 		         Debug.Log ("Ad Skipped");
 		         break;
 		     case ShowResult.Failed:
+		     		freeGacha = false;
+		     		beginReward = false;
 		         Debug.Log("Ad failed");
 		         break;
 		     
