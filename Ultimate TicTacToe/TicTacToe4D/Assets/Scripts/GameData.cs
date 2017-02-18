@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 [System.Serializable]
 public class GameData
@@ -12,6 +13,7 @@ public class GameData
 	public int matchPlayed;
 	public string avatarName;
 	public int avatarIcon;
+	public DateTime lastFreeRollTime;
 
 	public GameData()
 	{
@@ -21,5 +23,6 @@ public class GameData
 		matchPlayed = 0;
 		avatarName = "abc";
 		avatarIcon = 8;
+		lastFreeRollTime = DateTime.Now;
 	}
 }

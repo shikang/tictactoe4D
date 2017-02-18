@@ -77,6 +77,8 @@ public class Defines : Singleton<Defines>
 	// Money stuff
 	static public int GACHACOST = 100;
 
+	static public float FREE_ROLL_TIMER = 14400.0f;	//4 hours
+
 	void Start()
 	{
 		//load playerscoree

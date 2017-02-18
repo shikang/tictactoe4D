@@ -142,12 +142,12 @@ public class MenuBtnScript : MonoBehaviour
 			break;
 
 		case BUTTONTYPES.ADS_WATCH_VIDEO:
-			var options = new ShowOptions { resultCallback = Adverts.Instance.FreeGachaHandler};
-			Adverts.Instance.ShowAd(AdVidType.video,options);
-			//begin the timer
-			Adverts.Instance.freeGacha = true;
-			Adverts.Instance.beginReward = true;
-			Debug.Log("Pressed");
+			if(GachaScript.Instance.CanGacha())
+			{
+				var options = new ShowOptions { resultCallback = Adverts.Instance.FreeGachaHandler};
+				Adverts.Instance.ShowAd(AdVidType.video,options);
+				GachaScript.Instance.SetGacha();
+			}
 			break;
 
 		case BUTTONTYPES.NETWORK_BACKTOMAINMENU:

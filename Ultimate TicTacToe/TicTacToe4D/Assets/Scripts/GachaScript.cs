@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System;
 
 public class GachaScript : MonoBehaviour
 {
@@ -31,6 +32,31 @@ public class GachaScript : MonoBehaviour
 	public GameObject GachaPage;
 	public GameObject BuyPage;
 
+	// Free Roll Stuff
+	public GameObject freeRollButton;
+	public GameObject freeRollButtonGrey;
+	public DateTime freeRollDueTime;
+
+	// Singleton pattern
+	static GachaScript instance;
+	public static GachaScript Instance
+	{
+		get { return instance; }
+	}
+
+	void Awake()
+	{
+		if (instance != null)
+		{
+			//throw new System.Exception("You have more than 1 GachaScript in the scene.");
+			Destroy(this);
+			return;
+		}
+
+		// Initialize the static class variables
+		instance = this;
+	}
+
 	void Start()
 	{
 		currIcon.GetComponent<Image>().sprite =
@@ -52,6 +78,7 @@ public class GachaScript : MonoBehaviour
 		SetGreyBG(false);
 
 		moneyText.GetComponent<Text>().text = GameData.current.coin.ToString();
+		SetGacha();
 	}
 
 	void Update()
@@ -66,6 +93,7 @@ public class GachaScript : MonoBehaviour
 			UpdateAnimation(BuyIconFX);
 
 		UpdateGreyBG();
+		UpdateFreeRoll();
 	}
 
 	void InitTiming()
@@ -110,7 +138,7 @@ public class GachaScript : MonoBehaviour
 			{
 				do
 				{
-					randomList[i] = Random.Range(Defines.Avatar_FirstIcon, AvatarHandler.Instance.GetNoofAvatars());
+					randomList[i] = UnityEngine.Random.Range(Defines.Avatar_FirstIcon, AvatarHandler.Instance.GetNoofAvatars());
 				}
 				while (IconManager.Instance.GetIsBuy(randomList[i]));
 			}
@@ -214,6 +242,35 @@ public class GachaScript : MonoBehaviour
 		}
 	}
 
+	void UpdateFreeRoll()
+	{
+		if(CanGacha())
+		{
+			freeRollButtonGrey.SetActive(false);
+		}
+		else
+		{
+			freeRollButtonGrey.SetActive(true);
+
+			int hour  = freeRollDueTime.Subtract(DateTime.Now).Hours;
+			int min = freeRollDueTime.Subtract(DateTime.Now).Minutes;
+			int secs = freeRollDueTime.Subtract(DateTime.Now).Seconds;
+
+			/*while(currTime >= 3600)
+			{
+				++hour;
+				currTime -= 3600;
+			}
+
+			while(currTime >= 60)
+			{
+				++min;
+				currTime -= 60;
+			}*/
+			freeRollButtonGrey.GetComponentInChildren<Text>().text = hour.ToString("00") + ":" + min.ToString("00") + ":" + secs.ToString("00") + " to free roll"; 
+		}
+	}
+
 	public void SetGreyBG (bool setter)
 	{
 		GreyBG.SetActive(setter);
@@ -314,6 +371,17 @@ public class GachaScript : MonoBehaviour
 			Button button = AvatarHandler.Instance.buyArray[i].GetComponent<Button>();
 			button.enabled = enable;
 		}
+	}
+
+	public bool CanGacha()
+	{
+		return freeRollDueTime.Subtract(DateTime.Now) <= TimeSpan.Zero;
+	}
+
+	public void SetGacha()
+	{
+		GameData.current.lastFreeRollTime = DateTime.Now;
+		freeRollDueTime = GameData.current.lastFreeRollTime.AddSeconds(Defines.FREE_ROLL_TIMER);
 	}
 }
 
