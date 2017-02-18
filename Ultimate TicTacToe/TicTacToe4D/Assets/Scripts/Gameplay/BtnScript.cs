@@ -42,6 +42,7 @@ public class BtnScript : MonoBehaviour
             else
             {
                 SceneManager.LoadScene("GameScene");
+                Adverts.Instance.RandomShowAd();
             }
         }
 		else if(GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().pausedState == 2)
@@ -55,6 +56,7 @@ public class BtnScript : MonoBehaviour
             {
                 SceneManager.LoadScene("MainMenu");
             }
+            Adverts.Instance.RandomShowAd();
         }
 	}
 
@@ -81,12 +83,14 @@ public class BtnScript : MonoBehaviour
         {
             SceneManager.LoadScene("GameScene");
         }
+		Adverts.Instance.RandomShowAd();
     }
 
 	public void BtnConfirmMainMenu()
 	{
 		NetworkManager.LeaveRoom();
 		SceneManager.LoadScene("MainMenu");
+		Adverts.Instance.RandomShowAd();
 	}
 
 	public void BtnEmote()

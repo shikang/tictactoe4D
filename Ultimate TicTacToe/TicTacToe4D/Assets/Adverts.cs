@@ -12,6 +12,9 @@ public class Adverts : MonoBehaviour
 	public bool freeGacha = false;
 	public bool beginReward = false;
 	public bool support;
+	public int showChance;
+	int baseChance = 20;
+	int chanceIncrease = 10;
 	// Singleton pattern
 	static Adverts instance;
 	public static Adverts Instance
@@ -33,7 +36,7 @@ public class Adverts : MonoBehaviour
 		Debug.Log(Advertisement.testMode);
 		Debug.Log(Advertisement.isSupported);
 		support = Advertisement.isSupported;
-
+		showChance = baseChance;
 		// Initialize the static class variables
 		instance = this;
 
@@ -72,16 +75,29 @@ public class Adverts : MonoBehaviour
 	{
 		return Advertisement.IsReady("rewardedVideo");
 	}
-	public bool ShowAd(AdVidType type , ShowOptions SO)
+	public bool ShowAd(AdVidType type , ShowOptions SO = null)
 	{
-		//Debug.Log(Advertisement.IsReady());
-		if(Advertisement.IsReady("rewardedVideo"))
+		//string str;
+		if(Advertisement.IsReady(type.ToString()))
 		{
-			//Debug.Log("showing");
-				Advertisement.Show("rewardedVideo",SO);
+				//Debug.Log("showing");
+			Advertisement.Show(type.ToString(),SO);
 			return true;
 		}
+		//Debug.Log(Advertisement.IsReady());
+
 		return false;
+	}
+	public void RandomShowAd ()
+	{
+		int val = Random.Range(1,101);
+		if(val < showChance)
+		{	//show  the skippable ad
+			ShowAd(AdVidType.video);
+			showChance = baseChance;
+			return;
+		}
+		showChance+= chanceIncrease;
 	}
 	public void FreeGachaHandler(ShowResult result)
 	{

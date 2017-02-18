@@ -146,6 +146,7 @@ public class MenuBtnScript : MonoBehaviour
 			{
 				var options = new ShowOptions { resultCallback = Adverts.Instance.FreeGachaHandler};
 				Adverts.Instance.ShowAd(AdVidType.video,options);
+				Adverts.Instance.freeGacha = true;
 				GachaScript.Instance.SetGacha();
 			}
 			break;
