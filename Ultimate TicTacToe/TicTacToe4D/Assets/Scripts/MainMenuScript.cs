@@ -39,8 +39,10 @@ public class MainMenuScript : MonoBehaviour
 
 	public GameObject avatarObject;
 
-	public GameObject PlayerIcon;
+    public GameObject PlayerIcon;
 	public int screenState;
+
+    public GameObject BlackOverlay;
 
 	GameObject currScreen;
 	GameObject nextScreen;
@@ -48,6 +50,18 @@ public class MainMenuScript : MonoBehaviour
 	int moveDirection;
 	float screenMaxPosX;
 	float screenMoveSpeed;
+
+    Image blackOverlayImage;
+    float blackTime;
+
+    enum MenuScreens
+    {
+        eMainMenuScreen,
+        eLocalPlay,
+        eNetworkPlay,
+        eGatcha,
+        eAvatarScreen,
+    }
 
 	void Start ()
 	{
@@ -57,8 +71,12 @@ public class MainMenuScript : MonoBehaviour
 		screenState = 0;
 		DisplayScreen(screenState);
 		currScreen = MainMenuScreen;
-		//PlayerIcon.GetComponent<Image>().color = Defines.ICON_COLOR_P1;
-	}
+
+        blackOverlayImage = BlackOverlay.GetComponent(typeof(Image)) as Image;
+        //PlayerIcon.GetComponent<Image>().color = Defines.ICON_COLOR_P1;
+
+        blackTime = 0.0f;
+    }
 
 	void Update ()
 	{
@@ -79,7 +97,24 @@ public class MainMenuScript : MonoBehaviour
 		if(moveScreen)
 			UpdateScreenPos();
 
-	}
+        if (blackTime <= 2.0f)
+        {
+            if (blackOverlayImage.color.a >= 1)
+            {
+                blackOverlayImage.color = new Color(blackOverlayImage.color.r, blackOverlayImage.color.g, blackOverlayImage.color.b, PennerEasing.Instance.easeInQuart(blackTime, 1.0f, 0.0f, 1.0f));
+            }
+            else
+            {
+                blackOverlayImage.color = new Color(blackOverlayImage.color.r, blackOverlayImage.color.g, blackOverlayImage.color.b, PennerEasing.Instance.easeOutQuart(blackTime, 0.0f, 1.0f, 1.0f));
+            }
+        }
+        else
+        {
+            blackTime = 0.0f;
+        }
+        blackTime += Time.deltaTime;
+        //Debug.Log(blackOverlayImage.color.a + ","+ blackTime);
+    }
 
 	// Change Screen is the animation; once done, then this is called to hide unwanted screens
 	public void DisplayScreen(int _changeTo)

@@ -2,37 +2,28 @@
 using System.Collections;
 using System;
 
-public class PennerEasing : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-}
-
-#if UNITY
-using UnityEngine;
-using Mathf = UnityEngine.Mathf;
-#endif
-
-public class Easings
+public class PennerEasing : MonoBehaviour
 {
     /// <summary>
     /// Constant Pi.
     /// </summary>
     private const float PI = Mathf.PI;
 
-    static Easings instance;
-    public static Easings Instance
+    static PennerEasing instance;
+    public static PennerEasing Instance
     {
         get { return instance; }
     }
 
+    void Awake()
+    {
+        if (instance != null)
+            throw new System.Exception("You have more than 1 PennerEasing in the scene.");
+
+        Debug.Log("pennereasing created");
+        // Initialize the static class variables
+        instance = this;
+    }
     /// <summary>
     /// Constant Pi / 2.
     /// t is the current delta time 
@@ -40,8 +31,7 @@ public class Easings
     /// c is the amount to change ( end value - begin value )
     /// d is the entire duration 
     /// </summary>
-    private const float HALFPI = Mathf.PI / 2.0f;
-    
+    /// 
     public float Linear(float fTime, float fBegin, float fEnd, float fDuration)
     {
         float fChange = fEnd - fBegin;
