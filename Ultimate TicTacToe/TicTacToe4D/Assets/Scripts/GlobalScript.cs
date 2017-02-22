@@ -12,13 +12,13 @@ public class GlobalScript : MonoBehaviour
 
 	public int avatarState; // 0 = None, 1 = LocalPlay_P1, 2 = LocalPlay_P2, 3 = Avatar
 
-	public int startingPlayer;
+	/*public int startingPlayer;
 	public GameObject starter1;
 	public GameObject starter2;
 	public Sprite tNormalP1;
 	public Sprite tNormalP2;
 	public Sprite tDepressedP1;
-	public Sprite tDepressedP2;
+	public Sprite tDepressedP2;*/
 
 	public int noofIcons = 5;
 	int gameInit;
@@ -36,6 +36,8 @@ public class GlobalScript : MonoBehaviour
 	public int myIcon = (int)Defines.ICONS.SPADE;
 	public int iconP1 = (int)Defines.ICONS.CIRCLE;
 	public int iconP2 = (int)Defines.ICONS.CROSS;
+
+	public float timePerTurn;
 
 	// Singleton pattern
 	static GlobalScript instance;
@@ -90,6 +92,7 @@ public class GlobalScript : MonoBehaviour
         countdownTimerToStart = 5.0f;
 
         GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().UpdateText.SetActive(false);
+		GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().UpdateText_PublicGame.SetActive(false);
     }
 
 	void Update ()
@@ -158,20 +161,20 @@ public class GlobalScript : MonoBehaviour
 
 	public void UpdateStartingPlayer(int _player)
 	{
-		startingPlayer = _player;
+		/*startingPlayer = _player;
 		if(startingPlayer == 1)
 		{
-			//starter1.GetComponent<Image>().sprite = tDepressedP1;
-			//starter2.GetComponent<Image>().sprite = tNormalP2;
+			starter1.GetComponent<Image>().sprite = tDepressedP1;
+			starter2.GetComponent<Image>().sprite = tNormalP2;
 		}
 		else if(startingPlayer == 2)
 		{
-			//starter1.GetComponent<Image>().sprite = tNormalP1;
-			//starter2.GetComponent<Image>().sprite = tDepressedP2;
-		}
+			starter1.GetComponent<Image>().sprite = tNormalP1;
+			starter2.GetComponent<Image>().sprite = tDepressedP2;
+		}*/
 	}
 
-	public void  UpdatePlayer1Name(string str)
+	public void UpdatePlayer1Name(string str)
 	{
 			if(str == "")
 				return;
@@ -179,7 +182,7 @@ public class GlobalScript : MonoBehaviour
 			//Debug.Log (nameP1);
 	}
 
-	public void  UpdatePlayer2Name(string str)
+	public void UpdatePlayer2Name(string str)
 	{
 			if(str =="")
 				return;
@@ -251,7 +254,11 @@ public class GlobalScript : MonoBehaviour
 	{
 		//iconP1 = myIcon;
 		iconP1 = GameData.current.avatarIcon;
-		iconP2 = (int)Defines.ICONS.CROSS;
+
+		if(GameData.current.avatarIcon == (int)Defines.ICONS.CROSS)
+			iconP2 = (int)Defines.ICONS.CIRCLE;
+		else
+			iconP2 = (int)Defines.ICONS.CROSS;
 	}
 
 	public void SetLocalMultiPlayerName()
@@ -294,8 +301,7 @@ public class GlobalScript : MonoBehaviour
 	public void FindPublicGame()
 	{
 		SetPlayerName();
-		GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().UpdateText.SetActive(true);
-
+		GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().UpdateText_PublicGame.SetActive(true);
         // This is a non update fn, so if you want to search for game here, need some kind of boolean trigger.
         //bStartCountdown = true;
         matchMaker.GetComponent<MatchMaker>().roomInputField.GetComponent<InputField>().text = "";
@@ -304,8 +310,6 @@ public class GlobalScript : MonoBehaviour
 		//ShowRoomChoice(false);
 
 		network_allowButtonClicks = 1;
-		GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().JoinPublicGrey.SetActive(true);
-		GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().FindFriendGrey.SetActive(true);
 	}
 
 	public void FindFriendGame()
@@ -318,8 +322,6 @@ public class GlobalScript : MonoBehaviour
 		//SetPlayerName();
 
 		network_allowButtonClicks = 1;
-		GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().JoinPublicGrey.SetActive(true);
-		GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().FindFriendGrey.SetActive(true);
 	}
 
 	public void SearchFriend()
@@ -362,7 +364,17 @@ public class GlobalScript : MonoBehaviour
 			bStartCountdown = false;
 
 			countdownTimerToStart = 5.0f;
-			SceneManager.LoadScene("GameScene");
+			GameObject.FindGameObjectWithTag("MainMenuCanvas").GetComponent<MenuBtnScript>().isStartingGame = true;
 		}
+	}
+
+	public void SetTurnTime(int i)
+	{
+		if(i == 1)
+			timePerTurn = Defines.TIMEPERTURN_1;
+		else if(i == 2)
+			timePerTurn = Defines.TIMEPERTURN_2;
+		else if(i == 3)
+			timePerTurn = Defines.TIMEPERTURN_3;
 	}
 }

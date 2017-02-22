@@ -149,6 +149,7 @@ public class GridScript : MonoBehaviour
 		PlaceOnGrid((int)GetTurnHandler().turn);
 		parentGrid.GetComponent<BigGridScript>().ProcessBigGridCompleted(GetTurnHandler().turn);
 		GetTurnHandler().ChangeTurn();
+		GetGUIManagerScript().ResetTimer();
 
 		GetBoardScript().UpdateActiveGridBG(gridID);
 		GetGUIManagerScript().UpdateClick();

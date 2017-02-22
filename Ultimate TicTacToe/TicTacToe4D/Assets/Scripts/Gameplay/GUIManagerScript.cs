@@ -92,7 +92,7 @@ public class GUIManagerScript : MonoBehaviour
 	{
 		gridEffect_growStage = 0;
 		startTime = 300.0f;
-		timerP1 = timerP2 = startTime;
+		timerP1 = timerP2 = GlobalScript.Instance.timePerTurn;
 
 		nameP1 = GlobalScript.Instance.nameP1;
 		nameP2 = GlobalScript.Instance.nameP2;
@@ -222,10 +222,19 @@ public class GUIManagerScript : MonoBehaviour
 		{
 			timerP1 -= Time.deltaTime;
 			if(timerP1 <= 0.0f)
-				GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().SetWinner((int)Defines.TURN.P2);
+			{
+				GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().ChangeTurn();
+				GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().activeBigGrid = 10;
+				GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().UpdateActiveGridBG(10, false);
+			}
+			//GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().SetWinner((int)Defines.TURN.P2);
 
 			GUINameP1.GetComponent<Text>().color = Color.green;
-			GUITimerP1.GetComponent<Text>().color = Color.green;
+
+			if(timerP1 > 6.0f)
+				GUITimerP1.GetComponent<Text>().color = Color.green;
+			else
+				GUITimerP1.GetComponent<Text>().color = Color.red;
 			GUINameP2.GetComponent<Text>().color = Color.grey;
 			GUITimerP2.GetComponent<Text>().color = Color.grey;
 			GUITurn.GetComponent<Text>().text = nameP1 + "'s Turn";
@@ -259,13 +268,22 @@ public class GUIManagerScript : MonoBehaviour
 		else if(GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn == Defines.TURN.P2)
 		{
 			timerP2 -= Time.deltaTime;
+
 			if(timerP2 <= 0.0f)
-				GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().SetWinner((int)Defines.TURN.P1);
+			{
+				GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().ChangeTurn();
+				GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().activeBigGrid = 10;
+				GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().UpdateActiveGridBG(10, false);
+			}
+			//GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().SetWinner((int)Defines.TURN.P2);
 
 			GUINameP1.GetComponent<Text>().color = Color.grey;
 			GUITimerP1.GetComponent<Text>().color = Color.grey;
 			GUINameP2.GetComponent<Text>().color = Color.green;
-			GUITimerP2.GetComponent<Text>().color = Color.green;
+			if(timerP2 > 6.0f)
+				GUITimerP2.GetComponent<Text>().color = Color.green;
+			else
+				GUITimerP2.GetComponent<Text>().color = Color.red;
 			GUITurn.GetComponent<Text>().text = nameP2 + "'s Turn";
 
 			// Icon Frame Animation during the player's turn
@@ -393,6 +411,11 @@ public class GUIManagerScript : MonoBehaviour
 			currTime -= 60;
 		}
 		GUITimerP2.GetComponent<Text>().text = min + ":" + currTime.ToString("00");
+	}
+
+	public void ResetTimer()
+	{
+		timerP1 = timerP2 = GlobalScript.Instance.timePerTurn;
 	}
 
 	public void GridEffectAnim()

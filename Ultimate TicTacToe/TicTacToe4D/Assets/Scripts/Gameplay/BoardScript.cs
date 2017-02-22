@@ -165,7 +165,7 @@ public class BoardScript : MonoBehaviour
 		if(!firstTime)
 		{
 			// If next grid is already completed, next player gets to put anywhere.
-			if(bigGrids[_gridID].GetComponent<BigGridScript>().gridWinner != 0)
+			if(activeBigGrid != 10 && bigGrids[_gridID].GetComponent<BigGridScript>().gridWinner != 0)
 				activeBigGrid = 10;
 			else
 				activeBigGrid = _gridID;

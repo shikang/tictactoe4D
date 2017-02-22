@@ -20,12 +20,13 @@ public class MainMenuScript : MonoBehaviour
 	public GameObject HowToPlayPage;
 
 	public GameObject UpdateText;
+	public GameObject UpdateText_PublicGame;
 	public GameObject PasswordText;
 	public GameObject PasswordField;
 	public GameObject SearchBtn;
 
-	public GameObject FindFriendGrey;
-	public GameObject JoinPublicGrey;
+	public GameObject FindFriendBtn;
+	public GameObject JoinPublicBtn;
 	public GameObject SearchGrey;
 
 	public GameObject Avatar;
@@ -54,6 +55,17 @@ public class MainMenuScript : MonoBehaviour
     Image blackOverlayImage;
     float blackTime;
 
+	public GameObject setTimer_local_1;
+	public GameObject setTimer_local_2;
+	public GameObject setTimer_local_3;
+	public GameObject setTimer_network_1;
+	public GameObject setTimer_network_2;
+	public GameObject setTimer_network_3;
+	public Sprite normalButton;
+	public Sprite depressedButton;
+
+	public int networkMenuAnimStage;
+
     enum MenuScreens
     {
         eMainMenuScreen,
@@ -76,6 +88,11 @@ public class MainMenuScript : MonoBehaviour
         //PlayerIcon.GetComponent<Image>().color = Defines.ICON_COLOR_P1;
 
         blackTime = 0.0f;
+		networkMenuAnimStage = 0;
+
+		GlobalScript.Instance.SetTurnTime(3);
+		setTimer_local_3.GetComponent<Image>().sprite = depressedButton;
+		setTimer_network_3.GetComponent<Image>().sprite = depressedButton;
     }
 
 	void Update ()
@@ -114,6 +131,9 @@ public class MainMenuScript : MonoBehaviour
         }
         blackTime += Time.deltaTime;
         //Debug.Log(blackOverlayImage.color.a + ","+ blackTime);
+
+        if(networkMenuAnimStage != 0)
+			UpdateNetworkMenuAnim();
     }
 
 	// Change Screen is the animation; once done, then this is called to hide unwanted screens
@@ -142,17 +162,21 @@ public class MainMenuScript : MonoBehaviour
 			StartGameLocalMultiplayerScreen.SetActive(true);
 			avatarObject.SetActive(true);
 			//GlobalScript.Instance.gameMode = 2;
+
+			AvatarHandler.Instance.scrollGrandparent.GetComponent<RectTransform>().localPosition = new Vector3(0.3f, -65.5f, 0.0f);
+			AvatarHandler.Instance.scrollGrandparent.GetComponent<RectTransform>().sizeDelta = new Vector2(163.4f, 68.1f);
+			AvatarHandler.Instance.scrollParent.GetComponent<RectTransform>().localPosition = new Vector3(-0.0f, -34.0f, 0.0f);
+			AvatarHandler.Instance.scrollParent.GetComponent<RectTransform>().sizeDelta = new Vector2(314.0f, 130.6f);
 			break;
 
 		case 2:
 		// Network
 			StartGameNetworkedScreen.SetActive(true);
 			UpdateText.SetActive(false);
+			UpdateText_PublicGame.SetActive(false);
 			PasswordText.SetActive(false);
 			PasswordField.SetActive(false);
 			SearchBtn.SetActive(false);
-			JoinPublicGrey.SetActive(false);
-			FindFriendGrey.SetActive(false);
 			SearchGrey.SetActive(false);
 			FindFriendButton.SetActive(true);
 			JoinPublicButton.SetActive(true);
@@ -171,6 +195,11 @@ public class MainMenuScript : MonoBehaviour
 		case 4:
 			AvatarScreen.SetActive(true);
 			avatarObject.SetActive(true);
+
+			AvatarHandler.Instance.scrollGrandparent.GetComponent<RectTransform>().localPosition = new Vector3(0.3f, -44.3f, 0.0f);
+			AvatarHandler.Instance.scrollGrandparent.GetComponent<RectTransform>().sizeDelta = new Vector2(163.4f, 110.7f);
+			AvatarHandler.Instance.scrollParent.GetComponent<RectTransform>().localPosition = new Vector3(-0.0f, -57.3f, 0.0f);
+			AvatarHandler.Instance.scrollParent.GetComponent<RectTransform>().sizeDelta = new Vector2(314.0f, 197.8f);
 			break;
 
 		default:
@@ -220,6 +249,81 @@ public class MainMenuScript : MonoBehaviour
 		case 3: return GachaScreen;
 		case 4: return AvatarScreen;
 		default: return null;
+		}
+	}
+
+	public void SetTimerImage(int mode, int i)
+	{
+		if(i == 1)
+		{
+			if(mode == 1) // local
+			{
+				setTimer_local_1.GetComponent<Image>().sprite = depressedButton;
+				setTimer_local_2.GetComponent<Image>().sprite = normalButton;
+				setTimer_local_3.GetComponent<Image>().sprite = normalButton;
+			}
+			else if(mode == 2) // network
+			{
+				setTimer_network_1.GetComponent<Image>().sprite = depressedButton;
+				setTimer_network_2.GetComponent<Image>().sprite = normalButton;
+				setTimer_network_3.GetComponent<Image>().sprite = normalButton;
+			}
+		}
+		else if(i == 2)
+		{
+			if(mode == 1) // local
+			{
+				setTimer_local_1.GetComponent<Image>().sprite = normalButton;
+				setTimer_local_2.GetComponent<Image>().sprite = depressedButton;
+				setTimer_local_3.GetComponent<Image>().sprite = normalButton;
+			}
+			else if(mode == 2) // network
+			{
+				setTimer_network_1.GetComponent<Image>().sprite = normalButton;
+				setTimer_network_2.GetComponent<Image>().sprite = depressedButton;
+				setTimer_network_3.GetComponent<Image>().sprite = normalButton;
+			}
+		}
+		else if(i == 3)
+		{
+			if(mode == 1) // local
+			{
+				setTimer_local_1.GetComponent<Image>().sprite = normalButton;
+				setTimer_local_2.GetComponent<Image>().sprite = normalButton;
+				setTimer_local_3.GetComponent<Image>().sprite = depressedButton;
+			}
+			else if(mode == 2) // network
+			{
+				setTimer_network_1.GetComponent<Image>().sprite = normalButton;
+				setTimer_network_2.GetComponent<Image>().sprite = normalButton;
+				setTimer_network_3.GetComponent<Image>().sprite = depressedButton;
+			}
+		}
+	}
+
+	void UpdateNetworkMenuAnim()
+	{
+		if(networkMenuAnimStage == 1)
+		{
+			Debug.Log("IN?");
+			float yPos = JoinPublicBtn.GetComponent<RectTransform>().localPosition.y;
+			JoinPublicBtn.GetComponent<RectTransform>().localPosition =
+				Vector3.Lerp(JoinPublicBtn.GetComponent<RectTransform>().localPosition, new Vector3(-160.0f, yPos, 0.0f), Time.deltaTime * 4.0f);
+
+			yPos = FindFriendBtn.GetComponent<RectTransform>().localPosition.y;
+			FindFriendBtn.GetComponent<RectTransform>().localPosition =
+				Vector3.Lerp(FindFriendBtn.GetComponent<RectTransform>().localPosition, new Vector3(160.0f, yPos, 0.0f), Time.deltaTime * 4.0f);
+		}
+
+		else if(networkMenuAnimStage == 2)
+		{
+			float yPos = JoinPublicBtn.GetComponent<RectTransform>().localPosition.y;
+			JoinPublicBtn.GetComponent<RectTransform>().localPosition =
+				Vector3.Lerp(JoinPublicBtn.GetComponent<RectTransform>().localPosition, new Vector3(0.0f, yPos, 0.0f), Time.deltaTime * 6.0f);
+
+			yPos = FindFriendBtn.GetComponent<RectTransform>().localPosition.y;
+			FindFriendBtn.GetComponent<RectTransform>().localPosition =
+				Vector3.Lerp(FindFriendBtn.GetComponent<RectTransform>().localPosition, new Vector3(0.0f, yPos, 0.0f), Time.deltaTime * 6.0f);
 		}
 	}
 }

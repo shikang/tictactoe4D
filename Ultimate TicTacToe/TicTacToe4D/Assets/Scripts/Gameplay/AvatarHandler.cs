@@ -10,6 +10,7 @@ public class AvatarHandler : MonoBehaviour
 	public GameObject framePrefab;
 	public GameObject avatarParent;
 	public GameObject frameParent;
+	public GameObject scrollGrandparent;
 	public GameObject scrollParent;
 
 	public Sprite Frame1;
@@ -140,6 +141,11 @@ public class AvatarHandler : MonoBehaviour
 		//currAvatar.GetComponent<Image>().color = Defines.ICON_COLOR_P1;
 
 		UpdateUnlockedAvatarsStatus();
+
+		localAvatar_P1 = (int)Defines.ICONS.CIRCLE;
+		localAvatar_P2 = (int)Defines.ICONS.CROSS;
+		avatarLocalPlay1.GetComponent<Image>().sprite = IconManager.Instance.GetIcon(localAvatar_P1);
+		avatarLocalPlay2.GetComponent<Image>().sprite = IconManager.Instance.GetIcon(localAvatar_P2);
 	}
 
 	void Update()

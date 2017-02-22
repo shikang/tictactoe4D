@@ -79,6 +79,10 @@ public class Defines : Singleton<Defines>
 
 	static public float FREE_ROLL_TIMER = 14400.0f;	//4 hours
 
+	static public float TIMEPERTURN_1 = 10.0f;
+	static public float TIMEPERTURN_2 = 20.0f;
+	static public float TIMEPERTURN_3 = 30.0f;
+
 	void Start()
 	{
 		//load playerscoree

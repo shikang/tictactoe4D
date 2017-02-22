@@ -25,7 +25,11 @@ public enum BUTTONTYPES
 
 	LOCAL_BACKTOMAINMENU,
 
-	ADS_WATCH_VIDEO //14
+	ADS_WATCH_VIDEO, //14
+
+	SETTIME_1,
+	SETTIME_2,
+	SETTIME_3
 };
 
 public class MenuBtnScript : MonoBehaviour
@@ -36,13 +40,36 @@ public class MenuBtnScript : MonoBehaviour
 	public bool isShowHowToPlayScreen;
 	public GameObject MenuHandler;
 
+	public bool isStartingGame;
+	public GameObject blackScreen;
+
 	void Start ()
 	{
 		isShowSettingsScreen = false;
+		isStartingGame = false;
+		blackScreen.GetComponent<Image>().color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
+		blackScreen.SetActive(false);
 	}
 
 	void Update ()
 	{
+		UpdateAnim();
+	}
+
+	void UpdateAnim()
+	{
+		if(isStartingGame)
+		{
+			blackScreen.SetActive(true);
+			Color temp = blackScreen.GetComponent<Image>().color;
+			temp.a += Time.deltaTime * 3.0f;
+			blackScreen.GetComponent<Image>().color = temp;
+
+			if(blackScreen.GetComponent<Image>().color.a >= 1.0f)
+			{
+				SceneManager.LoadScene("GameScene");
+			}
+		}
 	}
 
 	// NGUI Mouse Handler
@@ -55,8 +82,8 @@ public class MenuBtnScript : MonoBehaviour
 		switch((BUTTONTYPES)btn_)
 		{
 		case BUTTONTYPES.MAIN_SINGLEPLAYER:
+			isStartingGame = true;
 			GlobalScript.Instance.gameMode = 0;
-			SceneManager.LoadScene("GameScene");
 			GlobalScript.Instance.SetSinglePlayerName();
 			GlobalScript.Instance.SetSinglePlayerIcon();
 			break;
@@ -109,7 +136,7 @@ public class MenuBtnScript : MonoBehaviour
 	        break;
 
 		case BUTTONTYPES.LOCALPLAY_START:
-			SceneManager.LoadScene("GameScene");
+			isStartingGame = true;
 			GlobalScript.Instance.SetLocalMultiPlayerName();
 			GlobalScript.Instance.SetLocalMultiPlayerIcon();
 			break;
@@ -118,10 +145,12 @@ public class MenuBtnScript : MonoBehaviour
 			GlobalScript.Instance.FindPublicGame();
 			Camera.main.GetComponent<MainMenuScript>().Avatar.SetActive(false);
 			Camera.main.GetComponent<MainMenuScript>().Settings.SetActive(false);
+			Camera.main.GetComponent<MainMenuScript>().networkMenuAnimStage = 1;
 			break;
 
 		case BUTTONTYPES.NETWORK_PRIVATEGAME:
 			GlobalScript.Instance.FindFriendGame();
+			Camera.main.GetComponent<MainMenuScript>().networkMenuAnimStage = 1;
 			break;
 
 		case BUTTONTYPES.NETWORK_PRIVATEGAME_SEARCH:
@@ -154,11 +183,11 @@ public class MenuBtnScript : MonoBehaviour
 		case BUTTONTYPES.NETWORK_BACKTOMAINMENU:
 			if(GlobalScript.Instance.network_allowButtonClicks == 1)
 			{
-				Camera.main.GetComponent<MainMenuScript>().JoinPublicGrey.SetActive(false);
-				Camera.main.GetComponent<MainMenuScript>().FindFriendGrey.SetActive(false);
+				Camera.main.GetComponent<MainMenuScript>().networkMenuAnimStage = 2;
 				GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().SearchGrey.SetActive(false);
 
 				Camera.main.GetComponent<MainMenuScript>().UpdateText.SetActive(false);
+				Camera.main.GetComponent<MainMenuScript>().UpdateText_PublicGame.SetActive(false);
 				Camera.main.GetComponent<MainMenuScript>().PasswordText.SetActive(false);
 				Camera.main.GetComponent<MainMenuScript>().PasswordField.SetActive(false);
 				Camera.main.GetComponent<MainMenuScript>().SearchBtn.SetActive(false);
@@ -180,6 +209,21 @@ public class MenuBtnScript : MonoBehaviour
 		        //GlobalScript.Instance.LeaveRoom();
 		        //GlobalScript.Instance.ResetCountdown();
 			}
+			break;
+
+		case BUTTONTYPES.SETTIME_1:
+			GlobalScript.Instance.SetTurnTime(1);
+			Camera.main.GetComponent<MainMenuScript>().SetTimerImage(GlobalScript.Instance.gameMode, 1);
+			break;
+
+		case BUTTONTYPES.SETTIME_2:
+			GlobalScript.Instance.SetTurnTime(2);
+			Camera.main.GetComponent<MainMenuScript>().SetTimerImage(GlobalScript.Instance.gameMode, 2);
+			break;
+
+		case BUTTONTYPES.SETTIME_3:
+			GlobalScript.Instance.SetTurnTime(3);
+			Camera.main.GetComponent<MainMenuScript>().SetTimerImage(GlobalScript.Instance.gameMode, 3);
 			break;
 
 		default:

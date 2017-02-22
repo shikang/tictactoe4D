@@ -50,17 +50,24 @@ public class GameStartAnim : MonoBehaviour
 		currStage = STAGE.BlackBG;
 		scaleTimer = 2.5f;
 		fadeOut = false;
+
+		playerIcon1.GetComponent<Image>().sprite = IconManager.Instance.GetIcon((Defines.ICONS)GlobalScript.Instance.iconP1);
+		playerIcon2.GetComponent<Image>().sprite = IconManager.Instance.GetIcon((Defines.ICONS)GlobalScript.Instance.iconP2);
+		playerName1.GetComponent<Text>().text = GlobalScript.Instance.nameP1;
+		playerName2.GetComponent<Text>().text = GlobalScript.Instance.nameP2;
 	}
 
 	void Update ()
 	{
 		if(currStage == STAGE.BlackBG)
 		{
+			blackScreen.SetActive(true);
+
 			Color tmp = blackScreen.GetComponent<Image>().color;
-			tmp.a += Time.deltaTime * 1.0f;
+			tmp.a -= Time.deltaTime * 1.0f;
 			blackScreen.GetComponent<Image>().color = tmp;
 
-			if(tmp.a >= 0.5f)
+			if(tmp.a <= 0.5f)
 				currStage = STAGE.PlayerLerpIn;
 		}
 
@@ -82,7 +89,7 @@ public class GameStartAnim : MonoBehaviour
 			if(!fadeOut)
 			{
 				tmp = whiteScreen.GetComponent<Image>().color;
-				tmp.a += Time.deltaTime * 5.0f;
+				tmp.a += Time.deltaTime * 7.0f;
 				whiteScreen.GetComponent<Image>().color = tmp;
 
 				if(tmp.a >= 0.8f)
@@ -91,7 +98,7 @@ public class GameStartAnim : MonoBehaviour
 			else
 			{
 				tmp = whiteScreen.GetComponent<Image>().color;
-				tmp.a -= Time.deltaTime * 1.3f;
+				tmp.a -= Time.deltaTime * 1.6f;
 				whiteScreen.GetComponent<Image>().color = tmp;
 
 				if(tmp.a <= 0.2f)
@@ -123,10 +130,10 @@ public class GameStartAnim : MonoBehaviour
 
 		else if(currStage == STAGE.PlayerLerpOut)
 		{
-			playerGroup1.transform.localPosition = Vector3.Lerp(playerGroup1.transform.localPosition, new Vector3(-240.0f, 0.0f, 0.0f), Time.deltaTime * 8.0f);
-			playerGroup2.transform.localPosition = Vector3.Lerp(playerGroup2.transform.localPosition, new Vector3(240.0f, 0.0f, 0.0f), Time.deltaTime * 8.0f);
+			playerGroup1.transform.localPosition = Vector3.Lerp(playerGroup1.transform.localPosition, new Vector3(-250.0f, 0.0f, 0.0f), Time.deltaTime * 8.0f);
+			playerGroup2.transform.localPosition = Vector3.Lerp(playerGroup2.transform.localPosition, new Vector3(250.0f, 0.0f, 0.0f), Time.deltaTime * 8.0f);
 
-			if(Vector3.Distance(playerGroup1.transform.localPosition, new Vector3(-240.0f, 0.0f, 0.0f)) < 10.0f)
+			if(Vector3.Distance(playerGroup1.transform.localPosition, new Vector3(-250.0f, 0.0f, 0.0f)) < 10.0f)
 			{
 				currStage = STAGE.FadeOut;
 			}
@@ -139,7 +146,11 @@ public class GameStartAnim : MonoBehaviour
 			blackScreen.GetComponent<Image>().color = tmp;
 
 			if(tmp.a <= 0.0f)
+			{
+				blackScreen.SetActive(false);
+				whiteScreen.SetActive(false);
 				currStage = STAGE.EndAnim;
+			}
 		}
 	}
 
