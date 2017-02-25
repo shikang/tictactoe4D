@@ -15,6 +15,7 @@ public class InAppProductList : Singleton<InAppProductList>
 	{
 		COIN,
 		AVATAR,
+		REMOVE_ADS
 	}
 
 	// Comsumables
@@ -90,6 +91,8 @@ public class InAppProductList : Singleton<InAppProductList>
 				return PRODUCT_PREFIX + productType.ToString().ToLower() + "." + productParam.ToString();
 			case InAppProductList.ProductType.AVATAR:
 				return PRODUCT_PREFIX + productType.ToString().ToLower() + "." + ((Defines.ICONS)productParam).ToString().ToLower();
+			case InAppProductList.ProductType.REMOVE_ADS:
+				return PRODUCT_PREFIX + productType.ToString().ToLower() + "." + productParam.ToString();
 			default:
 				Debug.Log( string.Format( "InAppProcessor::GetProductIdentifier: FAIL. Invalid product type: '{0}'", productType.ToString() ) );
 				return "";

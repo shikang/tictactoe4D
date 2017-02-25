@@ -88,8 +88,19 @@ public class Adverts : MonoBehaviour
 
 		return false;
 	}
+	public void RemoveAds()
+	{
+
+		GameData.current.RandomAds = false;
+		SaveLoad.Save();
+		Debug.Log("Removing Random Ads");
+	}
 	public void RandomShowAd ()
 	{
+		//Do not show ads if player has purchased the Ad removal
+		if( GameData.current.RandomAds ==false)
+			return;
+
 		int val = Random.Range(1,101);
 		if(val < showChance)
 		{	//show  the skippable ad
