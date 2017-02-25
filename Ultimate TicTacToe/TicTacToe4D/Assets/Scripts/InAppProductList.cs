@@ -15,7 +15,7 @@ public class InAppProductList : Singleton<InAppProductList>
 	{
 		COIN,
 		AVATAR,
-		REMOVE_ADS
+		ADS,
 	}
 
 	// Comsumables
@@ -68,7 +68,7 @@ public class InAppProductList : Singleton<InAppProductList>
 			}
 		}
 		
-		// Non-consumables
+		// Non-consumables (Avatar)
 		for ( int i = 0; i < AvatarHandler.Instance.buyArray.Length; ++i )
 		{
 			int buyID = AvatarHandler.Instance.BuyID[i];
@@ -77,6 +77,14 @@ public class InAppProductList : Singleton<InAppProductList>
 			m_NonConsumableList.Add( productIdentifier, new ProductInfo( productIdentifier, Store.ALL ) );
 
 			InAppProcessor.Instance.AddProductParam( productIdentifier, ProductType.AVATAR, buyID );
+		}
+		// Non-consumables (DisableAds)
+		for ( int i = 0; i < (int)Defines.AdsInAppPurchase.TOTAL; ++i )
+		{
+			string productIdentifier = GetProductIdentifier( ProductType.ADS, i );
+			Debug.Log( "Non consumable: " + productIdentifier );
+			m_NonConsumableList.Add( productIdentifier, new ProductInfo( productIdentifier, Store.ALL ) );
+			InAppProcessor.Instance.AddProductParam( productIdentifier, ProductType.ADS, i );
 		}
 
 		// Subscriptions
@@ -91,8 +99,8 @@ public class InAppProductList : Singleton<InAppProductList>
 				return PRODUCT_PREFIX + productType.ToString().ToLower() + "." + productParam.ToString();
 			case InAppProductList.ProductType.AVATAR:
 				return PRODUCT_PREFIX + productType.ToString().ToLower() + "." + ((Defines.ICONS)productParam).ToString().ToLower();
-			case InAppProductList.ProductType.REMOVE_ADS:
-				return PRODUCT_PREFIX + productType.ToString().ToLower() + "." + productParam.ToString();
+			case InAppProductList.ProductType.ADS:
+				return PRODUCT_PREFIX + productType.ToString().ToLower() + "." + ((Defines.AdsInAppPurchase)productParam).ToString().ToLower();
 			default:
 				Debug.Log( string.Format( "InAppProcessor::GetProductIdentifier: FAIL. Invalid product type: '{0}'", productType.ToString() ) );
 				return "";

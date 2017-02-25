@@ -14,7 +14,7 @@ public class GameData
 	public string avatarName;
 	public int avatarIcon;
 	public DateTime lastFreeRollTime;
-	public bool RandomAds;
+	public bool removeAds;
 
 	public GameData()
 	{
@@ -25,6 +25,6 @@ public class GameData
 		avatarName = "abc";
 		avatarIcon = 8;
 		lastFreeRollTime = DateTime.Now;
-		RandomAds = true;
+		removeAds = false;
 	}
 }

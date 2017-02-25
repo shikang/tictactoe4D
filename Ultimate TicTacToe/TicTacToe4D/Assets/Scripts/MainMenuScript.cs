@@ -38,6 +38,8 @@ public class MainMenuScript : MonoBehaviour
 	public GameObject PlayerIconInput;
 	public GameObject RoomNameInput;
 
+	public GameObject DisableAdsButton;
+
 	public GameObject avatarObject;
 
     public GameObject PlayerIcon;
@@ -325,5 +327,15 @@ public class MainMenuScript : MonoBehaviour
 			FindFriendBtn.GetComponent<RectTransform>().localPosition =
 				Vector3.Lerp(FindFriendBtn.GetComponent<RectTransform>().localPosition, new Vector3(0.0f, yPos, 0.0f), Time.deltaTime * 6.0f);
 		}
+	}
+
+	public void EnableDisableAdsButton(bool enable)
+	{
+		DisableAdsButton.GetComponent<Button>().enabled = enable;
+	}
+
+	public void DisableDisableAdsButton()
+	{
+		DisableAdsButton.GetComponent<Button>().interactable = false;
 	}
 }

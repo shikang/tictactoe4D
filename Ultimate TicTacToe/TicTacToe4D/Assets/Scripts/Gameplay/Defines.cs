@@ -83,6 +83,13 @@ public class Defines : Singleton<Defines>
 	static public float TIMEPERTURN_2 = 20.0f;
 	static public float TIMEPERTURN_3 = 30.0f;
 
+	public enum AdsInAppPurchase
+	{
+		DISABLE,
+
+		TOTAL
+	}
+
 	void Start()
 	{
 		//load playerscoree

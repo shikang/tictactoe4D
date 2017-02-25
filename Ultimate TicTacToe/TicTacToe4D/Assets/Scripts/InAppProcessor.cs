@@ -49,6 +49,27 @@ public class InAppProcessor : Singleton<InAppProcessor>
 					GachaScript gacha = go.GetComponent<GachaScript>();
 					gacha.ProcessBuyIcon( productParam.m_nProductParam );
 					break;
+				case InAppProductList.ProductType.ADS:
+					Defines.AdsInAppPurchase adsProductParam = (Defines.AdsInAppPurchase)productParam.m_nProductParam;
+
+					switch ( adsProductParam )
+					{
+						case Defines.AdsInAppPurchase.DISABLE:
+							Debug.Log( string.Format( "InAppProcessor::ProcessPurchase: PASS. Product: '{0}'", productIdentifier ) );
+							Adverts.Instance.RemoveAds();
+
+							// Disable disable ads button
+							MainMenuScript mainMenu = Camera.main.GetComponent<MainMenuScript>();
+							mainMenu.EnableDisableAdsButton(true);
+							mainMenu.DisableDisableAdsButton();
+
+							break;
+						default:
+							Debug.Log( string.Format( "InAppProcessor::ProcessPurchase: FAIL. Unrecognized Ads Product Params: '{0}'", productIdentifier ) );
+							break;
+					}
+					
+					break;
 				default:
 					Debug.Log( string.Format( "InAppProcessor::ProcessPurchase: FAIL. Invalid product type: '{0}'", productParam.m_ProductType.ToString() ) );
 					return;
@@ -80,6 +101,12 @@ public class InAppProcessor : Singleton<InAppProcessor>
 					GameObject go = GameObject.FindGameObjectWithTag( "Gacha" );
 					GachaScript gacha = go.GetComponent<GachaScript>();
 					gacha.EnableBuyUI( true );
+					break;
+				case InAppProductList.ProductType.ADS:
+					Debug.Log( string.Format( "InAppProcessor::ProcessPurchase: FAIL. Product: '{0}'", productIdentifier ) );
+
+					MainMenuScript mainMenu = Camera.main.GetComponent<MainMenuScript>();
+					mainMenu.EnableDisableAdsButton(true);
 					break;
 				default:
 					Debug.Log( string.Format( "InAppProcessor::ProcessPurchase: FAIL. Invalid product type: '{0}'", productParam.m_ProductType.ToString() ) );

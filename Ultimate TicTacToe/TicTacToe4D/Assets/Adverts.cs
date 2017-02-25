@@ -91,14 +91,14 @@ public class Adverts : MonoBehaviour
 	public void RemoveAds()
 	{
 
-		GameData.current.RandomAds = false;
+		GameData.current.removeAds = true;
 		SaveLoad.Save();
 		Debug.Log("Removing Random Ads");
 	}
 	public void RandomShowAd ()
 	{
 		//Do not show ads if player has purchased the Ad removal
-		if( GameData.current.RandomAds ==false)
+		if( GameData.current.removeAds)
 			return;
 
 		int val = Random.Range(1,101);

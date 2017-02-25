@@ -29,9 +29,9 @@ public enum BUTTONTYPES
 
 	SETTIME_1,
 	SETTIME_2,
-	SETTIME_3,//17
+	SETTIME_3,
 
-	RemoveAds
+	SETTINGS_DIABLE_ADS, //18
 };
 
 public class MenuBtnScript : MonoBehaviour
@@ -228,18 +228,13 @@ public class MenuBtnScript : MonoBehaviour
 			Camera.main.GetComponent<MainMenuScript>().SetTimerImage(GlobalScript.Instance.gameMode, 3);
 			break;
 
-		case BUTTONTYPES.RemoveAds:
-			//Pop up the purchase option to remove ads
-			//Disable the rest of the UI
-			//????
-			//buy the product
-			GameObject.FindGameObjectWithTag("IAPManager").GetComponent<InAppPurchaser>().BuyProduct(InAppProductList.ProductType.AVATAR, 3);
-			//Upon Purchase successful
-			//Call disable ads 
-			Adverts.Instance.RemoveAds();
+		case BUTTONTYPES.SETTINGS_DIABLE_ADS:
+			Camera.main.GetComponent<MainMenuScript>().EnableDisableAdsButton(false);
+
+			GameObject IAPManager = GameObject.Find("IAPManager");
+			InAppPurchaser iapPurchaser = IAPManager.GetComponent<InAppPurchaser>();
+			iapPurchaser.BuyProduct( InAppProductList.ProductType.ADS, (int)Defines.AdsInAppPurchase.DISABLE );
 			break;
-
-
 		default:
 			break;
 		}
