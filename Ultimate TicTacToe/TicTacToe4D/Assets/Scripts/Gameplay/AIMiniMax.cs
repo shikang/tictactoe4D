@@ -93,7 +93,7 @@ public class AIMiniMax : MonoBehaviour
 			// Free to go any big grid
 			if(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().activeBigGrid == 10)
 			{
-				int gridID = 4;
+				//int gridID = 4;
 				/*do
 				{
 					gridID = Random.Range(0, 8);
@@ -159,8 +159,8 @@ public class AIMiniMax : MonoBehaviour
 		}
 
 		MaxVal = -INFINITE;
-		minVals.Clear();
-		posVals.Clear();
+		//minVals.Clear();
+		//posVals.Clear();
 		//Debug.Log("Start");
 		int changecount = 0;
 		for(int i = 0; i < 9; ++i)
@@ -174,21 +174,22 @@ public class AIMiniMax : MonoBehaviour
 				Place(i, AITurn);
 				MinVal = O(depth-1, MaxVal, INFINITE);
 				UnPlace(i);
-				//Debug.Log("Val: " + MinVal);
+				//Debug.Log(i+ " > Val: " + MinVal);
 
-				minVals.Add(MinVal);
-				posVals.Add(i);
+				//minVals.Add(MinVal);
+				//posVals.Add(i);
 
 				if(MaxVal < MinVal)
 				{
-					++changecount;
 					FinalGrid = i;
 					MaxVal = MinVal;
 				}
+				else if (MaxVal == MinVal)
+					++changecount;
 			}
 		}
 		//Debug.Log("Min: "+MinVal+"\nChangeCount: " + changecount);
-		if(diff == Difficulty.Easy)
+		/*if(diff == Difficulty.Easy)
 		{
 			aiMin = MaxVal - 6;
 			aiMax = MaxVal + 6;
@@ -220,7 +221,13 @@ public class AIMiniMax : MonoBehaviour
 			int tmpval = Random.Range(0,minVals.Count);
 			int tmpposval = posVals[tmpval];
 			FinalGrid =  tmpposval;
-		}
+		}*/
+		//this means all positions are equally viable
+		//so we randomnize it
+		Debug.Log("Changecount: "+changecount);
+		if(changecount == 8)
+			FinalGrid = Random.Range(0,9);
+
 		Place(FinalGrid, AITurn);
 		GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().bigGrids[currentBigGrid].GetComponent<BigGridScript>().grids[FinalGrid].GetComponent<GridScript>().HighlightGrid();
 		return true;
@@ -240,7 +247,7 @@ public class AIMiniMax : MonoBehaviour
 		{
 			currentBigGrid = FindBestBigGrid();
 		}
-
+		//Debug.Log(currentBigGrid);
 		// Free to go any big grid
 		if(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().bigGrids[currentBigGrid].GetComponent<BigGridScript>().IsGridCompleted(AITurn))
 		{
@@ -269,7 +276,7 @@ public class AIMiniMax : MonoBehaviour
 	}
 
 	// Heuristic function that calculates the number of lines that are still available for Computer to use and win.
-	int EvaluationTest(BigGridScript go)
+	int EvaluationTest(BigGridScript go,bool terminal = true)
 	{
 		int noofLines = 0;
 		// Checks for horizontal wins
@@ -312,22 +319,64 @@ public class AIMiniMax : MonoBehaviour
 			go.grids[4].GetComponent<GridScript>().gridState != (int)PlayerTurn &&
 			go.grids[6].GetComponent<GridScript>().gridState != (int)PlayerTurn)
 			noofLines += 1;
-		
+		if(terminal == false)
+		{
+			for(int i =0; i <9; ++i)
+			{
+				if(go.grids[i].GetComponent<GridScript>().gridState == (int)AITurn)
+				{
+					if(Random.Range(1,101) <=75)
+						++noofLines;
+				}
+					//add a chance to add to the no of lines
+			}
+		}
 		return noofLines;
 	}
 
 	int FindBestBigGrid()
 	{
+		//Debug.Log("COMEHERE");	
 		// The big grid that the AI has most chance to win.
+		int[] vals ;
+		vals = new int[9];
 		int bestID = -1;
+		int bestVal = -1;
+		int sameweight = 0;
 
 		for(int i = 0; i < 9; ++i)
 		{
 			BigGridScript go = GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().bigGrids[i].GetComponent<BigGridScript>();
-			int val = EvaluationTest(go);
-			if(bestID < val)
-				bestID = val;
+			//Debug.Log(go.gridWinner);
+			//this is so that we do not place into won already grids?
+			if(go.gridWinner == 0)
+			{
+				int val = EvaluationTest(go,false);
+				vals[i] = val;
+				//Debug.Log(i + ": " + val);
+				if(bestVal < val)
+				{
+					bestID = i;
+					bestVal = val;
+				}
+				else if( bestVal == val)
+					++sameweight;
+			}
 		}
+		string s="";
+		for(int j =0 ; j <9 ; ++j)
+		{
+			s += "[" + vals[j] + "] ";
+			if(j%3 == 2)
+				s+= "\n";
+		}
+		Debug.Log(s);
+		Debug.Log("Same weight: " + sameweight);
+		//if this number is 8, it means all the board have the same chance of winning
+		//so we will random a board between all of them
+		if(sameweight == 8)
+			bestID = Random.Range(0,9);
+
 		return bestID;
 	}
 
