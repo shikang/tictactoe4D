@@ -382,6 +382,7 @@ public class GachaScript : MonoBehaviour
 	{
 		GameData.current.lastFreeRollTime = DateTime.Now;
 		freeRollDueTime = GameData.current.lastFreeRollTime.AddSeconds(Defines.FREE_ROLL_TIMER);
+		SaveLoad.Save();
 	}
 }
 

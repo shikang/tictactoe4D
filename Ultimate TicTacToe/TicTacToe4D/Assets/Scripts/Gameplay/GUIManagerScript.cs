@@ -92,6 +92,7 @@ public class GUIManagerScript : MonoBehaviour
 	{
 		gridEffect_growStage = 0;
 		startTime = 300.0f;
+		GlobalScript.Instance.timePerTurn = 30.0f;
 		timerP1 = timerP2 = GlobalScript.Instance.timePerTurn;
 
 		nameP1 = GlobalScript.Instance.nameP1;
@@ -220,7 +221,9 @@ public class GUIManagerScript : MonoBehaviour
 		// Whose Turn
 		if(GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn == Defines.TURN.P1)
 		{
-			timerP1 -= Time.deltaTime;
+			if(!TutorialScript.Instance.isTutorial)
+				timerP1 -= Time.deltaTime;
+
 			if(timerP1 <= 0.0f)
 			{
 				GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().ChangeTurn();
@@ -267,7 +270,8 @@ public class GUIManagerScript : MonoBehaviour
 		}
 		else if(GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn == Defines.TURN.P2)
 		{
-			timerP2 -= Time.deltaTime;
+			if(!TutorialScript.Instance.isTutorial)
+				timerP2 -= Time.deltaTime;
 
 			if(timerP2 <= 0.0f)
 			{

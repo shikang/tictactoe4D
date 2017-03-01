@@ -45,44 +45,108 @@ public class GridScript : MonoBehaviour
 			GetTurnHandler().pausedState != 0)
 			return;
 
-		// Check if node belongs to the activeGrid
-		if(GetBoardScript().activeBigGrid == parentGrid.GetComponent<BigGridScript>().bigGridID ||
-		   GetBoardScript().activeBigGrid == 10)
+
+		// Special Case: Tutorials
+		if(TutorialScript.Instance.isTutorial)
 		{
-			// Highlight grid
-			if(gridState == 0)
+			if(TutorialScript.Instance.tStage == TUTORIALSTAGE.PLACE_TOPLEFT_P)
 			{
-                if ( GetBoardScript().gameMode == Defines.GAMEMODE.ONLINE )
-                {
-                    NetworkGameLogic networkLogic = NetworkGameLogic.GetNetworkGameLogic();
-                    networkLogic.HighlightGrid(parentGrid.GetComponent<BigGridScript>().bigGridID, gridID);
-                }
-                else
-                {
-                    HighlightGrid();
-                }
+				if(GetBoardScript().activeBigGrid == 0 && gridID == 5)
+				{
+					if(gridState == 0)
+						HighlightGrid();
+					else if(gridState == 3)
+					{
+						ConfirmPlacement();
+						TutorialScript.Instance.tStage = TUTORIALSTAGE.OPPONENT_TURN1;
+					}
+				}
+				else
+				{	if(gridState == 0)
+						PlaceOnGrid(4);
+				}
 			}
 
-			// Only allowed if grid is highlighted
-			else if(gridState == 3)
+			else if(TutorialScript.Instance.tStage == TUTORIALSTAGE.PLACE_BOTLEFT)
 			{
-                if ( GetBoardScript().gameMode == Defines.GAMEMODE.ONLINE )
-                {
-                    NetworkGameLogic networkLogic = NetworkGameLogic.GetNetworkGameLogic();
-                    networkLogic.ConfirmPlacement(parentGrid.GetComponent<BigGridScript>().bigGridID, gridID,
-                                                  NetworkManager.IsPlayerOne() ? Defines.TURN.P1 : Defines.TURN.P2,
-												  NetworkManager.IsPlayerOne() ? GetGUIManagerScript().timerP1 : GetGUIManagerScript().timerP2);
-                }
-                else
-                {
-                    ConfirmPlacement();
-                }
+				if(GetBoardScript().activeBigGrid == 6 && gridID == 2)
+				{
+					if(gridState == 0)
+						HighlightGrid();
+					else if(gridState == 3)
+					{
+						ConfirmPlacement();
+						TutorialScript.Instance.tStage = TUTORIALSTAGE.OPPONENT_TURN2;
+					}
+				}
+				else
+				{
+					if(gridState == 0)
+						PlaceOnGrid(4);
+				}
+			}
+
+			else if(TutorialScript.Instance.tStage == TUTORIALSTAGE.PLACE_BOTRIGHT_P2)
+			{
+				if(GetBoardScript().activeBigGrid == 10 && gridID == 1)
+				{
+					if(gridState == 0)
+						HighlightGrid();
+					else if(gridState == 3)
+					{
+						ConfirmPlacement();
+						TutorialScript.Instance.tStage = TUTORIALSTAGE.WIN;
+					}
+				}
+				else
+				{
+					if(gridState == 0)
+						PlaceOnGrid(4);
+				}
 			}
 		}
+
+		// Check if node belongs to the activeGrid
 		else
 		{
-			if(gridState == 0)
-				PlaceOnGrid(4); // Current grid is invalid (red)
+			if(GetBoardScript().activeBigGrid == parentGrid.GetComponent<BigGridScript>().bigGridID ||
+			   GetBoardScript().activeBigGrid == 10)
+			{
+				// Highlight grid
+				if(gridState == 0)
+				{
+	                if ( GetBoardScript().gameMode == Defines.GAMEMODE.ONLINE )
+	                {
+	                    NetworkGameLogic networkLogic = NetworkGameLogic.GetNetworkGameLogic();
+	                    networkLogic.HighlightGrid(parentGrid.GetComponent<BigGridScript>().bigGridID, gridID);
+	                }
+	                else
+	                {
+	                    HighlightGrid();
+	                }
+				}
+
+				// Only allowed if grid is highlighted
+				else if(gridState == 3)
+				{
+	                if ( GetBoardScript().gameMode == Defines.GAMEMODE.ONLINE )
+	                {
+	                    NetworkGameLogic networkLogic = NetworkGameLogic.GetNetworkGameLogic();
+	                    networkLogic.ConfirmPlacement(parentGrid.GetComponent<BigGridScript>().bigGridID, gridID,
+	                                                  NetworkManager.IsPlayerOne() ? Defines.TURN.P1 : Defines.TURN.P2,
+													  NetworkManager.IsPlayerOne() ? GetGUIManagerScript().timerP1 : GetGUIManagerScript().timerP2);
+	                }
+	                else
+	                {
+	                    ConfirmPlacement();
+	                }
+				}
+			}
+			else
+			{
+				if(gridState == 0)
+					PlaceOnGrid(4); // Current grid is invalid (red)
+			}
 		}
 	}
 
@@ -155,6 +219,14 @@ public class GridScript : MonoBehaviour
 		GetGUIManagerScript().UpdateClick();
 		GameObject.FindGameObjectWithTag("AIMiniMax").GetComponent<AIMiniMax>().UpdateAI();
 		//AudioManager.Instance.PlaySoundEvent(SOUNDID.ICONPLACED);
+
+		if(TutorialScript.Instance.isTutorial)
+		{
+			if(TutorialScript.Instance.tStage == TUTORIALSTAGE.PLACE_MIDRIGHT_C)
+				TutorialScript.Instance.tStage = TUTORIALSTAGE.PLACE_BOTLEFT;
+			else if(TutorialScript.Instance.tStage == TUTORIALSTAGE.PLACE_TOPRIGHT_C)
+				TutorialScript.Instance.tStage = TUTORIALSTAGE.PLACE_BOTRIGHT_P1;
+		}
 	}
 
 	public void ResetHighlight()

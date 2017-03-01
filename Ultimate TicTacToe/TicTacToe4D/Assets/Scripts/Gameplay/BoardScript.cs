@@ -99,9 +99,8 @@ public class BoardScript : MonoBehaviour
 			pos1 = 2;
 			pos2 = 4;
 			pos3 = 6;
-						//Debug.Log(bigGrids[pos1].GetComponentInChildren<Shaker>().duration + " name: " + bigGrids[pos1].GetComponentInChildren<Shaker>().name);
-						//Debug.Log(bigGrids[pos1].name);
-			
+			//Debug.Log(bigGrids[pos1].GetComponentInChildren<Shaker>().duration + " name: " + bigGrids[pos1].GetComponentInChildren<Shaker>().name);
+			//Debug.Log(bigGrids[pos1].name);
 		}
 
 		if(begin)
@@ -389,6 +388,8 @@ public class BoardScript : MonoBehaviour
 	{
 		int turn = (int)GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn;
 
+		if(TutorialScript.Instance.isTutorial)
+			turn = 1;
 
 		if(bigGrids[0].GetComponent<BigGridScript>().gridWinner == turn && bigGrids[1].GetComponent<BigGridScript>().gridWinner == turn && bigGrids[2].GetComponent<BigGridScript>().gridWinner == turn)
 		{

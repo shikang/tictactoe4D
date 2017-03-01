@@ -65,6 +65,13 @@ public class AIMiniMax : MonoBehaviour
 
 	public void UpdateAI()
 	{
+		if(TutorialScript.Instance.isTutorial)
+		{
+			if( TutorialScript.Instance.tStage != TUTORIALSTAGE.PLACE_MIDRIGHT_C &&
+				TutorialScript.Instance.tStage != TUTORIALSTAGE.PLACE_TOPRIGHT_C )
+				return;
+		}
+
 		if(GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn != AITurn)
 			return;
 	
@@ -270,6 +277,7 @@ public class AIMiniMax : MonoBehaviour
 		{
 			BigGridScript go = GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().bigGrids[currentBigGrid].GetComponent<BigGridScript>();
 			terminalValue = EvaluationTest(go);
+			Debug.Log("ES: " + terminalValue);
 			return true;
 		}
 		return false;
@@ -319,6 +327,7 @@ public class AIMiniMax : MonoBehaviour
 			go.grids[4].GetComponent<GridScript>().gridState != (int)PlayerTurn &&
 			go.grids[6].GetComponent<GridScript>().gridState != (int)PlayerTurn)
 			noofLines += 1;
+
 		if(terminal == false)
 		{
 			for(int i =0; i <9; ++i)

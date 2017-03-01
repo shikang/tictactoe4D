@@ -17,6 +17,9 @@ public class BtnScript : MonoBehaviour
 
 	public void BtnRestart()
 	{
+		if(TutorialScript.Instance.isTutorial)
+			return;
+
 		GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().pausedState = 1;
 		GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().SetCfmAlpha(true);
 		GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().GUICfmText.GetComponent<Text>().text
@@ -25,6 +28,9 @@ public class BtnScript : MonoBehaviour
 
 	public void BtnMainMenu()
 	{
+		if(TutorialScript.Instance.isTutorial)
+			return;
+
 		GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().pausedState = 2;
 		GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().SetCfmAlpha(true);
 		GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().GUICfmText.GetComponent<Text>().text
@@ -54,7 +60,7 @@ public class BtnScript : MonoBehaviour
             }
             else
             {
-                SceneManager.LoadScene("MainMenu");
+				BackToMainMenu();
             }
             Adverts.Instance.RandomShowAd();
         }
@@ -89,12 +95,15 @@ public class BtnScript : MonoBehaviour
 	public void BtnConfirmMainMenu()
 	{
 		NetworkManager.LeaveRoom();
-		SceneManager.LoadScene("MainMenu");
+		BackToMainMenu();
 		Adverts.Instance.RandomShowAd();
 	}
 
 	public void BtnEmote()
 	{
+		if(TutorialScript.Instance.isTutorial)
+			return;
+
 		GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().ToogleEmoteMenu();
 	}
 
@@ -121,6 +130,12 @@ public class BtnScript : MonoBehaviour
 		}
 
 		GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().HideEmoteMenu();
+	}
+
+	public void BackToMainMenu()
+	{
+		// Do fade out logic here
+		SceneManager.LoadScene("MainMenu");
 	}
 
 	public void BtnClickGoodGameEmote()
