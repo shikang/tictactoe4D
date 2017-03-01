@@ -38,6 +38,18 @@ public class PennerEasing : MonoBehaviour
         return fChange * fTime / fDuration + fBegin;
     }
 
+    public float LinearInOut(float fTime, float fBegin, float fEnd, float fDuration)
+    {
+        float fChange = fEnd - fBegin;
+        float t = fTime / fDuration * 2;
+        if (t < 1)
+        {
+            return fChange * 2 * fTime / fDuration + fBegin;
+        }
+        t = t - 1;
+        return fChange * 2 * (fDuration - fTime) / fDuration + fBegin;
+    }
+
     public float easeInQuad(float fTime, float fBegin, float fEnd, float fDuration)
     {
         float fChange = fEnd - fBegin;
@@ -55,7 +67,7 @@ public class PennerEasing : MonoBehaviour
     public float easeInOutQuad(float fTime, float fBegin, float fEnd, float fDuration)
     {
         float fChange = fEnd - fBegin;
-        float t = fTime / fDuration / 2;
+        float t = fTime / fDuration * 2;
         if (t < 1)
         {
             return fChange / 2 * t * t + fBegin;
@@ -82,7 +94,7 @@ public class PennerEasing : MonoBehaviour
     public float easeInOutCubic(float fTime, float fBegin, float fEnd, float fDuration)
     {
         float fChange = fEnd - fBegin;
-        float t = fTime / fDuration / 2;
+        float t = fTime / fDuration * 2;
         if(t < 1)
         {
             return fChange / 2 * t * t * t + fBegin;
@@ -109,7 +121,7 @@ public class PennerEasing : MonoBehaviour
     public float easeInOutQuart(float fTime, float fBegin, float fEnd, float fDuration)
     {
         float fChange = fEnd - fBegin;
-        float t = fTime / fDuration / 2;
+        float t = fTime / fDuration * 2;
         if( t < 1 )
         {
             return fChange / 2 * t * t * t * t + fBegin;
@@ -136,7 +148,7 @@ public class PennerEasing : MonoBehaviour
     public float easeInOutQuint(float fTime, float fBegin, float fEnd, float fDuration)
     {
         float fChange = fEnd - fBegin;
-        float t = fTime / fDuration / 2;
+        float t = fTime / fDuration * 2;
         if(t < 1)
         {
             return fChange / 2 * t * t * t * t * t + fBegin;
@@ -183,10 +195,10 @@ public class PennerEasing : MonoBehaviour
     public float easeInOutExpo(float fTime, float fBegin, float fEnd, float fDuration)
     {
         float fChange = fEnd - fBegin;
-        float t = fTime / fDuration / 2;
+        float t = fTime / fDuration * 2;
         if(t < 1)
         {
-            return fChange / 2 * (-Mathf.Pow(2, -10 * t) + 2) + fBegin;
+            return fChange / 2 * (Mathf.Pow(2, -10 * t) + 2) + fBegin;
         }
         return fChange / 2 * (-Mathf.Pow(2, -10 * t) + 2) + fBegin;
     }
@@ -209,7 +221,7 @@ public class PennerEasing : MonoBehaviour
     public float easeInOutCirc(float fTime, float fBegin, float fEnd, float fDuration)
     {
         float fChange = fEnd - fBegin;
-        float t = fTime / fDuration / 2;
+        float t = fTime / fDuration * 2;
         if (t < 1)
         {
             return -fChange / 2 * (Mathf.Sqrt(1 - t * t) + 1) + fBegin;
@@ -237,7 +249,7 @@ public class PennerEasing : MonoBehaviour
     {
         float fChange = fEnd - fBegin;
         float s = 1.70158f;
-        float t = fTime / fDuration / 2;
+        float t = fTime / fDuration * 2;
         if (t < 1)
         {
             return fChange / 2 * (t * t *(((s *= 1.525f) + 1) * t - s)) + fBegin;
@@ -293,7 +305,7 @@ public class PennerEasing : MonoBehaviour
             return fBegin;
         }
 
-        float t = fTime / fDuration;
+        float t = fTime / fDuration * 2;
         if (t >= 1.0f)
         {
             return fEnd;
@@ -347,7 +359,7 @@ public class PennerEasing : MonoBehaviour
     public float easeInOutBounce(float fTime, float fBegin, float fEnd, float fDuration)
     {
         float fChange = fEnd - fBegin;
-        float t = fTime / fDuration / 2;
+        float t = fTime / fDuration;
         if (t < fDuration / 2)
         {
             return easeInBounce(t * 2, 0, fChange, fDuration) * .5f + fBegin;

@@ -54,10 +54,18 @@ public class MainMenuScript : MonoBehaviour
 	float screenMaxPosX;
 	float screenMoveSpeed;
 
+    // variables to lerp screen fade in out
     Image blackOverlayImage;
-    float blackTime;
+    float currentFadeTime;
+    float faderDuration;
+    bool isFading;
 
-	public GameObject setTimer_local_1;
+    // variables to lerp screen left right
+    float currentMoveTime;
+    float moveDuration;
+    bool isMoving;
+
+    public GameObject setTimer_local_1;
 	public GameObject setTimer_local_2;
 	public GameObject setTimer_local_3;
 	public GameObject setTimer_network_1;
@@ -82,15 +90,15 @@ public class MainMenuScript : MonoBehaviour
 		screenMaxPosX = 1130.0f;
 		screenMoveSpeed = 3500.0f;
 
-		screenState = 0;
+        blackOverlayImage = BlackOverlay.GetComponent(typeof(Image)) as Image;
+
+        screenState = 0;
 		DisplayScreen(screenState);
 		currScreen = MainMenuScreen;
 
-        blackOverlayImage = BlackOverlay.GetComponent(typeof(Image)) as Image;
         //PlayerIcon.GetComponent<Image>().color = Defines.ICON_COLOR_P1;
 
-        blackTime = 0.0f;
-		networkMenuAnimStage = 0;
+        networkMenuAnimStage = 0;
 
 		GlobalScript.Instance.SetTurnTime(3);
 		setTimer_local_3.GetComponent<Image>().sprite = depressedButton;
@@ -116,26 +124,15 @@ public class MainMenuScript : MonoBehaviour
 		if(moveScreen)
 			UpdateScreenPos();
 
-        if (blackTime <= 2.0f)
-        {
-            if (blackOverlayImage.color.a >= 1)
-            {
-                blackOverlayImage.color = new Color(blackOverlayImage.color.r, blackOverlayImage.color.g, blackOverlayImage.color.b, PennerEasing.Instance.easeInQuart(blackTime, 1.0f, 0.0f, 1.0f));
-            }
-            else
-            {
-                blackOverlayImage.color = new Color(blackOverlayImage.color.r, blackOverlayImage.color.g, blackOverlayImage.color.b, PennerEasing.Instance.easeOutQuart(blackTime, 0.0f, 1.0f, 1.0f));
-            }
-        }
-        else
-        {
-            blackTime = 0.0f;
-        }
-        blackTime += Time.deltaTime;
-        //Debug.Log(blackOverlayImage.color.a + ","+ blackTime);
+        //Debug.Log(blackOverlayImage.color.a + "," + isFading + "," + faderDuration);
+        if(isFading)
+            blackFadeTransition();
 
-        if(networkMenuAnimStage != 0)
+        if (networkMenuAnimStage != 0)
 			UpdateNetworkMenuAnim();
+
+        currentFadeTime += Time.deltaTime;
+        currentMoveTime += Time.deltaTime;
     }
 
 	// Change Screen is the animation; once done, then this is called to hide unwanted screens
@@ -148,16 +145,17 @@ public class MainMenuScript : MonoBehaviour
 		AvatarScreen.SetActive(false);
 		GachaScreen.SetActive(false);
 		avatarObject.SetActive(false);
+        //OptionsScreen.SetActive(false);
+        //HowToPlayScreen.SetActive(false);
+        //CreditScreen.SetActive(false);
 
-		//OptionsScreen.SetActive(false);
-		//HowToPlayScreen.SetActive(false);
-		//CreditScreen.SetActive(false);
-
-		switch(screenState)
+        switch (screenState)
 		{
 		case 0:
-			MainMenuScreen.SetActive(true);
-			break;
+            MainMenuScreen.SetActive(true);
+            //kelvin: this is supposed to fade in only from intro screen
+            SetupFade(2.0f);
+            break;
 
 		case 1:
 		// Local Multiplayer
@@ -220,10 +218,13 @@ public class MainMenuScript : MonoBehaviour
 
 		if(_moveBack)
 			avatarObject.SetActive(false);
+
+        SetupMove(1.0f);
 	}
 
 	void UpdateScreenPos()
 	{
+        
 		Vector3 temp = currScreen.transform.localPosition;
 		temp.x -= screenMoveSpeed * moveDirection * Time.deltaTime;
 		currScreen.transform.localPosition = temp;
@@ -231,7 +232,7 @@ public class MainMenuScript : MonoBehaviour
 		temp = nextScreen.transform.localPosition;
 		temp.x -= screenMoveSpeed * moveDirection * Time.deltaTime;
 		nextScreen.transform.localPosition = temp;
-
+        
 		if( (moveDirection == 1 && temp.x <= 0.0f) || (moveDirection == -1 && temp.x >= 0) )
 		{
 			nextScreen.transform.localPosition = Vector3.zero;
@@ -239,7 +240,31 @@ public class MainMenuScript : MonoBehaviour
 			currScreen = nextScreen;
 			DisplayScreen(screenState);
 		}
-	}
+        
+        
+        /*
+        if (currentMoveTime <= moveDuration)
+        {
+            Vector3 temp = currScreen.transform.localPosition;
+            //temp.x -= PennerEasing.Instance.Linear(currentMoveTime, 0.0f, -30.0f, moveDuration);
+            //currScreen.transform.localPosition = temp;
+
+            temp = nextScreen.transform.localPosition;
+            temp.x -= PennerEasing.Instance.easeInElastic(currentMoveTime, 30.0f, 0.0f, moveDuration);
+            nextScreen.transform.localPosition = temp;
+
+            Debug.Log(nextScreen.transform.localPosition);
+        }
+        else //(currentFadeTime > faderDuration)
+        {
+            Debug.Log(nextScreen.transform.localPosition);
+            //nextScreen.transform.localPosition = Vector3.zero;
+            currScreen = nextScreen;
+            isMoving = false;
+            DisplayScreen(screenState);
+        }
+        */
+    }
 
 	GameObject GetScreen(int i)
 	{
@@ -338,4 +363,33 @@ public class MainMenuScript : MonoBehaviour
 	{
 		DisableAdsButton.GetComponent<Button>().interactable = false;
 	}
+
+    public void SetupFade(float duration)
+    {
+        faderDuration = duration;
+        currentFadeTime = 0.0f;
+        isFading = true;
+        blackOverlayImage.rectTransform.gameObject.SetActive(true);
+    }
+
+    public void SetupMove(float duration)
+    {
+        moveDuration = duration;
+        currentMoveTime = 0.0f;
+        isMoving = true;
+    }
+
+    public void blackFadeTransition()
+    {
+        if (currentFadeTime <= faderDuration)
+        {
+            blackOverlayImage.color = new Color(blackOverlayImage.color.r, blackOverlayImage.color.g, blackOverlayImage.color.b, PennerEasing.Instance.LinearInOut(currentFadeTime, 0.0f, 1.0f, faderDuration));
+        }
+        else //(currentFadeTime > faderDuration)
+        {
+            isFading = false;
+            blackOverlayImage.rectTransform.gameObject.SetActive(false);
+        }
+        
+    }
 }
