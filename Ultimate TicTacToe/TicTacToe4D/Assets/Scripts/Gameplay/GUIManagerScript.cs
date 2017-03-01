@@ -92,7 +92,6 @@ public class GUIManagerScript : MonoBehaviour
 	{
 		gridEffect_growStage = 0;
 		startTime = 300.0f;
-		GlobalScript.Instance.timePerTurn = 30.0f;
 		timerP1 = timerP2 = GlobalScript.Instance.timePerTurn;
 
 		nameP1 = GlobalScript.Instance.nameP1;
