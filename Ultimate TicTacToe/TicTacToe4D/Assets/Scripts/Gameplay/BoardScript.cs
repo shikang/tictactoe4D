@@ -67,10 +67,6 @@ public class BoardScript : MonoBehaviour
         {
 			gameMode = Defines.GAMEMODE.ONLINE;
 			// same as GameObject.FindGameObjectWithTag("GlobalScript").GetComponent<GlobalScript>().gameMode == 2
-
-			SaveLoad.Load();
-			GameData.current.matchPlayed += 1;
-			SaveLoad.Save();
 		}
         else
         {
@@ -79,6 +75,9 @@ public class BoardScript : MonoBehaviour
 			else if(GlobalScript.Instance.gameMode == 1)
 				gameMode = Defines.GAMEMODE.LOCAL;
         }
+
+		GameData.current.matchPlayed += 1;
+		SaveLoad.Save();
 
 		activeBigGrid = 10;
 		UpdateActiveGridBG(0, true);

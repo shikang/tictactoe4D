@@ -16,6 +16,8 @@ public class GameData
 	public DateTime lastFreeRollTime;
 	public bool removeAds;
 	public bool finishedTutorial;
+	public bool shownRateApp;
+	public bool shownLikeFacebook;
 
 	public GameData()
 	{
@@ -28,5 +30,6 @@ public class GameData
 		lastFreeRollTime = DateTime.Now;
 		removeAds = false;
 		finishedTutorial = false;
+		shownRateApp = false;
 	}
 }

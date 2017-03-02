@@ -83,6 +83,9 @@ public class Defines : Singleton<Defines>
 	static public float TIMEPERTURN_2 = 20.0f;
 	static public float TIMEPERTURN_3 = 30.0f;
 
+	static public int TIMES_TO_SHOW_RATE_APP = 2;
+	static public int TIMES_TO_SHOW_LIKE_FB = 1;
+
 	public enum AdsInAppPurchase
 	{
 		DISABLE,

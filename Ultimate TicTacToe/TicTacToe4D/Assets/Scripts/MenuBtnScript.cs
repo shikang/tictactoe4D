@@ -32,6 +32,11 @@ public enum BUTTONTYPES
 	SETTIME_3,
 
 	SETTINGS_DIABLE_ADS, //18
+
+	RATE_OUR_APP,
+	NO_RATE_OUR_APP,
+	LIKE_OUR_FACEBOOK,
+	NO_LIKE_OUR_FACEBOOK,
 };
 
 public class MenuBtnScript : MonoBehaviour
@@ -237,6 +242,20 @@ public class MenuBtnScript : MonoBehaviour
 			GameObject IAPManager = GameObject.Find("IAPManager");
 			InAppPurchaser iapPurchaser = IAPManager.GetComponent<InAppPurchaser>();
 			iapPurchaser.BuyProduct( InAppProductList.ProductType.ADS, (int)Defines.AdsInAppPurchase.DISABLE );
+			break;
+		case BUTTONTYPES.RATE_OUR_APP:
+			PlatformUtilies.Instance.DisplayRateUs();
+			Camera.main.GetComponent<MainMenuScript>().RateAppScreen.SetActive(false);
+			break;
+		case BUTTONTYPES.NO_RATE_OUR_APP:
+			Camera.main.GetComponent<MainMenuScript>().RateAppScreen.SetActive(false);
+			break;
+		case BUTTONTYPES.LIKE_OUR_FACEBOOK:
+			PlatformUtilies.Instance.DisplayFacebookPage();
+			Camera.main.GetComponent<MainMenuScript>().LikeFacebookScreen.SetActive(false);
+			break;
+		case BUTTONTYPES.NO_LIKE_OUR_FACEBOOK:
+			Camera.main.GetComponent<MainMenuScript>().LikeFacebookScreen.SetActive(false);
 			break;
 		default:
 			break;

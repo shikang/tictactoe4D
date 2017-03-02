@@ -18,6 +18,8 @@ public class MainMenuScript : MonoBehaviour
 	public GameObject SettingsScreen;
 	public GameObject CreditsPage;
 	public GameObject HowToPlayPage;
+	public GameObject RateAppScreen;
+	public GameObject LikeFacebookScreen;
 
 	public GameObject UpdateText;
 	public GameObject UpdateText_PublicGame;
@@ -65,6 +67,9 @@ public class MainMenuScript : MonoBehaviour
     float moveDuration;
     bool isMoving;
 
+	bool shownRate;
+	bool shownLike;
+
     public GameObject setTimer_local_1;
 	public GameObject setTimer_local_2;
 	public GameObject setTimer_local_3;
@@ -103,7 +108,10 @@ public class MainMenuScript : MonoBehaviour
 		GlobalScript.Instance.SetTurnTime(3);
 		setTimer_local_3.GetComponent<Image>().sprite = depressedButton;
 		setTimer_network_3.GetComponent<Image>().sprite = depressedButton;
-    }
+
+		shownRate = false;
+		shownLike = false;
+	}
 
 	void Update ()
 	{
@@ -128,7 +136,26 @@ public class MainMenuScript : MonoBehaviour
         if(isFading)
             blackFadeTransition();
 
-        if (networkMenuAnimStage != 0)
+		if (!isFading && !shownLike && !GameData.current.shownRateApp && GameData.current.matchPlayed >= Defines.TIMES_TO_SHOW_RATE_APP)
+		{
+			GameData.current.shownRateApp = true;
+			RateAppScreen.SetActive(true);
+			SaveLoad.Save();
+
+			shownRate = true;
+		}
+
+		if (!isFading && !shownRate && !GameData.current.shownLikeFacebook && GameData.current.matchPlayed >= Defines.TIMES_TO_SHOW_LIKE_FB)
+		//if (!isFading)
+		{
+			GameData.current.shownLikeFacebook = true;
+			LikeFacebookScreen.SetActive(true);
+			SaveLoad.Save();
+
+			shownLike = true;
+		}
+
+		if (networkMenuAnimStage != 0)
 			UpdateNetworkMenuAnim();
 
         currentFadeTime += Time.deltaTime;
@@ -144,6 +171,8 @@ public class MainMenuScript : MonoBehaviour
 		SettingsScreen.SetActive(false);
 		AvatarScreen.SetActive(false);
 		GachaScreen.SetActive(false);
+		RateAppScreen.SetActive(false);
+		LikeFacebookScreen.SetActive(false);
 		avatarObject.SetActive(false);
         //OptionsScreen.SetActive(false);
         //HowToPlayScreen.SetActive(false);
