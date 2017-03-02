@@ -56,6 +56,9 @@ public class MenuBtnScript : MonoBehaviour
 	void Update ()
 	{
 		UpdateAnim();
+
+		if(!GameData.current.finishedTutorial)
+			BtnClick((int)BUTTONTYPES.MAIN_SINGLEPLAYER);
 	}
 
 	void UpdateAnim()

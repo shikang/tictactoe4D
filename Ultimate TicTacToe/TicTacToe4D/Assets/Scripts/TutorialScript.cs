@@ -48,7 +48,7 @@ public class TutorialScript : MonoBehaviour
 	void Start()
 	{
 		isInit = false;
-		isTutorial = GameData.current.finishedTutorial;
+		isTutorial = !GameData.current.finishedTutorial;
 	}
 
 	void Update()
