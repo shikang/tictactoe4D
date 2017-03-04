@@ -11,6 +11,9 @@ public class BoardScript : MonoBehaviour
 	public GameObject   scrollingText;
 	public GameObject   canvas;
 
+	int currHighlighted_BigGrid;
+	int currHighlighted_Grid;
+
 	public float 		minScale;
 	public float		maxScale;
 	public float		scaleLimitX;
@@ -27,6 +30,7 @@ public class BoardScript : MonoBehaviour
 	public int 			gameWinner;		// 0 = Draw, 1 = Cross, 2 = Circle
 	public int			activeBigGrid;	// 0-8 = respective grids, 10 = all available
     public Defines.GAMEMODE 	gameMode;
+    public bool			showWinScreen;
 
     float jerkTimerP1;
 	float jerkTimerP2;
@@ -88,6 +92,10 @@ public class BoardScript : MonoBehaviour
 		jerkTypeP2 = Random.Range(1, 3);
 		jerkTimerP1 = Random.Range(18.0f, 35.0f);
 		jerkTimerP2 = Random.Range(18.0f, 35.0f);
+
+		currHighlighted_BigGrid = 10;
+		currHighlighted_Grid = 10;
+		showWinScreen = false;
 	}
 
 	void Update ()
@@ -104,9 +112,10 @@ public class BoardScript : MonoBehaviour
 
 		if(begin)
 		{
-			time-=Time.deltaTime;
+			time -= Time.deltaTime;
 			if(time <=0 && time > -1)
 				time = 0;
+
 			if(time ==0)
 			{
 				time = -1;
@@ -138,22 +147,16 @@ public class BoardScript : MonoBehaviour
 			else if(bigGrids[pos3].GetComponentInChildren<Shaker>().IsShakeComplete())
 			{
 				SetWinner(gameWinner);
+				showWinScreen = true;
 				begin = false;
 			}
-
 		}
-
-		UpdateScaleLimit();
-
-		if(Input.GetKeyDown("t"))
-			SetWinner(0);
-
-		// AI's turn if applicable
-		if (gameMode == Defines.GAMEMODE.AI)
+		else if(gameMode == Defines.GAMEMODE.AI)
 		{
 			GameObject.FindGameObjectWithTag("AIMiniMax").GetComponent<AIMiniMax>().UpdateAI();
 		}
 
+		UpdateScaleLimit();
 		UpdateJerkTimer(1, ref jerkTimerP1, ref jerkTypeP1);
 		UpdateJerkTimer(2, ref jerkTimerP2, ref jerkTypeP2);
 	}
@@ -163,7 +166,7 @@ public class BoardScript : MonoBehaviour
 		if(!firstTime)
 		{
 			// If next grid is already completed, next player gets to put anywhere.
-			if(activeBigGrid != 10 && bigGrids[_gridID].GetComponent<BigGridScript>().gridWinner != 0)
+			if(_gridID == 10 || bigGrids[_gridID].GetComponent<BigGridScript>().gridWinner != 0)
 				activeBigGrid = 10;
 			else
 				activeBigGrid = _gridID;
@@ -234,13 +237,11 @@ public class BoardScript : MonoBehaviour
 				tmp.GetComponent<Text>().text = "+ " + Defines.bigGridWin + "!";
 
 			}
-			//SetWinner((int)GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn);
 		}
-		else
+		else if(IsDraw()) // Draw. All boards filled
 		{
-			// Draw. All boards filled
-			if(IsDraw())
-				SetWinner(0);
+			SetWinner(0);
+			showWinScreen = true;
 		}
 	}
 
@@ -256,6 +257,24 @@ public class BoardScript : MonoBehaviour
 				}
 			}
 		}
+	}
+
+	public void SetCurrentHighlight(int _bigGrid, int _grid)
+	{
+		ResetCurrentHighlight();
+		currHighlighted_BigGrid = _bigGrid;
+		currHighlighted_Grid = _grid;
+	}
+
+	public void ResetCurrentHighlight()
+	{
+		if(currHighlighted_BigGrid == 10 || currHighlighted_Grid == 10)
+			return;
+
+		GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().gridEffect_growStage = 13;
+		bigGrids[currHighlighted_BigGrid].GetComponent<BigGridScript>().grids[currHighlighted_Grid].GetComponent<GridScript>().ResetHighlight();
+		currHighlighted_BigGrid = 10;
+		currHighlighted_Grid = 10;
 	}
 
 	public void SetWinner(int _winner)
@@ -385,7 +404,9 @@ public class BoardScript : MonoBehaviour
 
 	bool IsBigGridCompleted()
 	{
-		int turn = (int)GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn;
+		int turn = 1;
+		if(GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn == Defines.TURN.P1)
+			turn = 2;
 
 		if(TutorialScript.Instance.isTutorial)
 			turn = 1;
@@ -447,8 +468,9 @@ public class BoardScript : MonoBehaviour
 	    	pos3 = 6;
 	    }
 
-	    if ( winMethod == WINMETHOD.NIL)
+	    if (winMethod == WINMETHOD.NIL)
 	    	return false;
+
 	    return true;
 	}
 

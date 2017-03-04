@@ -24,8 +24,6 @@ public class AudioManager : MonoBehaviour
 
 		// Initialize the static class variables
 		instance = this;
-
-		DontDestroyOnLoad(gameObject);
 	}
 
 	void Start()
@@ -61,7 +59,7 @@ public class AudioManager : MonoBehaviour
 
 	void SoundEventWrapper(string s, GameObject go)
 	{
-		AkSoundEngine.PostEvent(s, go);
+		//AkSoundEngine.PostEvent(s, go);
 	}
 
 	public void SetMasterVol(float vol)

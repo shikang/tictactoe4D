@@ -20,7 +20,7 @@ public class PennerEasing : MonoBehaviour
         if (instance != null)
             throw new System.Exception("You have more than 1 PennerEasing in the scene.");
 
-        Debug.Log("pennereasing created");
+        //Debug.Log("pennereasing created");
         // Initialize the static class variables
         instance = this;
     }

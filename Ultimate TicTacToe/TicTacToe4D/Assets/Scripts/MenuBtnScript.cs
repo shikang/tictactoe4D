@@ -176,8 +176,11 @@ public class MenuBtnScript : MonoBehaviour
 			break;
 
 		case BUTTONTYPES.SETTINGS_HOWTOPLAY:
-			isShowHowToPlayScreen = !isShowHowToPlayScreen;
-			Camera.main.GetComponent<MainMenuScript>().HowToPlayPage.SetActive(isShowHowToPlayScreen);
+			GameData.current.finishedTutorial = false;
+			SaveLoad.Save();
+			isStartingGame = true;
+			//isShowHowToPlayScreen = !isShowHowToPlayScreen;
+			//Camera.main.GetComponent<MainMenuScript>().HowToPlayPage.SetActive(isShowHowToPlayScreen);
 			break;
 
 		case BUTTONTYPES.ADS_WATCH_VIDEO:

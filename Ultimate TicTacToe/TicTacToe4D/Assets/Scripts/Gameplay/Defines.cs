@@ -47,6 +47,7 @@ public class Defines : Singleton<Defines>
 	// Player Colors
 	static public Color ICON_COLOR_P1 = new Color(0.102f, 0.675f, 0.686f);
 	static public Color ICON_COLOR_P2 = new Color(0.871f, 0.447f, 0.204f);
+	static public Color ICON_COLOR_DRAW = new Color(0.075f, 0.737f, 0.376f);
 	static public Color ICON_COLOR_HIGHLIGHT = new Color(0.984f, 0.851f, 0.098f);
 	static public Color ICON_COLOR_INVALID = new Color(0.886f, 0.118f, 0.043f);
 	static public Color ICON_COLOR_GREY = Color.grey;

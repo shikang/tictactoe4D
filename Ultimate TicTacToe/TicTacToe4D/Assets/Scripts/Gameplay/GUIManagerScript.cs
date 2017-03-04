@@ -17,6 +17,10 @@ public class GUIManagerScript : MonoBehaviour
 	public GameObject GUICfmFrame;
 	public GameObject GUICfmMainMenu;
 
+	public GameObject BtnMainMenu;
+	public GameObject BtnEmote;
+	public GameObject BtnRestart;
+
 	// Emote
 	public GameObject GUIEmoteScreen;
 	public GameObject GUIP1EmoteSpeech;
@@ -141,6 +145,7 @@ public class GUIManagerScript : MonoBehaviour
 
 		UpdateTimer();
 		GridEffectAnim();
+		GridEffectFlash();
 
 		UpdateTurnGUI();
 		UpdateAIGUI();
@@ -161,17 +166,18 @@ public class GUIManagerScript : MonoBehaviour
 			else if(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().gameWinner == 2)
 				GUICenterText.GetComponent<Text>().text = "Player 2 Wins!";
 
-			GUITurn.GetComponent<Text>().text = "";
-			GUICfmFrame.SetActive(true);
-			GUICfmNewGame.SetActive(true);
-			GUICfmEndGame.SetActive(true);
-
-			GUICenterText.SetActive(true);
-			Color temp = GUICenterText.GetComponent<Text>().color;
-			temp.a = 1.0f;
-			GUICenterText.GetComponent<Text>().color = temp;
-
-			GUIEmoteScreen.SetActive(false);
+			if(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().showWinScreen)
+			{
+				GUITurn.GetComponent<Text>().text = "";
+				GUICfmFrame.SetActive(true);
+				GUICfmNewGame.SetActive(true);
+				GUICfmEndGame.SetActive(true);
+				GUICenterText.SetActive(true);
+				Color temp = GUICenterText.GetComponent<Text>().color;
+				temp.a = 1.0f;
+				GUICenterText.GetComponent<Text>().color = temp;
+				GUIEmoteScreen.SetActive(false);
+			}
 
 			// Add money
 			Debug.Log("Recieve coin: " + Defines.Instance.playerScore);
@@ -236,7 +242,7 @@ public class GUIManagerScript : MonoBehaviour
 			if(timerP1 > 6.0f)
 				GUITimerP1.GetComponent<Text>().color = Color.green;
 			else
-				GUITimerP1.GetComponent<Text>().color = Color.red;
+				GUITimerP1.GetComponent<Text>().color = Defines.ICON_COLOR_P2;
 			GUINameP2.GetComponent<Text>().color = Color.grey;
 			GUITimerP2.GetComponent<Text>().color = Color.grey;
 			GUITurn.GetComponent<Text>().text = nameP1 + "'s Turn";
@@ -286,7 +292,7 @@ public class GUIManagerScript : MonoBehaviour
 			if(timerP2 > 6.0f)
 				GUITimerP2.GetComponent<Text>().color = Color.green;
 			else
-				GUITimerP2.GetComponent<Text>().color = Color.red;
+				GUITimerP2.GetComponent<Text>().color = Defines.ICON_COLOR_P2;
 			GUITurn.GetComponent<Text>().text = nameP2 + "'s Turn";
 
 			// Icon Frame Animation during the player's turn
@@ -447,9 +453,9 @@ public class GUIManagerScript : MonoBehaviour
 			gridEffect.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
 
 			//Opacity
-			Color tmp = gridEffect.GetComponent<Renderer>().material.color;
+			Color tmp = gridEffect.GetComponent<SpriteRenderer>().color;
 			tmp.a = 1.0f;
-			gridEffect.GetComponent<Renderer>().material.color = tmp;
+			gridEffect.GetComponent<SpriteRenderer>().color = tmp;
 
 			// Next stage
 			gridEffect_growStage = 2;
@@ -484,17 +490,55 @@ public class GUIManagerScript : MonoBehaviour
 				gridEffect.transform.localScale.y - gridEffect_scaleSpeed * Time.deltaTime,
 				gridEffect.transform.localScale.z );
 
-			Color tmp = gridEffect.GetComponent<Renderer>().material.color;
+			Color tmp = gridEffect.GetComponent<SpriteRenderer>().color;
 			tmp.a -= 0.1f;
-			gridEffect.GetComponent<Renderer>().material.color = tmp;
+			gridEffect.GetComponent<SpriteRenderer>().color = tmp;
 
-			if(gridEffect.GetComponent<Renderer>().material.color.a <= 0.1f)
+			if(gridEffect.GetComponent<SpriteRenderer>().color.a <= 0.1f)
 			{
 				gridEffect_growStage = 0;
-				tmp = gridEffect.GetComponent<Renderer>().material.color;
+				tmp = gridEffect.GetComponent<SpriteRenderer>().color;
 				tmp.a = 0.0f;
-				gridEffect.GetComponent<Renderer>().material.color = tmp;
+				gridEffect.GetComponent<SpriteRenderer>().color = tmp;
 			}
+		}
+	}
+
+	public void GridEffectFlash()
+	{
+		if(gridEffect_growStage == 10)
+		{
+			gridEffect.GetComponent<SpriteRenderer>().sprite =
+					GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().GetSpriteEmpty();
+			gridEffect.GetComponent<SpriteRenderer>().color = Defines.ICON_COLOR_WHITE;
+			gridEffect.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+
+			gridEffect_growStage = 11;
+		}
+		else if(gridEffect_growStage == 11)
+		{
+			Color tmp = gridEffect.GetComponent<SpriteRenderer>().color;
+			tmp.a -= Time.deltaTime * 2.0f;
+			gridEffect.GetComponent<SpriteRenderer>().color = tmp;
+
+			if(tmp.a <= 0.0f)
+				gridEffect_growStage = 12;
+		}
+		else if(gridEffect_growStage == 12)
+		{
+			Color tmp = gridEffect.GetComponent<SpriteRenderer>().color;
+			tmp.a += Time.deltaTime * 2.0f;
+			gridEffect.GetComponent<SpriteRenderer>().color = tmp;
+
+			if(tmp.a >= 1.0f)
+				gridEffect_growStage = 11;
+		}
+		else if(gridEffect_growStage == 13)
+		{
+			Color tmp = gridEffect.GetComponent<SpriteRenderer>().color;
+			tmp.a = 0.0f;
+			gridEffect.GetComponent<SpriteRenderer>().color = tmp;
+			gridEffect_growStage = 0;
 		}
 	}
 

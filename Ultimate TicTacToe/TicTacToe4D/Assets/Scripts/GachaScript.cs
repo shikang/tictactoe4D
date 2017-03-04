@@ -35,7 +35,6 @@ public class GachaScript : MonoBehaviour
 	// Free Roll Stuff
 	public GameObject freeRollButton;
 	public GameObject freeRollButtonGrey;
-	public DateTime freeRollDueTime;
 
 	// Singleton pattern
 	static GachaScript instance;
@@ -78,7 +77,6 @@ public class GachaScript : MonoBehaviour
 		SetGreyBG(false);
 
 		moneyText.GetComponent<Text>().text = GameData.current.coin.ToString();
-		SetGacha();
 	}
 
 	void Update()
@@ -252,21 +250,10 @@ public class GachaScript : MonoBehaviour
 		{
 			freeRollButtonGrey.SetActive(true);
 
-			int hour  = freeRollDueTime.Subtract(DateTime.Now).Hours;
-			int min = freeRollDueTime.Subtract(DateTime.Now).Minutes;
-			int secs = freeRollDueTime.Subtract(DateTime.Now).Seconds;
+			int hour  = GameData.current.nextFreeRollTime.Subtract(DateTime.Now).Hours;
+			int min = GameData.current.nextFreeRollTime.Subtract(DateTime.Now).Minutes;
+			int secs = GameData.current.nextFreeRollTime.Subtract(DateTime.Now).Seconds;
 
-			/*while(currTime >= 3600)
-			{
-				++hour;
-				currTime -= 3600;
-			}
-
-			while(currTime >= 60)
-			{
-				++min;
-				currTime -= 60;
-			}*/
 			freeRollButtonGrey.GetComponentInChildren<Text>().text = hour.ToString("00") + ":" + min.ToString("00") + ":" + secs.ToString("00") + " to free roll"; 
 		}
 	}
@@ -375,13 +362,12 @@ public class GachaScript : MonoBehaviour
 
 	public bool CanGacha()
 	{
-		return freeRollDueTime.Subtract(DateTime.Now) <= TimeSpan.Zero;
+		return DateTime.Now.Subtract(GameData.current.nextFreeRollTime) >= TimeSpan.Zero;
 	}
 
 	public void SetGacha()
 	{
-		GameData.current.lastFreeRollTime = DateTime.Now;
-		freeRollDueTime = GameData.current.lastFreeRollTime.AddSeconds(Defines.FREE_ROLL_TIMER);
+		GameData.current.nextFreeRollTime = DateTime.Now.AddSeconds(Defines.FREE_ROLL_TIMER);
 		SaveLoad.Save();
 	}
 }

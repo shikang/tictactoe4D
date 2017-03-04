@@ -13,7 +13,7 @@ public class GameData
 	public int matchPlayed;
 	public string avatarName;
 	public int avatarIcon;
-	public DateTime lastFreeRollTime;
+	public DateTime nextFreeRollTime;
 	public bool removeAds;
 	public bool finishedTutorial;
 	public bool shownRateApp;
@@ -27,7 +27,7 @@ public class GameData
 		matchPlayed = 0;
 		avatarName = "abc";
 		avatarIcon = 8;
-		lastFreeRollTime = DateTime.Now;
+		nextFreeRollTime = DateTime.Now;
 		removeAds = false;
 		finishedTutorial = false;
 		shownRateApp = false;

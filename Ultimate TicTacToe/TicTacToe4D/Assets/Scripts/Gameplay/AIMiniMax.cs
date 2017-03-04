@@ -74,8 +74,6 @@ public class AIMiniMax : MonoBehaviour
 
 		if(GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn != AITurn)
 			return;
-	
-		// UI Update not done
 
 		// Set timer: How long AI takes to highlight a grid
 		if(AIStage == 0)
@@ -100,15 +98,12 @@ public class AIMiniMax : MonoBehaviour
 			// Free to go any big grid
 			if(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().activeBigGrid == 10)
 			{
-				//int gridID = 4;
-				/*do
-				{
-					gridID = Random.Range(0, 8);
-				}
-				while( GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().bigGrids[gridID].GetComponent<BigGridScript>().IsGridCompleted(GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn )
-						|| GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().bigGrids[gridID].GetComponent<BigGridScript>().IsDraw() );
-			*/}
-			currentBigGrid = GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().activeBigGrid;
+				currentBigGrid = FindBestBigGrid();
+			}
+			else
+			{
+				currentBigGrid = GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().activeBigGrid;
+			}
 			MiniMax();
 			AIStage = 4;
 		}
@@ -142,11 +137,6 @@ public class AIMiniMax : MonoBehaviour
 
 	public bool MiniMax()
 	{
-		if(currentBigGrid == 10)
-		{
-			currentBigGrid = FindBestBigGrid();
-		}
-
 		// Terminate if game ends.
 		int m_iUtility = 0;
 		if(TerminalTest(ref m_iUtility, depth))
@@ -370,6 +360,10 @@ public class AIMiniMax : MonoBehaviour
 				}
 				else if( bestVal == val)
 					++sameweight;
+			}
+			else
+			{
+				vals[i] = -1;	// completed grids should have no chance.
 			}
 		}
 		string s="";

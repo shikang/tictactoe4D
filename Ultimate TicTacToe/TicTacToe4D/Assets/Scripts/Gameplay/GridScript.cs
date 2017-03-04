@@ -7,7 +7,6 @@ public class GridScript : MonoBehaviour
 	public int gridState;	// Whose grid it belongs to
 	public int gridID;
 
-	public GameObject gridEffect;
 	public GameObject parentGrid;
 	public GameObject mainIcon;
 
@@ -49,12 +48,16 @@ public class GridScript : MonoBehaviour
 		// Special Case: Tutorials
 		if(TutorialScript.Instance.isTutorial)
 		{
-			if(TutorialScript.Instance.tStage == TUTORIALSTAGE.PLACE_TOPLEFT_P)
+			if( TutorialScript.Instance.tStage == TUTORIALSTAGE.PLACE_TOPLEFT_P ||
+				TutorialScript.Instance.tStage == TUTORIALSTAGE.ICON_HIGHLIGHTED )
 			{
 				if(GetBoardScript().activeBigGrid == 0 && gridID == 5)
 				{
 					if(gridState == 0)
+					{
 						HighlightGrid();
+						TutorialScript.Instance.tStage = TUTORIALSTAGE.ICON_HIGHLIGHTED;
+					}
 					else if(gridState == 3)
 					{
 						ConfirmPlacement();
@@ -62,8 +65,12 @@ public class GridScript : MonoBehaviour
 					}
 				}
 				else
-				{	if(gridState == 0)
+				{
+					if(gridState == 0)
+					{
+						TutorialScript.Instance.tStage = TUTORIALSTAGE.PLACE_TOPLEFT_P;
 						PlaceOnGrid(4);
+					}
 				}
 			}
 
@@ -159,7 +166,8 @@ public class GridScript : MonoBehaviour
 
 	public void HighlightGrid()
 	{
-		GetBoardScript().ResetAllHighlights();
+		GetBoardScript().SetCurrentHighlight(parentGrid.GetComponent<BigGridScript>().bigGridID, gridID);
+		//GetBoardScript().ResetAllHighlights();
 		PlaceOnGrid(3);
 	}
 
@@ -191,12 +199,15 @@ public class GridScript : MonoBehaviour
 		case 3:	// Highlighting (Yellow)
 			GetComponent<SpriteRenderer>().color = Defines.ICON_COLOR_HIGHLIGHT;
 			GetComponent<Animator>().SetTrigger("isHighlighted");
+			GetGUIManagerScript().gridEffect_growStage = 10;
+			GetGUIManagerScript().gridEffect.transform.position = transform.position;
 			mainIcon.SetActive(false);
 			break;
 
 		case 4:	// Invalid (Red)
 			GetComponent<SpriteRenderer>().color = Defines.ICON_COLOR_INVALID;
-			GetComponent<Animator>().SetTrigger("isHighlighted");
+			GetComponent<Animator>().SetTrigger("isInvalid");
+			GetBoardScript().SetCurrentHighlight(10, 10);
 			mainIcon.SetActive(false);
 			break;
 
@@ -213,11 +224,12 @@ public class GridScript : MonoBehaviour
 		PlaceOnGrid((int)GetTurnHandler().turn);
 		parentGrid.GetComponent<BigGridScript>().ProcessBigGridCompleted(GetTurnHandler().turn);
 		GetTurnHandler().ChangeTurn();
+
 		GetGUIManagerScript().ResetTimer();
 
 		GetBoardScript().UpdateActiveGridBG(gridID);
 		GetGUIManagerScript().UpdateClick();
-		GameObject.FindGameObjectWithTag("AIMiniMax").GetComponent<AIMiniMax>().UpdateAI();
+		//GameObject.FindGameObjectWithTag("AIMiniMax").GetComponent<AIMiniMax>().UpdateAI();
 		//AudioManager.Instance.PlaySoundEvent(SOUNDID.ICONPLACED);
 
 		if(TutorialScript.Instance.isTutorial)
@@ -235,6 +247,7 @@ public class GridScript : MonoBehaviour
 		{
 			gridState = 0;
 			GetComponent<SpriteRenderer>().color = Defines.ICON_COLOR_GREY;
+			GetComponent<Animator>().SetBool("isHighlighted", false);
 		}
 	}
 

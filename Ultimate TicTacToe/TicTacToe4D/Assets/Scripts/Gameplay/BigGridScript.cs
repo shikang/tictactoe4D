@@ -20,6 +20,7 @@ public class BigGridScript : MonoBehaviour
 {
 	public GameObject gridObj;
 	public GameObject sWinIcon;
+	public GameObject sWinFrame;
 	public GameObject [] grids;
 	public GameObject scrollingText;
 	public GameObject canvas;
@@ -57,6 +58,19 @@ public class BigGridScript : MonoBehaviour
 			grids[i].GetComponent<GridScript>().PlaceOnGrid(0);
 			grids[i].transform.position = transform.position + new Vector3(offsetX, offsetY, depth);
 		}
+
+		// Dummy placed icons for testing
+		/*if(bigGridID == 0)
+		{
+			grids[0].GetComponent<GridScript>().PlaceOnGrid(2);
+			grids[1].GetComponent<GridScript>().PlaceOnGrid(1);
+			grids[2].GetComponent<GridScript>().PlaceOnGrid(2);
+			grids[3].GetComponent<GridScript>().PlaceOnGrid(1);
+			grids[4].GetComponent<GridScript>().PlaceOnGrid(2);
+			grids[5].GetComponent<GridScript>().PlaceOnGrid(1);
+			grids[6].GetComponent<GridScript>().PlaceOnGrid(1);
+			grids[7].GetComponent<GridScript>().PlaceOnGrid(2);
+		}*/
 	}
 
 	void ResetVars()
@@ -68,38 +82,46 @@ public class BigGridScript : MonoBehaviour
 
 	void Update ()
 	{
-		if(begin == true)
+		if(begin)
 		{
 			if(grids[pos1].GetComponent<Shaker>().IsShakeComplete())
 			{
 				grids[pos2].GetComponent<Shaker>().StartShaking();
-				//Debug.Log("AAAA");
 			}
 			else if(grids[pos2].GetComponent<Shaker>().IsShakeComplete())
 			{
 				grids[pos3].GetComponent<Shaker>().StartShaking();
-								//Debug.Log("BBB");
 			}
 			else if(grids[pos3].GetComponent<Shaker>().IsShakeComplete())
 			{
-								//Debug.Log("CCCC");
 				if(gridWinner == (int)Defines.TURN.P1)
 				{
 					sWinIcon.GetComponent<SpriteRenderer>().sprite =
 						GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().GetSpriteP1();
-					sWinIcon.GetComponent<SpriteRenderer>().color = Defines.ICON_COLOR_P1;
+					//sWinIcon.GetComponent<SpriteRenderer>().color = Defines.ICON_COLOR_P1;
+
+					sWinFrame.SetActive(true);
+					sWinFrame.GetComponent<SpriteRenderer>().color =
+						new Color(Defines.ICON_COLOR_P1.r, Defines.ICON_COLOR_P1.g, Defines.ICON_COLOR_P1.b, 0.7f);
 				}
 				else if(gridWinner == (int)Defines.TURN.P2)
 				{
 					sWinIcon.GetComponent<SpriteRenderer>().sprite =
 						GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().GetSpriteP2();
-					sWinIcon.GetComponent<SpriteRenderer>().color = Defines.ICON_COLOR_P2;
+					//sWinIcon.GetComponent<SpriteRenderer>().color = Defines.ICON_COLOR_P2;
+
+					sWinFrame.SetActive(true);
+					sWinFrame.GetComponent<SpriteRenderer>().color =
+						new Color(Defines.ICON_COLOR_P2.r, Defines.ICON_COLOR_P2.g, Defines.ICON_COLOR_P2.b, 0.7f);
 				}
+
 				begin = false;
 				for(int i = 0; i <9;++i)
 				{
 					grids[i].GetComponent<Shaker>().StartShaking(0.75f);
 				}
+
+				GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().ProcessBoardCompleted();
 			}
 		}
 	}
@@ -121,14 +143,15 @@ public class BigGridScript : MonoBehaviour
 				tmp.transform.localPosition =  new Vector3(-200,700,0);
 				tmp.GetComponent<Text>().text = "+ " + Defines.smallGridWin + "!";
 			}
+
 			//begin to do the shakings
 			begin = true;
 			grids[pos1].GetComponent<Shaker>().StartShaking();
 			//grids[pos2].GetComponent<Shaker>().StartShaking();
 			//grids[pos3].GetComponent<Shaker>().StartShaking();
 			// Win!
+
 			gridWinner = (int)_turn;
-			GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().ProcessBoardCompleted();
 			/*GetComponent<LineRenderer>().SetPosition(0,grids[pos1].transform.position+new Vector3(0,0,1));
 			GetComponent<LineRenderer>().SetPosition(1,grids[pos3].transform.position+new Vector3(0,0,1));*/
 			if(winMethod == WINMETHOD.H_TOP)
@@ -148,11 +171,15 @@ public class BigGridScript : MonoBehaviour
 			else if(winMethod == WINMETHOD.SLASH)
 				transform.Find("RightSlash").GetComponent<WinLine>().startLine(grids[pos1].GetComponent<Shaker>().duration*3);
 		}
-		/*else if(IsDraw())
+		else if(IsDraw())
 		{
 			gridWinner = 3;
-			sIconTexture.GetComponent<SpriteRenderer>().sprite = sBigDraw;
-		}*/
+			sWinFrame.SetActive(true);
+			sWinFrame.GetComponent<SpriteRenderer>().color =
+				new Color(Defines.ICON_COLOR_DRAW.r, Defines.ICON_COLOR_DRAW.g, Defines.ICON_COLOR_DRAW.b, 0.5f);
+			sWinFrame.GetComponent<Animator>().SetTrigger("isSpin");
+			GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().ProcessBoardCompleted();
+		}
 	}
 
 	public bool IsGridCompleted(Defines.TURN _turn)

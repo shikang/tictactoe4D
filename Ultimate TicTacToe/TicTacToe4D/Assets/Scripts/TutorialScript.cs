@@ -7,6 +7,7 @@ public enum TUTORIALSTAGE
 	STARTANIM = 0,
 	WELCOME,
 	PLACE_TOPLEFT_P,
+	ICON_HIGHLIGHTED,
 	OPPONENT_TURN1,
 	PLACE_MIDRIGHT_C,
 	PLACE_BOTLEFT,
@@ -28,6 +29,7 @@ public class TutorialScript : MonoBehaviour
 	public GameObject tText_Btn;
 	public GameObject tText_NoBtn;
 	public GameObject tButton;
+	float winCountdown;
 
 	// Singleton pattern
 	static TutorialScript instance;
@@ -49,6 +51,14 @@ public class TutorialScript : MonoBehaviour
 	{
 		isInit = false;
 		isTutorial = !GameData.current.finishedTutorial;
+		winCountdown = 2.2f;
+
+		if(isTutorial)
+		{
+			GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().BtnMainMenu.SetActive(false);
+			GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().BtnEmote.SetActive(false);
+			GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().BtnRestart.SetActive(false);
+		}
 	}
 
 	void Update()
@@ -70,6 +80,7 @@ public class TutorialScript : MonoBehaviour
 		{
 			tFrame.SetActive(true);
 			tText_NoBtn.SetActive(false);
+			tFrame.GetComponent<RectTransform>().localPosition = new Vector3(0.0f, -40.0f, 0.0f);
 			tText_Btn.GetComponent<Text>().text = "Welcome! In this tutorial, you will learn how to play the game!";
 		}
 		else if(tStage == TUTORIALSTAGE.PLACE_TOPLEFT_P)
@@ -77,23 +88,27 @@ public class TutorialScript : MonoBehaviour
 			tButton.SetActive(false);
 			tText_Btn.SetActive(false);
 			tText_NoBtn.SetActive(true);
-			tText_NoBtn.GetComponent<Text>().text = "See that glowing big grid on the top left? That's where you can place. Try placing the middle-right grid!";
+			tText_NoBtn.GetComponent<Text>().text = "See that glowing board on the <color=green>top left</color>? That's where you can place. Try placing the <color=blue>middle-right</color> box!";
+
+			GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().bigGrids[0].GetComponent<BigGridScript>().grids[5].GetComponent<GridScript>().
+				GetComponent<Animator>().SetTrigger("isIconPlaced");
+
 		}
-		else if(tStage == TUTORIALSTAGE.PLACE_TOPLEFT_P)
+		else if(tStage == TUTORIALSTAGE.ICON_HIGHLIGHTED)
 		{
-			tButton.SetActive(false);
-			tText_Btn.SetActive(false);
-			tText_NoBtn.SetActive(true);
-			tText_NoBtn.GetComponent<Text>().text = "See that glowing big grid on the top left? That's where you can place. Try placing the middle-right grid!";
+			tText_NoBtn.GetComponent<Text>().text = "The first tap highlights the icon. Tap on it again to <color=green>confirm</color> placement!";
+
+			GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().bigGrids[0].GetComponent<BigGridScript>().grids[5].GetComponent<GridScript>().
+				GetComponent<Animator>().SetTrigger("isIconPlaced");
 		}
 		else if(tStage == TUTORIALSTAGE.OPPONENT_TURN1)
 		{
 			tButton.SetActive(true);
 			tText_Btn.SetActive(true);
 			tText_NoBtn.SetActive(false);
-			tText_Btn.GetComponent<Text>().text = "The opponent can now only place on the middle-right big grid, because that's where you sent it to!";
+			tText_Btn.GetComponent<Text>().text = "By placing your icon on the <color=green>middle-right</color> box, you've sent the opponent to the <color=green>middle-right</color> board!";
 
-			tFrame.GetComponent<RectTransform>().localPosition = new Vector3(0.0f, -85.0f, 0.0f);
+			tFrame.GetComponent<RectTransform>().localPosition = new Vector3(0.0f, -80.0f, 0.0f);
 		}
 		else if(tStage == TUTORIALSTAGE.PLACE_MIDRIGHT_C)
 		{
@@ -105,16 +120,19 @@ public class TutorialScript : MonoBehaviour
 			tButton.SetActive(false);
 			tText_Btn.SetActive(false);
 			tText_NoBtn.SetActive(true);
-			tText_NoBtn.GetComponent<Text>().text = "Win the grid!!";
+			tText_NoBtn.GetComponent<Text>().text = "The opponent has sent you to the <color=green>bottom-left board!</color> Win it!!";
 
 			tFrame.GetComponent<RectTransform>().localPosition = new Vector3(0.0f, -10.0f, 0.0f);
+
+			GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().bigGrids[6].GetComponent<BigGridScript>().grids[2].GetComponent<GridScript>().
+				GetComponent<Animator>().SetTrigger("isIconPlaced");
 		}
 		else if(tStage == TUTORIALSTAGE.OPPONENT_TURN2)
 		{
 			tButton.SetActive(true);
 			tText_Btn.SetActive(true);
 			tText_NoBtn.SetActive(false);
-			tText_Btn.GetComponent<Text>().text = "Again, by placing on the top right grid, you've sent the opponent to the top right big grid!";
+			tText_Btn.GetComponent<Text>().text = "Again, by placing on the <color=green>top-right</color> box, you've sent the opponent to the <color=green>top-right</color> board!";
 
 			tFrame.GetComponent<RectTransform>().localPosition = new Vector3(0.0f, -50.0f, 0.0f);
 		}
@@ -128,18 +146,20 @@ public class TutorialScript : MonoBehaviour
 			tButton.SetActive(true);
 			tText_Btn.SetActive(true);
 			tText_NoBtn.SetActive(false);
-			tText_Btn.GetComponent<Text>().text = "The opponent has placed on the bottom-center! It is already completed, so you can place anywhere!";
+			tText_Btn.GetComponent<Text>().text = "The opponent has placed on the <color=green>bottom-center</color> box! Since it is completed, you can place <color=blue>ANYWHERE</color>!";
 
-			tFrame.GetComponent<RectTransform>().localPosition = new Vector3(0.0f, 10.0f, 0.0f);
+			tFrame.GetComponent<RectTransform>().localPosition = new Vector3(0.0f, -15.0f, 0.0f);
 		}
 		else if(tStage == TUTORIALSTAGE.PLACE_BOTRIGHT_P2)
 		{
 			tButton.SetActive(false);
 			tText_Btn.SetActive(false);
 			tText_NoBtn.SetActive(true);
-			tText_NoBtn.GetComponent<Text>().text = "Win this game by winning the bottom row!";
+			tText_NoBtn.GetComponent<Text>().text = "Win this game by winning the bottom boards!";
 
-			tFrame.GetComponent<RectTransform>().localPosition = new Vector3(0.0f, -10.0f, 0.0f);
+			GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().bigGrids[8].GetComponent<BigGridScript>().grids[1].GetComponent<GridScript>().
+				GetComponent<Animator>().SetTrigger("isIconPlaced");
+
 		}
 		else if(tStage == TUTORIALSTAGE.WIN)
 		{
@@ -148,7 +168,12 @@ public class TutorialScript : MonoBehaviour
 			tText_NoBtn.SetActive(true);
 			tText_NoBtn.GetComponent<Text>().text = "Congratulations! You are now ready to play the game!";
 
-			tFrame.GetComponent<RectTransform>().localPosition = new Vector3(0.0f, -5.0f, 0.0f);
+			winCountdown -= Time.deltaTime;
+			if(winCountdown <= 0.0f)
+			{
+				tFrame.SetActive(false);
+			}
+
 			isTutorial = false;
 			GameData.current.finishedTutorial = true;
 			SaveLoad.Save();

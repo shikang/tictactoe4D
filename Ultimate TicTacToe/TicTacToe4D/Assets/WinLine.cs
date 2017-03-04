@@ -21,7 +21,7 @@ public class WinLine : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		if(duration >0)
+		if(duration > 0)
 		{
 			duration -= Time.deltaTime;
 			nScale = transform.localScale;
@@ -33,6 +33,11 @@ public class WinLine : MonoBehaviour
 	}
 	public void startLine(float dur)
 	{
+		/*if(gameObject.GetComponentInParent<BigGridScript>().gridWinner == 1)
+			GetComponent<SpriteRenderer>().color = Defines.ICON_COLOR_P1;
+		else if(gameObject.GetComponentInParent<BigGridScript>().gridWinner == 2)
+			GetComponent<SpriteRenderer>().color = Defines.ICON_COLOR_P2;*/
+
 //		Debug.Log("????");
 		duration = dur;
 		amtToAdd = distance / dur;
