@@ -111,6 +111,9 @@ public class MainMenuScript : MonoBehaviour
 
 		shownRate = false;
 		shownLike = false;
+
+		// @debug
+		//Assets.SimpleAndroidNotifications.NotificationManager.SendWithAppIcon(System.TimeSpan.FromSeconds(Defines.FREE_ROLL_TIMER), "Ultimate Tic Tac Toe", "Get your free roll now!", Color.black);
 	}
 
 	void Update ()

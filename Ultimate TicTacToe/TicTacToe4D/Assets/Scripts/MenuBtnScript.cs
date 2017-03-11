@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.Advertisements;
+using Assets.SimpleAndroidNotifications;
 
 public enum BUTTONTYPES
 {
@@ -190,6 +191,14 @@ public class MenuBtnScript : MonoBehaviour
 				Adverts.Instance.ShowAd(AdVidType.video,options);
 				Adverts.Instance.freeGacha = true;
 				GachaScript.Instance.SetGacha();
+
+				#if UNITY_ANDROID && !UNITY_EDITOR
+				NotificationManager.SendWithAppIcon(System.TimeSpan.FromSeconds(Defines.FREE_ROLL_TIMER), "Ultimate Tic Tac Toe", "Get your free roll now!", Color.black);
+				#endif
+
+				#if UNITY_IOS && !UNITY_EDITOR
+				// @todo apple notification here
+				#endif
 			}
 			break;
 
