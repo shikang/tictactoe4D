@@ -160,6 +160,9 @@ public class AIMiniMax : MonoBehaviour
 		//posVals.Clear();
 		//Debug.Log("Start");
 		int changecount = 0;
+		int maxEmptySlots=0;
+		int []tmpval = new int[9];
+		int []tmppos = new int[9];
 		for(int i = 0; i < 9; ++i)
 		{
 			/* Places a node on the first empty spot and tests MiniMax.
@@ -168,11 +171,12 @@ public class AIMiniMax : MonoBehaviour
 			   according to the evalution function to place the node. */
 			if(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().bigGrids[currentBigGrid].GetComponent<BigGridScript>().grids[i].GetComponent<GridScript>().gridState == EmptyCell)
 			{
+				++maxEmptySlots;
 				Place(i, AITurn);
 				MinVal = O(depth-1, MaxVal, INFINITE);
 				UnPlace(i);
 				//Debug.Log(i+ " > Val: " + MinVal);
-
+				tmpval[i] = MinVal;
 				//minVals.Add(MinVal);
 				//posVals.Add(i);
 
@@ -181,8 +185,8 @@ public class AIMiniMax : MonoBehaviour
 					FinalGrid = i;
 					MaxVal = MinVal;
 				}
-				else if (MaxVal == MinVal)
-					++changecount;
+				/*else if (MaxVal == MinVal)
+					++changecount;*/
 			}
 		}
 		//Debug.Log("Min: "+MinVal+"\nChangeCount: " + changecount);
@@ -219,11 +223,43 @@ public class AIMiniMax : MonoBehaviour
 			int tmpposval = posVals[tmpval];
 			FinalGrid =  tmpposval;
 		}*/
-		//this means all positions are equally viable
-		//so we randomnize it
+		string s="";
+		for(int j =0 ; j <9 ; ++j)
+		{
+			s += "[" + tmpval[j] + "] ";
+			if(j%3 == 2)
+				s+= "\n";
+		}
+		Debug.Log(s);
+		//Debug.Log("Empty Slots: " + maxEmptySlots);
+		//if some or all of the positions are equally viable, they will have the same values
+		//so we randomnize it between them
+		changecount=0;
+		Debug.Log("Finalgrid: " + FinalGrid);
+		for (int k =0; k < 9; ++k)
+		{
+			if(k == FinalGrid)
+				continue;
+			//we check if there are duplicate values
+			else if (tmpval[FinalGrid] == tmpval[k])
+			{
+				//we assign the duplicate position to an arroy
+				tmppos[changecount] = k;
+				++changecount;
+			}
+		}
 		Debug.Log("Changecount: "+changecount);
-		if(changecount == 8)
-			FinalGrid = Random.Range(0,9);
+		//this means there is at least 1 duplicate
+		if(changecount >0)
+		{
+			tmppos[changecount] = FinalGrid;
+			++changecount;
+			Debug.Log("Randomizing because there are duplicate max vals");
+			int rand = Random.Range(0,changecount+1);
+			Debug.Log("Rand: " + rand);
+			FinalGrid = tmppos[rand];
+			Debug.Log("Randomed placement: " + FinalGrid);
+		}
 
 		Place(FinalGrid, AITurn);
 		GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().bigGrids[currentBigGrid].GetComponent<BigGridScript>().grids[FinalGrid].GetComponent<GridScript>().HighlightGrid();
@@ -324,7 +360,7 @@ public class AIMiniMax : MonoBehaviour
 			{
 				if(go.grids[i].GetComponent<GridScript>().gridState == (int)AITurn)
 				{
-					if(Random.Range(1,101) <=75)
+					if(Random.Range(1,101) <=60)
 						++noofLines;
 				}
 					//add a chance to add to the no of lines
@@ -366,15 +402,15 @@ public class AIMiniMax : MonoBehaviour
 				vals[i] = -1;	// completed grids should have no chance.
 			}
 		}
-		string s="";
+		/*string s="";
 		for(int j =0 ; j <9 ; ++j)
 		{
 			s += "[" + vals[j] + "] ";
 			if(j%3 == 2)
 				s+= "\n";
 		}
-		Debug.Log(s);
-		Debug.Log("Same weight: " + sameweight);
+		Debug.Log(s);*/
+		//Debug.Log("Same weight: " + sameweight);
 		//if this number is 8, it means all the board have the same chance of winning
 		//so we will random a board between all of them
 		if(sameweight == 8)
@@ -414,11 +450,16 @@ public class AIMiniMax : MonoBehaviour
 				alpha = Mathf.Max(alpha, MaxVal);
 			}
 		}
-		return MaxVal;
+
+		//original 
+		//return MaxVal;
+		//testing might break!!!
+		return MaxVal + depth;
 	}
 
 	int O(int depth, int alpha, int beta)
 	{
+		//Debug.Log("Depth: " + depth);
 		int MinVal = INFINITE;
 		if(TerminalTest(ref MinVal, depth))
 			return MinVal;
@@ -438,7 +479,11 @@ public class AIMiniMax : MonoBehaviour
 				beta = Mathf.Min(beta, MinVal);
 			}
 		}
-		return MinVal;
+
+		//original
+		//return MinVal;
+		//TESTING might break!!
+		return MinVal - depth;
 	}
 }
 
