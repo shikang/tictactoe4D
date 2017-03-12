@@ -223,7 +223,11 @@ public class BoardScript : MonoBehaviour
 		// Win!
 		if(IsBigGridCompleted())
 		{
-			gameWinner = (int)GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn;
+			if(GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn == Defines.TURN.P1)
+				gameWinner = 2;
+			else if(GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn == Defines.TURN.P2)
+				gameWinner = 1;
+
 			begin = true;
 			if (GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn == Defines.TURN.P1)
 			{	

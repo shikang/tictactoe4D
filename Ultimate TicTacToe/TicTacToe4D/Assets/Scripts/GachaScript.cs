@@ -269,12 +269,14 @@ public class GachaScript : MonoBehaviour
 
 	public void BuyButtonClick()
 	{
+		GameObject.FindGameObjectWithTag("MainMenuCanvas").GetComponent<MenuBtnScript>().currScreen = SCREENS.GACHA_MONEY;
 		GachaPage.SetActive(false);
 		BuyPage.SetActive(true);
 	}
 
 	public void BackBuyButtonClick()
 	{
+		GameObject.FindGameObjectWithTag("MainMenuCanvas").GetComponent<MenuBtnScript>().currScreen = SCREENS.GACHA_POINTS;
 		GachaPage.SetActive(true);
 		BuyPage.SetActive(false);
 		BuyIcon.SetActive(false);

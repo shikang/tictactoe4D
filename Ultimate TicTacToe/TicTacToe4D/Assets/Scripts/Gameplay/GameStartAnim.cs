@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 enum STAGE
@@ -20,6 +21,9 @@ public class GameStartAnim : MonoBehaviour
 	public GameObject whiteScreen;
 	float scaleTimer;
 	bool fadeOut;
+
+	bool fadeToMenu;
+	int nextScreen;
 
 	public GameObject playerGroup1;
 	public GameObject playerGroup2;
@@ -50,6 +54,7 @@ public class GameStartAnim : MonoBehaviour
 		currStage = STAGE.BlackBG;
 		scaleTimer = 2.5f;
 		fadeOut = false;
+		fadeToMenu = false;
 
 		playerIcon1.GetComponent<Image>().sprite = IconManager.Instance.GetIcon((Defines.ICONS)GlobalScript.Instance.iconP1);
 		playerIcon2.GetComponent<Image>().sprite = IconManager.Instance.GetIcon((Defines.ICONS)GlobalScript.Instance.iconP2);
@@ -152,10 +157,32 @@ public class GameStartAnim : MonoBehaviour
 				currStage = STAGE.EndAnim;
 			}
 		}
+
+		if(fadeToMenu)
+		{
+			Color tmp = blackScreen.GetComponent<Image>().color;
+			tmp.a += Time.deltaTime * 1.0f;
+			blackScreen.GetComponent<Image>().color = tmp;
+
+			if(tmp.a >= 1.0f)
+			{
+				if(nextScreen == 1)
+					SceneManager.LoadScene("MainMenu");
+				else if(nextScreen == 2)
+					SceneManager.LoadScene("GameScene");
+			}
+		}
 	}
 
 	public bool GameStartAnimEnded()
 	{
 		return currStage == STAGE.EndAnim;
+	}
+
+	public void FadeOut(int dest = 1)
+	{
+		nextScreen = dest;
+		fadeToMenu = true;
+		blackScreen.SetActive(true);
 	}
 }

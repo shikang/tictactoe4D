@@ -13,6 +13,10 @@ public class BtnScript : MonoBehaviour
 
 	void Update ()
 	{
+		if(Input.GetKeyDown(KeyCode.Escape))
+		{
+			BtnMainMenu();
+		}
 	}
 
 	public void BtnRestart()
@@ -47,7 +51,7 @@ public class BtnScript : MonoBehaviour
             }
             else
             {
-                SceneManager.LoadScene("GameScene");
+				BackToMainMenu(2);
                 Adverts.Instance.RandomShowAd();
             }
         }
@@ -132,10 +136,10 @@ public class BtnScript : MonoBehaviour
 		GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().HideEmoteMenu();
 	}
 
-	public void BackToMainMenu()
+	public void BackToMainMenu(int dest = 1)
 	{
 		// Do fade out logic here
-		SceneManager.LoadScene("MainMenu");
+		GameStartAnim.Instance.FadeOut(dest);
 	}
 
 	public void BtnClickGoodGameEmote()

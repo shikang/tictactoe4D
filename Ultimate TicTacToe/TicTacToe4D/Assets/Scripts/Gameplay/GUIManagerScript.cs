@@ -62,6 +62,7 @@ public class GUIManagerScript : MonoBehaviour
 	float				gridEffect_maxSize;
 	float				gridEffect_scaleSpeed;
 	public int			gridEffect_growStage;
+	float				gridEffect_timer;
 
 	float AITimer;
 
@@ -85,9 +86,9 @@ public class GUIManagerScript : MonoBehaviour
 		currMax = 1.3f;
 		frameScaleSpeed = 1.0f;
 
-		gridEffect_minSize = 0.95f;
-		gridEffect_maxSize = 1.2f;
-		gridEffect_scaleSpeed = 3.0f;
+		gridEffect_minSize = 0.85f;
+		gridEffect_maxSize = 1.3f;
+		gridEffect_scaleSpeed = 4.0f;
 
 		ResetVars();
 	}
@@ -162,9 +163,9 @@ public class GUIManagerScript : MonoBehaviour
 			if(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().gameWinner == 0)
 				GUICenterText.GetComponent<Text>().text = "Draw!";
 			else if(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().gameWinner == 1)
-				GUICenterText.GetComponent<Text>().text = "Player 1 Wins!";
+				GUICenterText.GetComponent<Text>().text = nameP1 + " Wins!";
 			else if(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().gameWinner == 2)
-				GUICenterText.GetComponent<Text>().text = "Player 2 Wins!";
+				GUICenterText.GetComponent<Text>().text = nameP2 + " Wins!";
 
 			if(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().showWinScreen)
 			{
@@ -433,6 +434,21 @@ public class GUIManagerScript : MonoBehaviour
 		{
 			// Do Nothing
 		}
+		else if(gridEffect_growStage == 5)
+		{
+			gridEffect.SetActive(false);
+			gridEffect_timer = 0.4f;
+			gridEffect_growStage = 6;
+		}
+		else if(gridEffect_growStage == 6)
+		{
+			gridEffect_timer -= Time.deltaTime;
+			if(gridEffect_timer <= 0.0f)
+			{
+				gridEffect.SetActive(true);
+				gridEffect_growStage = 1;
+			}
+		}
 		else if(gridEffect_growStage == 1)
 		{
 			// Setup
@@ -454,7 +470,7 @@ public class GUIManagerScript : MonoBehaviour
 
 			//Opacity
 			Color tmp = gridEffect.GetComponent<SpriteRenderer>().color;
-			tmp.a = 1.0f;
+			tmp.a = 0.7f;
 			gridEffect.GetComponent<SpriteRenderer>().color = tmp;
 
 			// Next stage
@@ -491,7 +507,7 @@ public class GUIManagerScript : MonoBehaviour
 				gridEffect.transform.localScale.z );
 
 			Color tmp = gridEffect.GetComponent<SpriteRenderer>().color;
-			tmp.a -= 0.1f;
+			tmp.a -= Time.deltaTime * 3.0f;
 			gridEffect.GetComponent<SpriteRenderer>().color = tmp;
 
 			if(gridEffect.GetComponent<SpriteRenderer>().color.a <= 0.1f)

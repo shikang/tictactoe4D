@@ -40,6 +40,19 @@ public enum BUTTONTYPES
 	NO_LIKE_OUR_FACEBOOK,
 };
 
+public enum SCREENS
+{
+	MAINMENU = 0,
+	ONLINEPLAY,
+	LOCALPLAY,
+	AVATAR,
+	GACHA_POINTS,
+	GACHA_MONEY,
+	SETTINGS_MAIN,
+	SETTINGS_CREDITS,
+	INGAME
+};
+
 public class MenuBtnScript : MonoBehaviour
 {
 	public BUTTONTYPES menuType;
@@ -50,6 +63,7 @@ public class MenuBtnScript : MonoBehaviour
 
 	public bool isStartingGame;
 	public GameObject blackScreen;
+	public SCREENS currScreen;
 
 	void Start ()
 	{
@@ -57,6 +71,7 @@ public class MenuBtnScript : MonoBehaviour
 		isStartingGame = false;
 		blackScreen.GetComponent<Image>().color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
 		blackScreen.SetActive(false);
+		currScreen = SCREENS.MAINMENU;
 	}
 
 	void Update ()
@@ -65,6 +80,27 @@ public class MenuBtnScript : MonoBehaviour
 
 		if(!GameData.current.finishedTutorial)
 			BtnClick((int)BUTTONTYPES.MAIN_SINGLEPLAYER);
+
+		// Android Back Button
+		if(Input.GetKeyDown(KeyCode.Escape))
+		{
+			if(currScreen == SCREENS.MAINMENU)
+				Application.Quit();
+			else if(currScreen == SCREENS.ONLINEPLAY)
+				BtnClick((int)BUTTONTYPES.NETWORK_BACKTOMAINMENU);
+			else if(currScreen == SCREENS.LOCALPLAY)
+				BtnClick((int)BUTTONTYPES.LOCAL_BACKTOMAINMENU);
+			else if(currScreen == SCREENS.AVATAR)
+				BtnClick((int)BUTTONTYPES.NETWORK_BACKTOMAINMENU);
+			else if(currScreen == SCREENS.GACHA_POINTS)
+				BtnClick((int)BUTTONTYPES.LOCAL_BACKTOMAINMENU);
+			else if(currScreen == SCREENS.GACHA_MONEY)
+				GachaScript.Instance.BackBuyButtonClick();
+			else if(currScreen == SCREENS.SETTINGS_MAIN)
+				BtnClick((int)BUTTONTYPES.MAIN_SETTINGS);
+			else if(currScreen == SCREENS.SETTINGS_CREDITS)
+				BtnClick((int)BUTTONTYPES.SETTINGS_CREDITS);
+		}
 	}
 
 	void UpdateAnim()
@@ -100,6 +136,7 @@ public class MenuBtnScript : MonoBehaviour
 			break;
 
 		case BUTTONTYPES.MAIN_LOCALPLAY:
+			currScreen = SCREENS.LOCALPLAY;
 			GlobalScript.Instance.gameMode = 1;
 			Camera.main.GetComponent<MainMenuScript>().ChangeScreen(1);
 			Camera.main.GetComponent<MainMenuScript>().Avatar.SetActive(false);
@@ -108,11 +145,13 @@ public class MenuBtnScript : MonoBehaviour
 			break;
 
 		case BUTTONTYPES.MAIN_NETWORK:
+			currScreen = SCREENS.ONLINEPLAY;
 			GlobalScript.Instance.gameMode = 2;
 			Camera.main.GetComponent<MainMenuScript>().ChangeScreen(2);
 			break;
 
 		case BUTTONTYPES.MAIN_GACHA:
+			currScreen = SCREENS.GACHA_POINTS;
 			GlobalScript.Instance.network_allowButtonClicks = 0;
 			Camera.main.GetComponent<MainMenuScript>().ChangeScreen(3);
 			Camera.main.GetComponent<MainMenuScript>().Avatar.SetActive(false);
@@ -120,11 +159,16 @@ public class MenuBtnScript : MonoBehaviour
 			break;
 
 		case BUTTONTYPES.MAIN_SETTINGS:
+			if(currScreen == SCREENS.MAINMENU)
+				currScreen = SCREENS.SETTINGS_MAIN;
+			else
+				currScreen = SCREENS.MAINMENU;
 			isShowSettingsScreen = !isShowSettingsScreen;
 			Camera.main.GetComponent<MainMenuScript>().SettingsScreen.SetActive(isShowSettingsScreen);
 			break;
 
 		case BUTTONTYPES.MAIN_AVATAR:
+			currScreen = SCREENS.AVATAR;
 			GlobalScript.Instance.network_allowButtonClicks = 0;
 			Camera.main.GetComponent<MainMenuScript>().ChangeScreen(4);
 			Camera.main.GetComponent<MainMenuScript>().Avatar.SetActive(false);
@@ -134,6 +178,7 @@ public class MenuBtnScript : MonoBehaviour
 
 		// Back To Main Menu
 		case BUTTONTYPES.LOCAL_BACKTOMAINMENU:
+			currScreen = SCREENS.MAINMENU;
 			Camera.main.GetComponent<MainMenuScript>().ChangeScreen(0, true);
 
 			Camera.main.GetComponent<MainMenuScript>().Avatar.SetActive(true);
@@ -172,6 +217,10 @@ public class MenuBtnScript : MonoBehaviour
 			break;
 
 		case BUTTONTYPES.SETTINGS_CREDITS:
+			if(currScreen == SCREENS.SETTINGS_MAIN)
+				currScreen = SCREENS.SETTINGS_CREDITS;
+			else
+				currScreen = SCREENS.SETTINGS_MAIN;
 			isShowCreditsScreen = !isShowCreditsScreen;
 			Camera.main.GetComponent<MainMenuScript>().CreditsPage.SetActive(isShowCreditsScreen);
 			break;
@@ -205,6 +254,7 @@ public class MenuBtnScript : MonoBehaviour
 		case BUTTONTYPES.NETWORK_BACKTOMAINMENU:
 			if(GlobalScript.Instance.network_allowButtonClicks == 1)
 			{
+				currScreen = SCREENS.ONLINEPLAY;
 				Camera.main.GetComponent<MainMenuScript>().networkMenuAnimStage = 2;
 				GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().SearchGrey.SetActive(false);
 
@@ -224,6 +274,7 @@ public class MenuBtnScript : MonoBehaviour
 			}
 			else
 			{
+				currScreen = SCREENS.MAINMENU;
 				Camera.main.GetComponent<MainMenuScript>().ChangeScreen(0, true);
 				Camera.main.GetComponent<MainMenuScript>().Avatar.SetActive(true);
 				Camera.main.GetComponent<MainMenuScript>().Settings.SetActive(true);

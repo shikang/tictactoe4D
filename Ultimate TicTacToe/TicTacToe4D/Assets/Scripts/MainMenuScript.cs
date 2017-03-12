@@ -112,6 +112,11 @@ public class MainMenuScript : MonoBehaviour
 		shownRate = false;
 		shownLike = false;
 
+		//SetupFade(2.0f);
+		BlackOverlay.SetActive(true);
+		BlackOverlay.GetComponent<Image>().color = Color.black;
+		isFading = true;
+
 		// @debug
 		//Assets.SimpleAndroidNotifications.NotificationManager.SendWithAppIcon(System.TimeSpan.FromSeconds(Defines.FREE_ROLL_TIMER), "Ultimate Tic Tac Toe", "Get your free roll now!", Color.black);
 	}
@@ -133,11 +138,30 @@ public class MainMenuScript : MonoBehaviour
 		}*/
 
 		if(moveScreen)
+		{
 			UpdateScreenPos();
+		}
+		else
+		{
+			if(Input.GetKeyDown(KeyCode.Escape))
+			{
+				Application.Quit();
+			}
+		}
 
         //Debug.Log(blackOverlayImage.color.a + "," + isFading + "," + faderDuration);
         if(isFading)
-            blackFadeTransition();
+        {
+        	Color temp = BlackOverlay.GetComponent<Image>().color;
+        	temp.a -= Time.deltaTime * 0.8f;
+			BlackOverlay.GetComponent<Image>().color = temp;
+
+			if(temp.a <= 0.0f)
+			{
+				isFading = false;
+				BlackOverlay.SetActive(false);
+			}
+        }
 
 		if (!isFading && !shownLike && !GameData.current.shownRateApp && GameData.current.matchPlayed >= Defines.TIMES_TO_SHOW_RATE_APP)
 		{
@@ -186,7 +210,7 @@ public class MainMenuScript : MonoBehaviour
 		case 0:
             MainMenuScreen.SetActive(true);
             //kelvin: this is supposed to fade in only from intro screen
-            SetupFade(2.0f);
+            //SetupFade(2.0f);
             break;
 
 		case 1:

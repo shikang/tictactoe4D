@@ -183,17 +183,17 @@ public class GridScript : MonoBehaviour
 			break;
 
 		case 1:	// P1 Icon
+			GetComponent<Animator>().SetTrigger("isIconPlaced");
 			GetComponent<SpriteRenderer>().color = Defines.ICON_COLOR_P1;
 			mainIcon.GetComponent<SpriteRenderer>().sprite = GetTurnHandler().GetSpriteP1();
 			mainIcon.SetActive(true);
-			GetComponent<Animator>().SetTrigger("isIconPlaced");
 			break;
 
 		case 2:	// P2 Icon
+			GetComponent<Animator>().SetTrigger("isIconPlaced");
 			GetComponent<SpriteRenderer>().color = Defines.ICON_COLOR_P2;
 			mainIcon.GetComponent<SpriteRenderer>().sprite = GetTurnHandler().GetSpriteP2();
 			mainIcon.SetActive(true);
-			GetComponent<Animator>().SetTrigger("isIconPlaced");
 			break;
 
 		case 3:	// Highlighting (Yellow)
@@ -218,7 +218,7 @@ public class GridScript : MonoBehaviour
 
 	public void ConfirmPlacement()
 	{
-		GetGUIManagerScript().gridEffect_growStage = 1;
+		GetGUIManagerScript().gridEffect_growStage = 5;
 		GetGUIManagerScript().gridEffect.transform.position = transform.position;
 
 		PlaceOnGrid((int)GetTurnHandler().turn);
