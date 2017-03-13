@@ -27,6 +27,12 @@ public class MainMenuScript : MonoBehaviour
 	public GameObject PasswordField;
 	public GameObject SearchBtn;
 
+	public GameObject greyTimerBtn1;
+	public GameObject greyTimerBtn2;
+	public GameObject greyTimerBtn3;
+	public GameObject findGameAnim1;
+	public GameObject findGameAnim2;
+
 	public GameObject FindFriendBtn;
 	public GameObject JoinPublicBtn;
 	public GameObject SearchGrey;
@@ -187,6 +193,8 @@ public class MainMenuScript : MonoBehaviour
 
         currentFadeTime += Time.deltaTime;
         currentMoveTime += Time.deltaTime;
+
+		SpinIcons();
     }
 
 	// Change Screen is the animation; once done, then this is called to hide unwanted screens
@@ -236,6 +244,8 @@ public class MainMenuScript : MonoBehaviour
 			SearchGrey.SetActive(false);
 			FindFriendButton.SetActive(true);
 			JoinPublicButton.SetActive(true);
+
+			GlobalScript.Instance.ResetGreyBtns();
 			//PlayerNameInput.GetComponent<InputField>().enabled = true;
 			//PlayerIconInput.GetComponent<Button>().interactable = true;
 			//Color iconColor = PlayerIconInput.GetComponent<Image>().color;
@@ -388,7 +398,6 @@ public class MainMenuScript : MonoBehaviour
 	{
 		if(networkMenuAnimStage == 1)
 		{
-			Debug.Log("IN?");
 			float yPos = JoinPublicBtn.GetComponent<RectTransform>().localPosition.y;
 			JoinPublicBtn.GetComponent<RectTransform>().localPosition =
 				Vector3.Lerp(JoinPublicBtn.GetComponent<RectTransform>().localPosition, new Vector3(-160.0f, yPos, 0.0f), Time.deltaTime * 4.0f);
@@ -445,7 +454,42 @@ public class MainMenuScript : MonoBehaviour
         {
             isFading = false;
             blackOverlayImage.rectTransform.gameObject.SetActive(false);
-        }
-        
+        } 
+    }
+
+    public void SetAnim(int id)
+    {
+    	int rand = Random.Range((int)Defines.Avatar_FirstIcon+1, (int)(Defines.ICONS.TOTAL)-1);
+    	Debug.Log("RR: " + rand);
+
+    	if(id == 1)
+    	{
+			findGameAnim1.SetActive(true);
+			findGameAnim1.GetComponentInChildren<Image>().sprite = IconManager.Instance.GetIcon(rand);
+		}
+		else if(id == 2)
+		{
+			findGameAnim2.SetActive(true);
+			findGameAnim2.GetComponentInChildren<Image>().sprite = IconManager.Instance.GetIcon(rand);
+		}
+    }
+
+    public void SpinIcons()
+    {
+    	if(findGameAnim1.activeInHierarchy)
+    	{
+			foreach(Transform curr in findGameAnim1.GetComponent<Transform>())
+			{
+				curr.Rotate(0.0f, 0.0f, 6.0f);
+			}
+		}
+
+		if(findGameAnim2.activeInHierarchy)
+    	{
+			foreach(Transform curr in findGameAnim2.GetComponent<Transform>())
+			{
+				curr.Rotate(0.0f, 0.0f, 6.0f);
+			}
+		}
     }
 }

@@ -377,4 +377,36 @@ public class GlobalScript : MonoBehaviour
 		else if(i == 3)
 			timePerTurn = Defines.TIMEPERTURN_3;
 	}
+
+	public void SetGreyBtns()
+	{
+		if(timePerTurn == Defines.TIMEPERTURN_1)
+		{
+			GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().greyTimerBtn1.SetActive(false);
+			GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().greyTimerBtn2.SetActive(true);
+			GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().greyTimerBtn3.SetActive(true);
+		}
+		else if(timePerTurn == Defines.TIMEPERTURN_2)
+		{
+			GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().greyTimerBtn1.SetActive(true);
+			GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().greyTimerBtn2.SetActive(false);
+			GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().greyTimerBtn3.SetActive(true);
+		}
+		else if(timePerTurn == Defines.TIMEPERTURN_3)
+		{
+			GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().greyTimerBtn1.SetActive(true);
+			GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().greyTimerBtn2.SetActive(true);
+			GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().greyTimerBtn3.SetActive(false);
+		}
+	}
+
+	public void ResetGreyBtns()
+	{
+		GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().greyTimerBtn1.SetActive(false);
+		GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().greyTimerBtn2.SetActive(false);
+		GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().greyTimerBtn3.SetActive(false);
+
+		GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().findGameAnim1.SetActive(false);
+		GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().findGameAnim2.SetActive(false);
+	}
 }

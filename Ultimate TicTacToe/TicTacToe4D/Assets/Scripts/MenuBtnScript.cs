@@ -202,6 +202,8 @@ public class MenuBtnScript : MonoBehaviour
 			Camera.main.GetComponent<MainMenuScript>().Avatar.SetActive(false);
 			Camera.main.GetComponent<MainMenuScript>().Settings.SetActive(false);
 			Camera.main.GetComponent<MainMenuScript>().networkMenuAnimStage = 1;
+			GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().SetAnim(1);
+			GlobalScript.Instance.SetGreyBtns();
 			break;
 
 		case BUTTONTYPES.NETWORK_PRIVATEGAME:
@@ -214,6 +216,8 @@ public class MenuBtnScript : MonoBehaviour
 			Camera.main.GetComponent<MainMenuScript>().Avatar.SetActive(false);
 			Camera.main.GetComponent<MainMenuScript>().Settings.SetActive(false);
 			GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().SearchGrey.SetActive(true);
+			GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().SetAnim(2);
+			GlobalScript.Instance.SetGreyBtns();
 			break;
 
 		case BUTTONTYPES.SETTINGS_CREDITS:
@@ -271,6 +275,7 @@ public class MenuBtnScript : MonoBehaviour
 
 				GlobalScript.Instance.LeaveRoom();
 		        GlobalScript.Instance.ResetCountdown();
+				GlobalScript.Instance.ResetGreyBtns();
 			}
 			else
 			{
