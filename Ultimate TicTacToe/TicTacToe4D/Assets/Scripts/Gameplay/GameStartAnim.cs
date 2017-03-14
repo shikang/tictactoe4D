@@ -14,6 +14,13 @@ enum STAGE
 	EndAnim
 };
 
+enum HEADER
+{
+	MoveDown = 0,
+	BounceUp,
+	End
+};
+
 public class GameStartAnim : MonoBehaviour
 {
 	STAGE currStage;
@@ -32,6 +39,9 @@ public class GameStartAnim : MonoBehaviour
 	public GameObject playerIcon2;
 	public GameObject playerName1;
 	public GameObject playerName2;
+
+	public GameObject header;
+	HEADER headerStage;
 
 	// Singleton pattern
 	static GameStartAnim instance;
@@ -52,6 +62,7 @@ public class GameStartAnim : MonoBehaviour
 	void Start ()
 	{
 		currStage = STAGE.BlackBG;
+		headerStage = HEADER.MoveDown;
 		scaleTimer = 2.5f;
 		fadeOut = false;
 		fadeToMenu = false;
@@ -63,6 +74,29 @@ public class GameStartAnim : MonoBehaviour
 	}
 
 	void Update ()
+	{
+		UpdateGameStartAnim();
+		UpdateHeaderAnim();
+
+		if(fadeToMenu)
+		{
+			Color tmp = blackScreen.GetComponent<Image>().color;
+			tmp.a += Time.deltaTime * 1.0f;
+			blackScreen.GetComponent<Image>().color = tmp;
+
+			if(tmp.a >= 1.0f)
+			{
+				if(nextScreen == 1)
+					SceneManager.LoadScene("MainMenu");
+				else if(nextScreen == 2)
+					SceneManager.LoadScene("GameScene");
+			}
+		}
+
+
+	}
+
+	void UpdateGameStartAnim()
 	{
 		if(currStage == STAGE.BlackBG)
 		{
@@ -157,19 +191,23 @@ public class GameStartAnim : MonoBehaviour
 				currStage = STAGE.EndAnim;
 			}
 		}
+	}
 
-		if(fadeToMenu)
+	void UpdateHeaderAnim()
+	{
+		if(headerStage == HEADER.MoveDown)
 		{
-			Color tmp = blackScreen.GetComponent<Image>().color;
-			tmp.a += Time.deltaTime * 1.0f;
-			blackScreen.GetComponent<Image>().color = tmp;
-
-			if(tmp.a >= 1.0f)
+			header.GetComponent<Transform>().localPosition = Vector3.Lerp(header.GetComponent<Transform>().localPosition, new Vector3(-450.0f, 470.0f, 0.0f), Time.deltaTime * 3.0f);
+			if( Vector3.Distance(header.GetComponent<Transform>().localPosition, new Vector3(-450.0f, 470.0f, 0.0f)) < 80.0f)
+				headerStage = HEADER.BounceUp;
+		}
+		else if(headerStage == HEADER.BounceUp)
+		{
+			header.GetComponent<Transform>().localPosition = Vector3.Lerp(header.GetComponent<Transform>().localPosition, new Vector3(-450.0f, 590.0f, 0.0f), Time.deltaTime * 4.0f);
+			if( Vector3.Distance(header.GetComponent<Transform>().localPosition, new Vector3(-450.0f, 590.0f, 0.0f)) < 5.0f)
 			{
-				if(nextScreen == 1)
-					SceneManager.LoadScene("MainMenu");
-				else if(nextScreen == 2)
-					SceneManager.LoadScene("GameScene");
+				header.GetComponent<Transform>().localPosition = new Vector3(-450.0f, 590.0f, 0.0f);
+				headerStage = HEADER.End;
 			}
 		}
 	}

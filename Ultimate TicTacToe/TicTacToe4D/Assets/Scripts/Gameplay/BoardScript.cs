@@ -34,8 +34,6 @@ public class BoardScript : MonoBehaviour
 
     float jerkTimerP1;
 	float jerkTimerP2;
-	int jerkTypeP1;
-	int jerkTypeP2;
 
     WINMETHOD winMethod = WINMETHOD.NIL;
     int pos1,pos2,pos3;
@@ -88,8 +86,6 @@ public class BoardScript : MonoBehaviour
 
 		gameWinner = -1;
 
-		jerkTypeP1 = Random.Range(1, 3);
-		jerkTypeP2 = Random.Range(1, 3);
 		jerkTimerP1 = Random.Range(18.0f, 35.0f);
 		jerkTimerP2 = Random.Range(18.0f, 35.0f);
 
@@ -157,8 +153,8 @@ public class BoardScript : MonoBehaviour
 		}
 
 		UpdateScaleLimit();
-		UpdateJerkTimer(1, ref jerkTimerP1, ref jerkTypeP1);
-		UpdateJerkTimer(2, ref jerkTimerP2, ref jerkTypeP2);
+		UpdateJerkTimer(1, ref jerkTimerP1);
+		UpdateJerkTimer(2, ref jerkTimerP2);
 	}
 
 	public void UpdateActiveGridBG(int _gridID, bool firstTime = false)
@@ -193,25 +189,29 @@ public class BoardScript : MonoBehaviour
 	}
 
 	// Random pulse of animation
-	void UpdateJerkTimer(int _player, ref float _animTimer, ref int _animType)
+	void UpdateJerkTimer(int _player, ref float _animTimer)
 	{
 		_animTimer -= Time.deltaTime;
 
 		if(_animTimer <= 0.0f)
 		{
+			_animTimer = Random.Range(18.0f, 35.0f);
+			int randType = Random.Range(1, 4);
+
 			for(int i = 0; i < 9; ++i)
 			{
 				for(int j = 0; j < 9; ++j)
 				{
 					if(bigGrids[i].GetComponent<BigGridScript>().grids[j].GetComponent<GridScript>().gridState == _player)
 					{
-						if(_animType == 1)
+						if(randType == 1)
 							bigGrids[i].GetComponent<BigGridScript>().grids[j].GetComponent<Animator>().SetTrigger("isIconJerk1");
-						else
+						else if(randType == 2)
 							bigGrids[i].GetComponent<BigGridScript>().grids[j].GetComponent<Animator>().SetTrigger("isIconJerk2");
-
-						_animTimer = Random.Range(18.0f, 35.0f);
-						_animType = Random.Range(1, 3);
+						else if(randType == 3)
+							bigGrids[i].GetComponent<BigGridScript>().grids[j].GetComponent<Animator>().SetTrigger("isIconPlaced");
+						else if(randType == 4)
+							bigGrids[i].GetComponent<BigGridScript>().grids[j].GetComponent<Animator>().SetTrigger("isHighlighted");
 					}
 				}
 			}

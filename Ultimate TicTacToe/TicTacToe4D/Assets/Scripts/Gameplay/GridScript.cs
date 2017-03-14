@@ -23,6 +23,8 @@ public class GridScript : MonoBehaviour
 		if( GetBoardScript().gameMode == Defines.GAMEMODE.AI &&
 			GetTurnHandler().turn == GameObject.FindGameObjectWithTag("AIMiniMax").GetComponent<AIMiniMax>().AITurn )
 		{
+			if(gridState == 0)
+				PlaceOnGrid(4);
 			return;
 		}
 
@@ -31,7 +33,9 @@ public class GridScript : MonoBehaviour
             ( (  NetworkManager.IsPlayerOne() && GetTurnHandler().turn != Defines.TURN.P1 ) ||
               ( !NetworkManager.IsPlayerOne() && GetTurnHandler().turn != Defines.TURN.P2 ) ) )
         {
-            return;
+			if(gridState == 0)
+				PlaceOnGrid(4);
+			return;
         }
 
 		//if(Input.touchCount != 1)
@@ -161,7 +165,8 @@ public class GridScript : MonoBehaviour
 	{
 		if(gridState == 4)
 			PlaceOnGrid(0);
-			
+		else if(gridState == 1 || gridState == 2)
+			GetComponent<Animator>().SetTrigger("isIconPlaced");
 	}
 
 	public void HighlightGrid()

@@ -361,7 +361,7 @@ public class GUIManagerScript : MonoBehaviour
 
 	public void UpdateWin()
 	{
-		ScaleText(GUICenterText.transform, 1.2f);
+		ScaleText(GUICenterText.transform, 0.6f);
 	}
 
 	public void SetCfmAlpha(bool _Setter)
@@ -437,7 +437,7 @@ public class GUIManagerScript : MonoBehaviour
 		else if(gridEffect_growStage == 5)
 		{
 			gridEffect.SetActive(false);
-			gridEffect_timer = 0.4f;
+			gridEffect_timer = 0.5f;
 			gridEffect_growStage = 6;
 		}
 		else if(gridEffect_growStage == 6)
