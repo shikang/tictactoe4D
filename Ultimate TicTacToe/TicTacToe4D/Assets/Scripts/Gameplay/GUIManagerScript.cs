@@ -232,9 +232,20 @@ public class GUIManagerScript : MonoBehaviour
 
 			if(timerP1 <= 0.0f)
 			{
-				GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().ChangeTurn();
-				GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().activeBigGrid = 10;
-				GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().UpdateActiveGridBG(10, false);
+				if (GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().gameMode != Defines.GAMEMODE.ONLINE)
+				{
+					ChangeTurn();
+				}
+				else if (GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().gameMode == Defines.GAMEMODE.ONLINE && NetworkManager.IsPlayerOne())
+				{
+					ChangeTurn();
+					Defines.TURN current = GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn;
+					NetworkGameLogic.GetNetworkGameLogic().ChangeTurn(Defines.TURN.P1, current);
+				}
+				else if (GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().gameMode == Defines.GAMEMODE.ONLINE && !NetworkManager.IsPlayerOne())
+				{
+					timerP1 = 0.0f;
+				}
 			}
 			//GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().SetWinner((int)Defines.TURN.P2);
 
@@ -281,9 +292,20 @@ public class GUIManagerScript : MonoBehaviour
 
 			if(timerP2 <= 0.0f)
 			{
-				GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().ChangeTurn();
-				GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().activeBigGrid = 10;
-				GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().UpdateActiveGridBG(10, false);
+				if (GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().gameMode != Defines.GAMEMODE.ONLINE)
+				{
+					ChangeTurn();
+				}
+				else if (GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().gameMode == Defines.GAMEMODE.ONLINE && NetworkManager.IsPlayerOne())
+				{
+					ChangeTurn();
+					Defines.TURN current = GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn;
+					NetworkGameLogic.GetNetworkGameLogic().ChangeTurn(Defines.TURN.P2, current);
+				}
+				else if (GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().gameMode == Defines.GAMEMODE.ONLINE && !NetworkManager.IsPlayerOne())
+				{
+					timerP2 = 0.0f;
+				}
 			}
 			//GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().SetWinner((int)Defines.TURN.P2);
 
@@ -326,6 +348,14 @@ public class GUIManagerScript : MonoBehaviour
 		{
 			GUITurn.GetComponent<Text>().text = "";
 		}
+	}
+
+	public void ChangeTurn()
+	{
+		GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().ChangeTurn();
+		GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().activeBigGrid = 10;
+		GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().UpdateActiveGridBG(10, false);
+		ResetTimer();
 	}
 
 	void UpdateAIGUI()

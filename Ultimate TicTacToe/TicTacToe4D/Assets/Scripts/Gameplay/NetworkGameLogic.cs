@@ -99,10 +99,19 @@ public class NetworkGameLogic : Photon.PunBehaviour
 
     public void ConfirmPlacement(int bigID, int smallID, Defines.TURN turn, float time)
     {
-        photonView.RPC("ConfirmPlacement_RPC", PhotonTargets.All, bigID, smallID, turn, time);
+        photonView.RPC("ConfirmPlacement_RPC", PhotonTargets.Others, bigID, smallID, turn, time);
     }
 
-    public void AfterActionDecision(int player, AFTERMATH_ACTION action)
+	// Player 1 to Player 2 only
+	public void ChangeTurn(Defines.TURN prev, Defines.TURN current)
+	{
+		if (!NetworkManager.IsPlayerOne())
+			return;
+
+		photonView.RPC("ChangeTurn_RPC", PhotonTargets.Others, prev, current);
+	}
+
+	public void AfterActionDecision(int player, AFTERMATH_ACTION action)
     {
         if ( NetworkManager.IsPlayerOne() && player == 1 )
         {
@@ -137,16 +146,37 @@ public class NetworkGameLogic : Photon.PunBehaviour
     [PunRPC]
     void ConfirmPlacement_RPC(int bigID, int smallID, Defines.TURN turn, float time)
     {
+		// If not correct turn
+		if (GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn != turn)
+			return;
+
         BoardScript board = GameObject.Find("Board").GetComponent<BoardScript>();
         BigGridScript bigGrid = board.bigGrids[bigID].GetComponent<BigGridScript>();
         GridScript smallGrid = bigGrid.grids[smallID].GetComponent<GridScript>();
-		GUIManagerScript guiScript = GameObject.FindGameObjectsWithTag("GUIManager")[0].GetComponent<GUIManagerScript>();
+		GUIManagerScript guiScript = GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>();
 
         smallGrid.ConfirmPlacement();
-		guiScript.SetTimer(turn, time);
+		//guiScript.SetTimer(turn, time);
+		guiScript.ResetTimer();
+
+		// Confirms p2 action and ask p2 to execute it.
+		if (NetworkManager.IsPlayerOne() && turn == Defines.TURN.P2)
+		{
+			GetNetworkGameLogic().ConfirmPlacement(bigID, smallID, turn, time);
+		}
     }
 
-    [PunRPC]
+	[PunRPC]
+	public void ChangeTurn_RPC(Defines.TURN prev, Defines.TURN current)
+	{
+		// Ignore
+		if (GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn != prev)
+			return;
+
+		GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().ChangeTurn();
+	}
+
+	[PunRPC]
     void AfterActionDecision_RPC(int player, AFTERMATH_ACTION action)
     {
         switch(player)

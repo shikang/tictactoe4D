@@ -146,6 +146,12 @@ public class GridScript : MonoBehaviour
 	                    networkLogic.ConfirmPlacement(parentGrid.GetComponent<BigGridScript>().bigGridID, gridID,
 	                                                  NetworkManager.IsPlayerOne() ? Defines.TURN.P1 : Defines.TURN.P2,
 													  NetworkManager.IsPlayerOne() ? GetGUIManagerScript().timerP1 : GetGUIManagerScript().timerP2);
+
+						// Player is acting like server
+						if (NetworkManager.IsPlayerOne())
+						{
+							ConfirmPlacement();
+						}
 	                }
 	                else
 	                {
