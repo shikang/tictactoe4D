@@ -240,9 +240,11 @@ public class MenuBtnScript : MonoBehaviour
 		case BUTTONTYPES.ADS_WATCH_VIDEO:
 			if(GachaScript.Instance.CanGacha())
 			{
+				#if UNITY_ANDROID || UNITY_IOS
 				var options = new ShowOptions { resultCallback = Adverts.Instance.FreeGachaHandler};
 				Adverts.Instance.ShowAd(AdVidType.video,options);
 				Adverts.Instance.freeGacha = true;
+				#endif
 				GachaScript.Instance.SetGacha();
 
 				#if UNITY_ANDROID && !UNITY_EDITOR

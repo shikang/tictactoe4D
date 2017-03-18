@@ -8,13 +8,6 @@ public enum AdVidType
 };
 public class Adverts : MonoBehaviour
 {
-	//bool show = false;
-	public bool freeGacha = false;
-	public bool beginReward = false;
-	public bool support;
-	public int showChance;
-	int baseChance = 20;
-	int chanceIncrease = 10;
 	// Singleton pattern
 	static Adverts instance;
 	public static Adverts Instance
@@ -22,16 +15,32 @@ public class Adverts : MonoBehaviour
 		get { return instance; }
 	}
 
+	public void RemoveAds()
+	{
+		GameData.current.removeAds = true;
+		SaveLoad.Save();
+		Debug.Log("Removing Random Ads");
+	}
+
+#if UNITY_ANDROID || UNITY_IOS
+	//bool show = false;
+	public bool freeGacha = false;
+	public bool beginReward = false;
+	public bool support;
+	public int showChance;
+	int baseChance = 20;
+	int chanceIncrease = 10;
+	
 	void Awake()
 	{
-		
+
 		if (instance != null)
 		{
 			//throw new System.Exception("You have more than 1 GlobalScript in the scene.");
 			Destroy(this);
 			return;
 		}
-		Advertisement.Initialize("1268576",true);
+		Advertisement.Initialize("1268576", true);
 		Debug.Log(Advertisement.isInitialized);
 		Debug.Log(Advertisement.testMode);
 		Debug.Log(Advertisement.isSupported);
@@ -88,13 +97,7 @@ public class Adverts : MonoBehaviour
 
 		return false;
 	}
-	public void RemoveAds()
-	{
 
-		GameData.current.removeAds = true;
-		SaveLoad.Save();
-		Debug.Log("Removing Random Ads");
-	}
 	public void RandomShowAd ()
 	{
 		//Do not show ads if player has purchased the Ad removal
@@ -137,6 +140,26 @@ public class Adverts : MonoBehaviour
 		         Debug.Log("Ad failed");
 		         break;
 		     
-	     }
-     }
-  }
+		}
+	}
+#else
+	void Awake()
+	{
+
+		if (instance != null)
+		{
+			//throw new System.Exception("You have more than 1 GlobalScript in the scene.");
+			Destroy(this);
+			return;
+		}
+		// Initialize the static class variables
+		instance = this;
+
+		DontDestroyOnLoad(gameObject);
+	}
+
+	public void RandomShowAd()
+	{
+	}
+#endif
+}
