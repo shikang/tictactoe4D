@@ -319,4 +319,12 @@ public class MatchMaker : Photon.PunBehaviour
 		connecting = false;
 		joinedLobby = false;
 	}
+
+	public void OnApplicationPause(bool pause)
+	{
+		if (pause && connecting)
+		{
+			LeaveRoom();
+		}
+	}
 }
