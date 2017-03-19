@@ -81,8 +81,17 @@ public class NetworkGameLogic : Photon.PunBehaviour
 		}
 	}
 
-    // Network game logic
-    public void SendMessage(string message)
+	public void OnApplicationPause(bool pause)
+	{
+		if (pause && NetworkManager.IsConnected())
+		{
+			NetworkManager.Disconnect();
+			SceneManager.LoadScene("MainMenu");
+		}
+	}
+
+	// Network game logic
+	public void SendMessage(string message)
     {
         photonView.RPC("SendMessage_RPC", PhotonTargets.All, message);
     }

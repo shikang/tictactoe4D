@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Photon;
 
-public class NetworkManager : Photon.PunBehaviour
+public class NetworkManager : UnityEngine.MonoBehaviour
 {
     // Use this for initialization
 	void Start () 
@@ -53,5 +53,10 @@ public class NetworkManager : Photon.PunBehaviour
 	{
 		if (PhotonNetwork.inRoom)
 			PhotonNetwork.LeaveRoom();
+	}
+
+	static public void Disconnect()
+	{
+		PhotonNetwork.Disconnect();
 	}
 }
