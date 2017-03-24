@@ -178,7 +178,7 @@ public class GlobalScript : MonoBehaviour
 	{
 			if(str == "")
 				return;
-			nameP1 = str;
+			nameP1 = str.Substring(0, System.Math.Min(Defines.MAX_PLAYER_NAME_LENGTH, str.Length));
 			//Debug.Log (nameP1);
 	}
 
@@ -186,7 +186,7 @@ public class GlobalScript : MonoBehaviour
 	{
 			if(str =="")
 				return;
-			nameP2 = str;		
+			nameP2 = str.Substring(0, System.Math.Min(Defines.MAX_PLAYER_NAME_LENGTH, str.Length));		
 			//Debug.Log (nameP2);
 	}
 

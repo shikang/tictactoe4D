@@ -91,6 +91,8 @@ public class Defines : Singleton<Defines>
 	static public int V_PLACEICON = 200;
 	static public int V_WINBIGGRID = 600;
 
+	static public int MAX_PLAYER_NAME_LENGTH = 10;
+
 	public enum AdsInAppPurchase
 	{
 		DISABLE,
