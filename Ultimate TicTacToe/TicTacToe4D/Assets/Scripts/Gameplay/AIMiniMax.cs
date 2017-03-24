@@ -188,6 +188,10 @@ public class AIMiniMax : MonoBehaviour
 				/*else if (MaxVal == MinVal)
 					++changecount;*/
 			}
+			else
+			{
+				tmpval[i] = -INFINITE;
+			}
 		}
 		//Debug.Log("Min: "+MinVal+"\nChangeCount: " + changecount);
 		/*if(diff == Difficulty.Easy)
