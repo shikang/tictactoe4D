@@ -85,9 +85,8 @@ public class BoardScript : MonoBehaviour
 		UpdateActiveGridBG(0, true);
 
 		gameWinner = -1;
-
-		jerkTimerP1 = Random.Range(18.0f, 35.0f);
-		jerkTimerP2 = Random.Range(18.0f, 35.0f);
+		jerkTimerP1 = Random.Range(35.0f, 80.0f);
+		jerkTimerP2 = Random.Range(35.0f, 80.0f);
 
 		currHighlighted_BigGrid = 10;
 		currHighlighted_Grid = 10;
@@ -246,7 +245,6 @@ public class BoardScript : MonoBehaviour
 				tmp.transform.localScale = new Vector3(1,1,1);	
 				tmp.transform.localPosition =  new Vector3(-200,700,0);
 				tmp.GetComponent<Text>().text = "+ " + Defines.bigGridWin + "!";
-
 			}
 		}
 		else if(IsDraw()) // Draw. All boards filled

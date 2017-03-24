@@ -80,9 +80,9 @@ public class Defines : Singleton<Defines>
 
 	static public float FREE_ROLL_TIMER = 14400.0f;	//4 hours
 
-	static public float TIMEPERTURN_1 = 10.0f;
-	static public float TIMEPERTURN_2 = 20.0f;
-	static public float TIMEPERTURN_3 = 30.0f;
+	static public float TIMEPERTURN_1 = 20.0f;
+	static public float TIMEPERTURN_2 = 30.0f;
+	static public float TIMEPERTURN_3 = 40.0f;
 
 	static public int TIMES_TO_SHOW_RATE_APP = 5;
 	static public int TIMES_TO_SHOW_LIKE_FB = 3;
