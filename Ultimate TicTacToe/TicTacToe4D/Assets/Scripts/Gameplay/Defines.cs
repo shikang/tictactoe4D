@@ -87,6 +87,10 @@ public class Defines : Singleton<Defines>
 	static public int TIMES_TO_SHOW_RATE_APP = 5;
 	static public int TIMES_TO_SHOW_LIKE_FB = 3;
 
+	static public int V_STARTGAME = 400;
+	static public int V_PLACEICON = 200;
+	static public int V_WINBIGGRID = 600;
+
 	public enum AdsInAppPurchase
 	{
 		DISABLE,

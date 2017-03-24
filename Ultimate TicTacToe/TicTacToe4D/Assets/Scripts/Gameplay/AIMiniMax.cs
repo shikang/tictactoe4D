@@ -366,6 +366,7 @@ public class AIMiniMax : MonoBehaviour
 					//add a chance to add to the no of lines
 			}
 		}
+
 		return noofLines;
 	}
 

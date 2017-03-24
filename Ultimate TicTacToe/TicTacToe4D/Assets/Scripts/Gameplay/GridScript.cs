@@ -198,6 +198,9 @@ public class GridScript : MonoBehaviour
 			GetComponent<SpriteRenderer>().color = Defines.ICON_COLOR_P1;
 			mainIcon.GetComponent<SpriteRenderer>().sprite = GetTurnHandler().GetSpriteP1();
 			mainIcon.SetActive(true);
+
+			if(VibrationManager.HasVibrator())
+				VibrationManager.Vibrate(Defines.V_PLACEICON);
 			break;
 
 		case 2:	// P2 Icon
@@ -205,6 +208,9 @@ public class GridScript : MonoBehaviour
 			GetComponent<SpriteRenderer>().color = Defines.ICON_COLOR_P2;
 			mainIcon.GetComponent<SpriteRenderer>().sprite = GetTurnHandler().GetSpriteP2();
 			mainIcon.SetActive(true);
+
+			if(VibrationManager.HasVibrator())
+				VibrationManager.Vibrate(Defines.V_PLACEICON);
 			break;
 
 		case 3:	// Highlighting (Yellow)

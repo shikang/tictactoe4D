@@ -121,6 +121,7 @@ public class BigGridScript : MonoBehaviour
 					grids[i].GetComponent<Shaker>().StartShaking(0.75f);
 				}
 
+				sWinFrame.GetComponent<Animator>().SetTrigger("isSpin");
 				GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().ProcessBoardCompleted();
 			}
 		}
@@ -130,6 +131,9 @@ public class BigGridScript : MonoBehaviour
 	{
 		if(IsGridCompleted(_turn))
 		{
+			if(VibrationManager.HasVibrator())
+				VibrationManager.Vibrate(Defines.V_WINBIGGRID);
+
 			//add the points
 			if (_turn == Defines.TURN.P1)
 			{
@@ -173,6 +177,9 @@ public class BigGridScript : MonoBehaviour
 		}
 		else if(IsDraw())
 		{
+			if(VibrationManager.HasVibrator())
+				VibrationManager.Vibrate(Defines.V_WINBIGGRID);
+
 			gridWinner = 3;
 			sWinFrame.SetActive(true);
 			sWinFrame.GetComponent<SpriteRenderer>().color =

@@ -107,6 +107,9 @@ public class MenuBtnScript : MonoBehaviour
 	{
 		if(isStartingGame)
 		{
+			if(VibrationManager.HasVibrator())
+				VibrationManager.Vibrate(Defines.V_STARTGAME);
+
 			blackScreen.SetActive(true);
 			Color temp = blackScreen.GetComponent<Image>().color;
 			temp.a += Time.deltaTime * 3.0f;

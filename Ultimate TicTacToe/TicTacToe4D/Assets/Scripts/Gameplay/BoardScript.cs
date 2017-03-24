@@ -228,6 +228,13 @@ public class BoardScript : MonoBehaviour
 			else if(GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn == Defines.TURN.P2)
 				gameWinner = 1;
 
+			if(VibrationManager.HasVibrator())
+			{
+				long [] pattern;
+				pattern = new long[]{0, 300, 300, 300, 300, 800};
+				VibrationManager.Vibrate(pattern, -1);
+			}
+
 			begin = true;
 			if (GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn == Defines.TURN.P1)
 			{	
@@ -246,6 +253,13 @@ public class BoardScript : MonoBehaviour
 		{
 			SetWinner(0);
 			showWinScreen = true;
+
+			if(VibrationManager.HasVibrator())
+			{
+				long [] pattern;
+				pattern = new long[]{0, 200, 200, 200, 200, 200};
+				VibrationManager.Vibrate(pattern, -1);
+			}
 		}
 	}
 
