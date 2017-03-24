@@ -34,6 +34,9 @@ public class MatchMaker : Photon.PunBehaviour
 
 		GlobalScript.Instance.matchMaker = this.gameObject;
 
+		continueWithGame.AddListener( delegate{ GlobalScript.Instance.FoundFriend(); } );
+		stopGame.AddListener( delegate{ GlobalScript.Instance.ResetCountdown(); } );
+
 		fRandomTimer = 0.0f;
 		bStartRandomTimer = false;
 		bRandom = false;
