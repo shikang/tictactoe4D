@@ -73,6 +73,12 @@ public class GUIManagerScript : MonoBehaviour
 	float emoteP1AnimTimer = 0.0f;
 	float emoteP2AnimTimer = 0.0f;
 
+	bool isCDSoundPlayed5;
+	bool isCDSoundPlayed4;
+	bool isCDSoundPlayed3;
+	bool isCDSoundPlayed2;
+	bool isCDSoundPlayed1;
+
 	void Start ()
 	{
 		textScaleSpeed = 2.0f;
@@ -131,6 +137,8 @@ public class GUIManagerScript : MonoBehaviour
 		emoteP2DownAnimation = false;
 		emoteP1AnimTimer = 0.0f;
 		emoteP2AnimTimer = 0.0f;
+
+		isCDSoundPlayed5 = isCDSoundPlayed4 = isCDSoundPlayed3 = isCDSoundPlayed2 = isCDSoundPlayed1 = false;
 
 		if (GetComponent<TurnHandler>() != null)
 		{
@@ -230,6 +238,32 @@ public class GUIManagerScript : MonoBehaviour
 			if(!TutorialScript.Instance.isTutorial)
 				timerP1 -= Time.deltaTime;
 
+			if(timerP1 < 5.0f && !isCDSoundPlayed5)
+			{
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.COUNTDOWN);
+				isCDSoundPlayed5 = true;
+			}
+			else if(timerP1 < 4.0f && !isCDSoundPlayed4)
+			{
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.COUNTDOWN);
+				isCDSoundPlayed4 = true;
+			}
+			else if(timerP1 < 3.0f && !isCDSoundPlayed3)
+			{
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.COUNTDOWN);
+				isCDSoundPlayed3 = true;
+			}
+			else if(timerP1 < 2.0f && !isCDSoundPlayed2)
+			{
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.COUNTDOWN);
+				isCDSoundPlayed2 = true;
+			}
+			else if(timerP1 < 1.0f && !isCDSoundPlayed1)
+			{
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.COUNTDOWN);
+				isCDSoundPlayed1 = true;
+			}
+
 			if(timerP1 <= 0.0f)
 			{
 				if (GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().gameMode != Defines.GAMEMODE.ONLINE)
@@ -289,6 +323,32 @@ public class GUIManagerScript : MonoBehaviour
 		{
 			if(!TutorialScript.Instance.isTutorial)
 				timerP2 -= Time.deltaTime;
+
+			if(timerP2 < 5.0f && !isCDSoundPlayed5)
+			{
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.COUNTDOWN);
+				isCDSoundPlayed5 = true;
+			}
+			else if(timerP2 < 4.0f && !isCDSoundPlayed4)
+			{
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.COUNTDOWN);
+				isCDSoundPlayed4 = true;
+			}
+			else if(timerP2 < 3.0f && !isCDSoundPlayed3)
+			{
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.COUNTDOWN);
+				isCDSoundPlayed3 = true;
+			}
+			else if(timerP2 < 2.0f && !isCDSoundPlayed2)
+			{
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.COUNTDOWN);
+				isCDSoundPlayed2 = true;
+			}
+			else if(timerP2 < 1.0f && !isCDSoundPlayed1)
+			{
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.COUNTDOWN);
+				isCDSoundPlayed1 = true;
+			}
 
 			if(timerP2 <= 0.0f)
 			{
@@ -456,6 +516,7 @@ public class GUIManagerScript : MonoBehaviour
 	public void ResetTimer()
 	{
 		timerP1 = timerP2 = GlobalScript.Instance.timePerTurn;
+		isCDSoundPlayed5 = isCDSoundPlayed4 = isCDSoundPlayed3 = isCDSoundPlayed2 = isCDSoundPlayed1 = false;
 	}
 
 	public void GridEffectAnim()

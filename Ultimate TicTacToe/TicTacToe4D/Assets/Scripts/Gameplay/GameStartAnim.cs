@@ -197,16 +197,16 @@ public class GameStartAnim : MonoBehaviour
 	{
 		if(headerStage == HEADER.MoveDown)
 		{
-			header.GetComponent<Transform>().localPosition = Vector3.Lerp(header.GetComponent<Transform>().localPosition, new Vector3(-450.0f, 470.0f, 0.0f), Time.deltaTime * 3.0f);
-			if( Vector3.Distance(header.GetComponent<Transform>().localPosition, new Vector3(-450.0f, 470.0f, 0.0f)) < 80.0f)
+			header.GetComponent<Transform>().localPosition = Vector3.Lerp(header.GetComponent<Transform>().localPosition, new Vector3(0.0f, -900.0f, 0.0f), Time.deltaTime * 3.0f);
+			if( Vector3.Distance(header.GetComponent<Transform>().localPosition, new Vector3(0.0f, -900.0f, 0.0f)) < 50.0f)
 				headerStage = HEADER.BounceUp;
 		}
 		else if(headerStage == HEADER.BounceUp)
 		{
-			header.GetComponent<Transform>().localPosition = Vector3.Lerp(header.GetComponent<Transform>().localPosition, new Vector3(-450.0f, 590.0f, 0.0f), Time.deltaTime * 4.0f);
-			if( Vector3.Distance(header.GetComponent<Transform>().localPosition, new Vector3(-450.0f, 590.0f, 0.0f)) < 5.0f)
+			header.GetComponent<Transform>().localPosition = Vector3.Lerp(header.GetComponent<Transform>().localPosition, new Vector3(0.0f, -750.0f, 0.0f), Time.deltaTime * 2.0f);
+			if( Vector3.Distance(header.GetComponent<Transform>().localPosition, new Vector3(0.0f, -750.0f, 0.0f)) < 5.0f)
 			{
-				header.GetComponent<Transform>().localPosition = new Vector3(-450.0f, 590.0f, 0.0f);
+				header.GetComponent<Transform>().localPosition = new Vector3(0.0f, -750.0f, 0.0f);
 				headerStage = HEADER.End;
 			}
 		}

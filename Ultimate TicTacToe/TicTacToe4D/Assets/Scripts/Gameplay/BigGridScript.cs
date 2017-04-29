@@ -134,6 +134,9 @@ public class BigGridScript : MonoBehaviour
 			if(VibrationManager.HasVibrator())
 				VibrationManager.Vibrate(Defines.V_WINBIGGRID);
 
+			if( !(TutorialScript.Instance.isTutorial && bigGridID == 7))
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.WIN_BIGGRID);
+
 			//add the points
 			if (_turn == Defines.TURN.P1)
 			{

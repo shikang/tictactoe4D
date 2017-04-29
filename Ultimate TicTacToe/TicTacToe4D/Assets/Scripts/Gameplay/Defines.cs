@@ -60,7 +60,7 @@ public class Defines : Singleton<Defines>
 	static public float MATCH_MAKE_RANDOM_RETRY_INTERVAL = 10.0f;	//!< In seconds
 
 	// Grid Layout
-	static public float GRID_SPACE = 1.1f;
+	static public float GRID_SPACE = 1.05f;
 	static public float GRID_SIZE = 0.5f;
 	static public float	BIGGRID_GAP_X = 3.3f;
 	static public float	BIGGRID_GAP_Y = 3.3f;
@@ -87,9 +87,9 @@ public class Defines : Singleton<Defines>
 	static public int TIMES_TO_SHOW_RATE_APP = 5;
 	static public int TIMES_TO_SHOW_LIKE_FB = 3;
 
-	static public int V_STARTGAME = 400;
-	static public int V_PLACEICON = 200;
-	static public int V_WINBIGGRID = 600;
+	static public int V_STARTGAME = 150;
+	static public int V_PLACEICON = 80;
+	static public int V_WINBIGGRID = 350;
 
 	static public int MAX_PLAYER_NAME_LENGTH = 10;
 

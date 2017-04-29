@@ -198,6 +198,7 @@ public class GridScript : MonoBehaviour
 			GetComponent<SpriteRenderer>().color = Defines.ICON_COLOR_P1;
 			mainIcon.GetComponent<SpriteRenderer>().sprite = GetTurnHandler().GetSpriteP1();
 			mainIcon.SetActive(true);
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.ICON_CONFIRMED);
 
 			if(VibrationManager.HasVibrator())
 				VibrationManager.Vibrate(Defines.V_PLACEICON);
@@ -208,6 +209,7 @@ public class GridScript : MonoBehaviour
 			GetComponent<SpriteRenderer>().color = Defines.ICON_COLOR_P2;
 			mainIcon.GetComponent<SpriteRenderer>().sprite = GetTurnHandler().GetSpriteP2();
 			mainIcon.SetActive(true);
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.ICON_CONFIRMED);
 
 			if(VibrationManager.HasVibrator())
 				VibrationManager.Vibrate(Defines.V_PLACEICON);
@@ -219,6 +221,7 @@ public class GridScript : MonoBehaviour
 			GetGUIManagerScript().gridEffect_growStage = 10;
 			GetGUIManagerScript().gridEffect.transform.position = transform.position;
 			mainIcon.SetActive(false);
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.ICON_HIGHLIGHTED);
 			break;
 
 		case 4:	// Invalid (Red)
@@ -226,6 +229,7 @@ public class GridScript : MonoBehaviour
 			GetComponent<Animator>().SetTrigger("isInvalid");
 			GetBoardScript().SetCurrentHighlight(10, 10);
 			mainIcon.SetActive(false);
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.ICON_INVALID);
 			break;
 
 		default:

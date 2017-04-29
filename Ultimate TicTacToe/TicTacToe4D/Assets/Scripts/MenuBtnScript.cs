@@ -136,6 +136,7 @@ public class MenuBtnScript : MonoBehaviour
 			GlobalScript.Instance.gameMode = 0;
 			GlobalScript.Instance.SetSinglePlayerName();
 			GlobalScript.Instance.SetSinglePlayerIcon();
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.STARTGAME);
 			break;
 
 		case BUTTONTYPES.MAIN_LOCALPLAY:
@@ -145,12 +146,14 @@ public class MenuBtnScript : MonoBehaviour
 			Camera.main.GetComponent<MainMenuScript>().Avatar.SetActive(false);
 			Camera.main.GetComponent<MainMenuScript>().Settings.SetActive(false);
 			GlobalScript.Instance.avatarState = 1;
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 			break;
 
 		case BUTTONTYPES.MAIN_NETWORK:
 			currScreen = SCREENS.ONLINEPLAY;
 			GlobalScript.Instance.gameMode = 2;
 			Camera.main.GetComponent<MainMenuScript>().ChangeScreen(2);
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 			break;
 
 		case BUTTONTYPES.MAIN_GACHA:
@@ -159,6 +162,7 @@ public class MenuBtnScript : MonoBehaviour
 			Camera.main.GetComponent<MainMenuScript>().ChangeScreen(3);
 			Camera.main.GetComponent<MainMenuScript>().Avatar.SetActive(false);
 			Camera.main.GetComponent<MainMenuScript>().Settings.SetActive(false);
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 			break;
 
 		case BUTTONTYPES.MAIN_SETTINGS:
@@ -168,6 +172,7 @@ public class MenuBtnScript : MonoBehaviour
 				currScreen = SCREENS.MAINMENU;
 			isShowSettingsScreen = !isShowSettingsScreen;
 			Camera.main.GetComponent<MainMenuScript>().SettingsScreen.SetActive(isShowSettingsScreen);
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 			break;
 
 		case BUTTONTYPES.MAIN_AVATAR:
@@ -177,6 +182,7 @@ public class MenuBtnScript : MonoBehaviour
 			Camera.main.GetComponent<MainMenuScript>().Avatar.SetActive(false);
 			Camera.main.GetComponent<MainMenuScript>().Settings.SetActive(false);
 			GlobalScript.Instance.avatarState = 3;
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 			break;
 
 		// Back To Main Menu
@@ -189,6 +195,7 @@ public class MenuBtnScript : MonoBehaviour
 			GlobalScript.Instance.avatarState = 0;
 
 			AvatarHandler.Instance.OnClickLocalPlayIcon1();
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.BACK);
 
 	        //GlobalScript.Instance.LeaveRoom();
 	        //GlobalScript.Instance.ResetCountdown();
@@ -198,6 +205,7 @@ public class MenuBtnScript : MonoBehaviour
 			isStartingGame = true;
 			GlobalScript.Instance.SetLocalMultiPlayerName();
 			GlobalScript.Instance.SetLocalMultiPlayerIcon();
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.STARTGAME);
 			break;
 
 		case BUTTONTYPES.NETWORK_PUBLICGAME:
@@ -207,11 +215,13 @@ public class MenuBtnScript : MonoBehaviour
 			Camera.main.GetComponent<MainMenuScript>().networkMenuAnimStage = 1;
 			GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().SetAnim(1);
 			GlobalScript.Instance.SetGreyBtns();
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 			break;
 
 		case BUTTONTYPES.NETWORK_PRIVATEGAME:
 			GlobalScript.Instance.FindFriendGame();
 			Camera.main.GetComponent<MainMenuScript>().networkMenuAnimStage = 1;
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 			break;
 
 		case BUTTONTYPES.NETWORK_PRIVATEGAME_SEARCH:
@@ -221,6 +231,7 @@ public class MenuBtnScript : MonoBehaviour
 			GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().SearchGrey.SetActive(true);
 			GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().SetAnim(2);
 			GlobalScript.Instance.SetGreyBtns();
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 			break;
 
 		case BUTTONTYPES.SETTINGS_CREDITS:
@@ -230,12 +241,14 @@ public class MenuBtnScript : MonoBehaviour
 				currScreen = SCREENS.SETTINGS_MAIN;
 			isShowCreditsScreen = !isShowCreditsScreen;
 			Camera.main.GetComponent<MainMenuScript>().CreditsPage.SetActive(isShowCreditsScreen);
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 			break;
 
 		case BUTTONTYPES.SETTINGS_HOWTOPLAY:
 			GameData.current.finishedTutorial = false;
 			SaveLoad.Save();
 			isStartingGame = true;
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 			//isShowHowToPlayScreen = !isShowHowToPlayScreen;
 			//Camera.main.GetComponent<MainMenuScript>().HowToPlayPage.SetActive(isShowHowToPlayScreen);
 			break;
@@ -258,6 +271,7 @@ public class MenuBtnScript : MonoBehaviour
 				// @todo apple notification here
 				#endif
 			}
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 			break;
 
 		case BUTTONTYPES.NETWORK_BACKTOMAINMENU:
@@ -281,6 +295,7 @@ public class MenuBtnScript : MonoBehaviour
 				GlobalScript.Instance.LeaveRoom();
 		        GlobalScript.Instance.ResetCountdown();
 				GlobalScript.Instance.ResetGreyBtns();
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.BACK);
 			}
 			else
 			{
@@ -288,6 +303,7 @@ public class MenuBtnScript : MonoBehaviour
 				Camera.main.GetComponent<MainMenuScript>().ChangeScreen(0, true);
 				Camera.main.GetComponent<MainMenuScript>().Avatar.SetActive(true);
 				Camera.main.GetComponent<MainMenuScript>().Settings.SetActive(true);
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.BACK);
 
 		        //GlobalScript.Instance.LeaveRoom();
 		        //GlobalScript.Instance.ResetCountdown();
@@ -297,16 +313,19 @@ public class MenuBtnScript : MonoBehaviour
 		case BUTTONTYPES.SETTIME_1:
 			GlobalScript.Instance.SetTurnTime(1);
 			Camera.main.GetComponent<MainMenuScript>().SetTimerImage(GlobalScript.Instance.gameMode, 1);
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.AVATARSELECT);
 			break;
 
 		case BUTTONTYPES.SETTIME_2:
 			GlobalScript.Instance.SetTurnTime(2);
 			Camera.main.GetComponent<MainMenuScript>().SetTimerImage(GlobalScript.Instance.gameMode, 2);
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.AVATARSELECT);
 			break;
 
 		case BUTTONTYPES.SETTIME_3:
 			GlobalScript.Instance.SetTurnTime(3);
 			Camera.main.GetComponent<MainMenuScript>().SetTimerImage(GlobalScript.Instance.gameMode, 3);
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.AVATARSELECT);
 			break;
 
 		case BUTTONTYPES.SETTINGS_DIABLE_ADS:
@@ -315,21 +334,31 @@ public class MenuBtnScript : MonoBehaviour
 			GameObject IAPManager = GameObject.Find("IAPManager");
 			InAppPurchaser iapPurchaser = IAPManager.GetComponent<InAppPurchaser>();
 			iapPurchaser.BuyProduct( InAppProductList.ProductType.ADS, (int)Defines.AdsInAppPurchase.DISABLE );
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 			break;
+
 		case BUTTONTYPES.RATE_OUR_APP:
 			PlatformUtilies.Instance.DisplayRateUs();
 			Camera.main.GetComponent<MainMenuScript>().RateAppScreen.SetActive(false);
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 			break;
+
 		case BUTTONTYPES.NO_RATE_OUR_APP:
 			Camera.main.GetComponent<MainMenuScript>().RateAppScreen.SetActive(false);
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 			break;
+
 		case BUTTONTYPES.LIKE_OUR_FACEBOOK:
 			PlatformUtilies.Instance.DisplayFacebookPage();
 			Camera.main.GetComponent<MainMenuScript>().LikeFacebookScreen.SetActive(false);
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 			break;
+
 		case BUTTONTYPES.NO_LIKE_OUR_FACEBOOK:
 			Camera.main.GetComponent<MainMenuScript>().LikeFacebookScreen.SetActive(false);
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 			break;
+
 		default:
 			break;
 		}

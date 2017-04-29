@@ -230,9 +230,10 @@ public class BoardScript : MonoBehaviour
 			if(VibrationManager.HasVibrator())
 			{
 				long [] pattern;
-				pattern = new long[]{0, 300, 300, 300, 300, 800};
+				pattern = new long[]{0, 100, 100, 100, 100, 350};
 				VibrationManager.Vibrate(pattern, -1);
 			}
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.WIN_GAME);
 
 			begin = true;
 			if (GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn == Defines.TURN.P1)

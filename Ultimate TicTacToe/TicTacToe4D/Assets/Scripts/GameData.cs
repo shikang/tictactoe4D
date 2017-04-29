@@ -18,6 +18,8 @@ public class GameData
 	public bool finishedTutorial;
 	public bool shownRateApp;
 	public bool shownLikeFacebook;
+	public bool hasBGM;
+	public bool hasSFX;
 
 	public GameData()
 	{
@@ -31,5 +33,7 @@ public class GameData
 		removeAds = false;
 		finishedTutorial = false;
 		shownRateApp = false;
+		hasBGM = true;
+		hasSFX = true;
 	}
 }

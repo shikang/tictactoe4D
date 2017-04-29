@@ -3,12 +3,29 @@ using System.Collections;
 
 public enum SOUNDID
 {
-	ICONPLACED = 0,
-	WONBIGGRID
+	CLICK = 0,
+	BACK,
+	STARTGAME,
+	AVATARSELECT,
+
+	GACHACOUNT,
+	GACHAEND,
+	ICON_BOUGHT,
+
+	ICON_CONFIRMED,
+	ICON_HIGHLIGHTED,
+	ICON_INVALID,
+	WIN_BIGGRID,
+	WIN_GAME,
+
+	COUNTDOWN
 };
 
 public class AudioManager : MonoBehaviour
 {
+	int gachaSwitch;
+	bool hasSFX;
+	bool hasBGM;
 
 	// Singleton pattern
 	static AudioManager instance;
@@ -28,7 +45,9 @@ public class AudioManager : MonoBehaviour
 
 	void Start()
 	{
-	
+		gachaSwitch = 1;
+		hasBGM = GameData.current.hasBGM;
+		hasSFX = GameData.current.hasSFX;
 	}
 
 	void Update()
@@ -38,17 +57,65 @@ public class AudioManager : MonoBehaviour
 
 	public void PlaySoundEvent(SOUNDID sid, GameObject go = null)
 	{
+		if(!hasSFX)
+			return;
+
 		if(!go)
 			go = gameObject;
 
 		switch(sid)
 		{
-		case SOUNDID.ICONPLACED:
-			SoundEventWrapper("Play_IconClicked", gameObject);
+		case SOUNDID.CLICK:
+			SoundEventWrapper("Click", go);
 			break;
 
-		case SOUNDID.WONBIGGRID:
-			SoundEventWrapper("Play_BigGridWon", go);
+		case SOUNDID.BACK:
+			SoundEventWrapper("Back", go);
+			break;
+
+		case SOUNDID.STARTGAME:
+			SoundEventWrapper("StartGame", go);
+			break;
+
+		case SOUNDID.AVATARSELECT:
+			SoundEventWrapper("AvatarSelect", go);
+			break;
+
+		case SOUNDID.GACHACOUNT:
+			SoundEventWrapper("GachaCount", go);
+			AkSoundEngine.SetSwitch("GachaCount", UpdateGachaSwitch(), go);
+			break;
+
+		case SOUNDID.GACHAEND:
+			SoundEventWrapper("GachaEnd", go);
+			break;
+
+		case SOUNDID.ICON_BOUGHT:
+			SoundEventWrapper("BoughtIcon", go);
+			break;
+
+		case SOUNDID.ICON_CONFIRMED:
+			//SoundEventWrapper("Place_Confirm", go);
+			break;
+
+		case SOUNDID.ICON_HIGHLIGHTED:
+			SoundEventWrapper("Place_Highlight", go);
+			break;
+
+		case SOUNDID.ICON_INVALID:
+			SoundEventWrapper("Place_Invalid", go);
+			break;
+
+		case SOUNDID.WIN_BIGGRID:
+			SoundEventWrapper("WinBigGrid", go);
+			break;
+
+		case SOUNDID.WIN_GAME:
+			//SoundEventWrapper("WinGame", go);
+			break;
+
+		case SOUNDID.COUNTDOWN:
+			SoundEventWrapper("Countdown", go);
 			break;
 
 		default:
@@ -59,7 +126,17 @@ public class AudioManager : MonoBehaviour
 
 	void SoundEventWrapper(string s, GameObject go)
 	{
-		//AkSoundEngine.PostEvent(s, go);
+		AkSoundEngine.PostEvent(s, go);
+	}
+
+	public void ToggleBGM()
+	{
+	}
+
+	public void ToggleSFX()
+	{
+		hasSFX = !hasSFX;
+		SaveLoad.Save();
 	}
 
 	public void SetMasterVol(float vol)
@@ -75,6 +152,16 @@ public class AudioManager : MonoBehaviour
 	public void SetSFXVol(float vol)
 	{
 		//AkSoundEngine.SetRTPCValue("SFXVol", vol);
+	}
+
+	string UpdateGachaSwitch()
+	{
+		if(gachaSwitch == 3)
+			gachaSwitch = 1;
+		else
+			++gachaSwitch;
+
+		return "Gacha" + gachaSwitch;
 	}
 
 	//AkSoundEngine.SetState("GameState", "MainMenu");
