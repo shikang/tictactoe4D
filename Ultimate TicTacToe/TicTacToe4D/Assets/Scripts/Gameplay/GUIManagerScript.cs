@@ -740,6 +740,7 @@ public class GUIManagerScript : MonoBehaviour
 
 	void UpdateEmote()
 	{
+
 		if ( p1EmoteTimer < Defines.EMOTE_SHOW_TIME )
 		{
 			p1EmoteTimer += Time.deltaTime;
@@ -773,7 +774,7 @@ public class GUIManagerScript : MonoBehaviour
 				GUIP1EmoteSpeech.transform.localScale = GetFactor( Mathf.Clamp( 1.0f - ( emoteP1AnimTimer / Defines.EMOTE_SCALE_TIME ), 0.0f, 1.0f ) ) * Vector3.one;
 			}
 		}
-		else if ( emoteP2UpAnimation || emoteP2DownAnimation )
+		if ( emoteP2UpAnimation || emoteP2DownAnimation )
 		{
 			emoteP2AnimTimer += Time.deltaTime;
 
@@ -781,8 +782,9 @@ public class GUIManagerScript : MonoBehaviour
 			{
 				GUIP2EmoteSpeech.transform.localScale = GetFactor( Mathf.Clamp( emoteP2AnimTimer / Defines.EMOTE_SCALE_TIME, 0.0f, 1.0f ) ) * Vector3.one;
 			}
-			else if ( emoteP1DownAnimation )
+			else if ( emoteP2DownAnimation )
 			{
+				//Debug.Log("do not remove");
 				GUIP2EmoteSpeech.transform.localScale = GetFactor( Mathf.Clamp( 1.0f - ( emoteP2AnimTimer / Defines.EMOTE_SCALE_TIME ), 0.0f, 1.0f ) ) * Vector3.one;
 			}
 		}
