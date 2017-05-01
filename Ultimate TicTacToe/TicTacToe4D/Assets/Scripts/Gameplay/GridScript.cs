@@ -28,7 +28,6 @@ public class GridScript : MonoBehaviour
 			return;
 		}
 
-
         if ( GetBoardScript().gameMode == Defines.GAMEMODE.ONLINE &&
             ( (  NetworkManager.IsPlayerOne() && GetTurnHandler().turn != Defines.TURN.P1 ) ||
               ( !NetworkManager.IsPlayerOne() && GetTurnHandler().turn != Defines.TURN.P2 ) ) )
@@ -45,6 +44,7 @@ public class GridScript : MonoBehaviour
 		if(parentGrid.GetComponent<BigGridScript>().gridWinner != 0 ||
 			GetTurnHandler().turn == Defines.TURN.NOTSTARTED ||
 			GetTurnHandler().turn == Defines.TURN.GAMEOVER ||
+			GetGUIManagerScript().GUIEmoteScreen.GetActive() ||
 			GetTurnHandler().pausedState != 0)
 			return;
 
@@ -198,7 +198,9 @@ public class GridScript : MonoBehaviour
 			GetComponent<SpriteRenderer>().color = Defines.ICON_COLOR_P1;
 			mainIcon.GetComponent<SpriteRenderer>().sprite = GetTurnHandler().GetSpriteP1();
 			mainIcon.SetActive(true);
-			AudioManager.Instance.PlaySoundEvent(SOUNDID.ICON_CONFIRMED);
+
+			if(GameStartAnim.Instance.GameStartAnimEnded())
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.ICON_CONFIRMED);
 
 			if(VibrationManager.HasVibrator())
 				VibrationManager.Vibrate(Defines.V_PLACEICON);
@@ -209,7 +211,9 @@ public class GridScript : MonoBehaviour
 			GetComponent<SpriteRenderer>().color = Defines.ICON_COLOR_P2;
 			mainIcon.GetComponent<SpriteRenderer>().sprite = GetTurnHandler().GetSpriteP2();
 			mainIcon.SetActive(true);
-			AudioManager.Instance.PlaySoundEvent(SOUNDID.ICON_CONFIRMED);
+
+			if(GameStartAnim.Instance.GameStartAnimEnded())
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.ICON_CONFIRMED);
 
 			if(VibrationManager.HasVibrator())
 				VibrationManager.Vibrate(Defines.V_PLACEICON);

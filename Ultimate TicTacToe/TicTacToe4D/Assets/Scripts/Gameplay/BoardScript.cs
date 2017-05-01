@@ -233,6 +233,7 @@ public class BoardScript : MonoBehaviour
 				pattern = new long[]{0, 100, 100, 100, 100, 350};
 				VibrationManager.Vibrate(pattern, -1);
 			}
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.STOPBGM);
 			AudioManager.Instance.PlaySoundEvent(SOUNDID.WIN_GAME);
 
 			begin = true;
@@ -244,8 +245,9 @@ public class BoardScript : MonoBehaviour
 				tmp = (GameObject)Instantiate(scrollingText);//.gameObject.GetComponent<FloatingText>().BeginScrolling(" + " + Defines.smallGridWin + "!");
 				tmp.transform.SetParent(canvas.transform.transform);
 				tmp.transform.localScale = new Vector3(1,1,1);	
-				tmp.transform.localPosition =  new Vector3(-200,700,0);
+				tmp.transform.localPosition =  new Vector3(0,0,0);
 				tmp.GetComponent<Text>().text = "+ " + Defines.bigGridWin + "!";
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.GETPOINTS);
 			}
 		}
 		else if(IsDraw()) // Draw. All boards filled
@@ -419,7 +421,7 @@ public class BoardScript : MonoBehaviour
 		boardSprite.transform.localScale = tempScale; */
 	}
 
-	bool IsBigGridCompleted()
+	public bool IsBigGridCompleted()
 	{
 		int turn = 1;
 		if(GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn == Defines.TURN.P1)

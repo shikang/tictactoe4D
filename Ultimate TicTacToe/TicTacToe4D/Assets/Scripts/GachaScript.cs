@@ -75,6 +75,7 @@ public class GachaScript : MonoBehaviour
 
 		InitTiming();
 		SetGreyBG(false);
+		ResetGachaText();
 
 		moneyText.GetComponent<Text>().text = GameData.current.coin.ToString();
 	}
@@ -134,11 +135,14 @@ public class GachaScript : MonoBehaviour
 
 			for (int i = 0; i < noofChanges; ++i)
 			{
+				int prev = 0;
+				if(i > 0)
+					prev = randomList[i-1];
 				do
 				{
 					randomList[i] = UnityEngine.Random.Range(Defines.Avatar_FirstIcon, AvatarHandler.Instance.GetNoofAvatars());
 				}
-				while (IconManager.Instance.GetIsBuy(randomList[i]));
+				while (IconManager.Instance.GetIsBuy(randomList[i]) || randomList[i] == prev );
 			}
 
 			currTime = 0.0f;
@@ -377,6 +381,11 @@ public class GachaScript : MonoBehaviour
 	{
 		GameData.current.nextFreeRollTime = DateTime.Now.AddSeconds(Defines.FREE_ROLL_TIMER);
 		SaveLoad.Save();
+	}
+
+	public void ResetGachaText()
+	{
+		gachaInfoText.GetComponent<Text>().text = "Cost: 100 coins";
 	}
 }
 

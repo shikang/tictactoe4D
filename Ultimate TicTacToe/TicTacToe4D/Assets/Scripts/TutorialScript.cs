@@ -193,6 +193,8 @@ public class TutorialScript : MonoBehaviour
 
 		else if(tStage == TUTORIALSTAGE.PLACE_BOTRIGHT_P1)
 			tStage = TUTORIALSTAGE.PLACE_BOTRIGHT_P2;
+
+		AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 	}
 
 	void PrePlaceBoard()

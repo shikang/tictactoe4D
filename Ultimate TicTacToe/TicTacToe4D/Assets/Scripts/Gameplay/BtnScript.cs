@@ -56,7 +56,7 @@ public class BtnScript : MonoBehaviour
             else
             {
 				AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
-				BackToMainMenu(2);
+				BackToMainMenu(2, false);
                 Adverts.Instance.RandomShowAd();
             }
         }
@@ -70,7 +70,7 @@ public class BtnScript : MonoBehaviour
             else
             {
 				AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
-				BackToMainMenu();
+				BackToMainMenu(1, false);
             }
             Adverts.Instance.RandomShowAd();
         }
@@ -101,6 +101,7 @@ public class BtnScript : MonoBehaviour
         {
             SceneManager.LoadScene("GameScene");
         }
+		AudioManager.Instance.PlaySoundEvent(SOUNDID.BGM);
 		Adverts.Instance.RandomShowAd();
     }
 
@@ -140,17 +141,21 @@ public class BtnScript : MonoBehaviour
 		}
 		else
 		{
-			GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().ShowP1EmoteSpeech(emote);
+			if(GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn == Defines.TURN.P1)
+				GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().ShowP1EmoteSpeech(emote);
+			else
+				GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().ShowP2EmoteSpeech(emote);
 		}
 
 		GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().HideEmoteMenu();
 		AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 	}
 
-	public void BackToMainMenu(int dest = 1)
+	public void BackToMainMenu(int dest = 1, bool playSound = true)
 	{
 		// Do fade out logic here
-		AudioManager.Instance.PlaySoundEvent(SOUNDID.BACK);
+		if(playSound)
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.BACK);
 		GameStartAnim.Instance.FadeOut(dest);
 	}
 

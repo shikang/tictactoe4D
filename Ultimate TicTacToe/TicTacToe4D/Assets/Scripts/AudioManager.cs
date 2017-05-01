@@ -18,7 +18,14 @@ public enum SOUNDID
 	WIN_BIGGRID,
 	WIN_GAME,
 
-	COUNTDOWN
+	COUNTDOWN,
+	BGM,
+
+	STARTGAME_FLASH,
+	STARTGAME_SCALING,
+	GETPOINTS,
+	CHANGETURN,
+	STOPBGM
 };
 
 public class AudioManager : MonoBehaviour
@@ -95,7 +102,7 @@ public class AudioManager : MonoBehaviour
 			break;
 
 		case SOUNDID.ICON_CONFIRMED:
-			//SoundEventWrapper("Place_Confirm", go);
+			SoundEventWrapper("Place_Confirm", go);
 			break;
 
 		case SOUNDID.ICON_HIGHLIGHTED:
@@ -111,11 +118,37 @@ public class AudioManager : MonoBehaviour
 			break;
 
 		case SOUNDID.WIN_GAME:
-			//SoundEventWrapper("WinGame", go);
+			SoundEventWrapper("WinGame", go);
 			break;
 
 		case SOUNDID.COUNTDOWN:
 			SoundEventWrapper("Countdown", go);
+			break;
+
+		case SOUNDID.BGM:
+			SoundEventWrapper("PlayBGM", go);
+			GlobalScript.Instance.isBGMPlaying = true;
+			break;
+
+		case SOUNDID.STARTGAME_FLASH:
+			SoundEventWrapper("StartGame_Flash", go);
+			break;
+
+		case SOUNDID.STARTGAME_SCALING:
+			SoundEventWrapper("StartGame_Scaling", go);
+			break;
+
+		case SOUNDID.GETPOINTS:
+			SoundEventWrapper("GetPoints", go);
+			break;
+
+		case SOUNDID.CHANGETURN:
+			SoundEventWrapper("ChangeTurn", go);
+			break;
+
+		case SOUNDID.STOPBGM:
+			SoundEventWrapper("StopBGM", go);
+			GlobalScript.Instance.isBGMPlaying = false;
 			break;
 
 		default:
@@ -146,12 +179,12 @@ public class AudioManager : MonoBehaviour
 
 	public void SetBGMVol(float vol)
 	{
-		//AkSoundEngine.SetRTPCValue("BGMVol", vol);
+		AkSoundEngine.SetRTPCValue("BGMVol", vol);
 	}
 
 	public void SetSFXVol(float vol)
 	{
-		//AkSoundEngine.SetRTPCValue("SFXVol", vol);
+		AkSoundEngine.SetRTPCValue("SFXVol", vol);
 	}
 
 	string UpdateGachaSwitch()

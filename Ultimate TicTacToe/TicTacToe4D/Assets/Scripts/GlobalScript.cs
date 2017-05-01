@@ -8,6 +8,7 @@ public class GlobalScript : MonoBehaviour
 	public string nameP1;
 	public string nameP2;
 	public float volSlider; // slider?
+	public bool isBGMPlaying = false;
 	string myName;
 
 	public int avatarState; // 0 = None, 1 = LocalPlay_P1, 2 = LocalPlay_P2, 3 = Avatar
@@ -247,7 +248,7 @@ public class GlobalScript : MonoBehaviour
 	{
 		//iconP1 = myIcon;
 		UpdatePlayer1Name(AvatarHandler.Instance.currAvatarText.text);
-		UpdatePlayer2Name("Trainer Garret");
+		UpdatePlayer2Name("Garret");
 	}
 
 	public void SetSinglePlayerIcon()

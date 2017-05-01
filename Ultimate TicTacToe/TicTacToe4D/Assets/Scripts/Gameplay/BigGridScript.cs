@@ -134,7 +134,7 @@ public class BigGridScript : MonoBehaviour
 			if(VibrationManager.HasVibrator())
 				VibrationManager.Vibrate(Defines.V_WINBIGGRID);
 
-			if( !(TutorialScript.Instance.isTutorial && bigGridID == 7))
+			if( !(TutorialScript.Instance.isTutorial && bigGridID == 7) && !(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().IsBigGridCompleted()) )
 				AudioManager.Instance.PlaySoundEvent(SOUNDID.WIN_BIGGRID);
 
 			//add the points
@@ -147,8 +147,9 @@ public class BigGridScript : MonoBehaviour
 				canvas = transform.parent.parent.gameObject.GetComponent<BoardScript>().canvas;
 				tmp.transform.SetParent(canvas.transform);
 				tmp.transform.localScale = new Vector3(1,1,1);
-				tmp.transform.localPosition =  new Vector3(-200,700,0);
+				tmp.transform.localPosition =  new Vector3(0,0,0);
 				tmp.GetComponent<Text>().text = "+ " + Defines.smallGridWin + "!";
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.GETPOINTS);
 			}
 
 			//begin to do the shakings

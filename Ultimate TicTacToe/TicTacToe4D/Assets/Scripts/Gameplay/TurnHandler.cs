@@ -48,6 +48,7 @@ public class TurnHandler : MonoBehaviour
 			turn = Defines.TURN.P2;
 		else if(turn == Defines.TURN.P2)
 			turn = Defines.TURN.P1;
+		AudioManager.Instance.PlaySoundEvent(SOUNDID.CHANGETURN);
 	}
 
     public void WaitingForOtherPlayer()

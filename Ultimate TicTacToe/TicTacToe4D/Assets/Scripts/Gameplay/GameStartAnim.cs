@@ -118,6 +118,7 @@ public class GameStartAnim : MonoBehaviour
 			if(Vector3.Distance(playerGroup1.transform.localPosition, new Vector3(-100.0f, 0.0f, 0.0f)) < 10.0f)
 			{
 				currStage = STAGE.ScreenBlink;
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.STARTGAME_FLASH);
 			}
 		}
 
@@ -143,6 +144,7 @@ public class GameStartAnim : MonoBehaviour
 				if(tmp.a <= 0.2f)
 				{
 					currStage = STAGE.IconScaling;
+					AudioManager.Instance.PlaySoundEvent(SOUNDID.STARTGAME_SCALING);
 					whiteScreen.GetComponent<Image>().color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
 				}
 			}

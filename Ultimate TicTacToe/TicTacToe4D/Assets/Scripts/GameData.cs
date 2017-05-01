@@ -23,7 +23,7 @@ public class GameData
 
 	public GameData()
 	{
-		coin = 1000;
+		coin = 235;
 		icons = new List<Defines.ICONS>();
 		win = 0;
 		matchPlayed = 0;

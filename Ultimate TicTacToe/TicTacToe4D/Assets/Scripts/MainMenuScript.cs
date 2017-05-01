@@ -123,6 +123,11 @@ public class MainMenuScript : MonoBehaviour
 		BlackOverlay.GetComponent<Image>().color = Color.black;
 		isFading = true;
 
+		if(!GlobalScript.Instance.isBGMPlaying)
+		{
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.BGM);
+		}
+
 		// @debug
 		//Assets.SimpleAndroidNotifications.NotificationManager.SendWithAppIcon(System.TimeSpan.FromSeconds(Defines.FREE_ROLL_TIMER), "Ultimate Tic Tac Toe", "Get your free roll now!", Color.black);
 	}
@@ -460,7 +465,6 @@ public class MainMenuScript : MonoBehaviour
     public void SetAnim(int id)
     {
     	int rand = Random.Range((int)Defines.Avatar_FirstIcon+1, (int)(Defines.ICONS.TOTAL)-1);
-    	Debug.Log("RR: " + rand);
 
     	if(id == 1)
     	{

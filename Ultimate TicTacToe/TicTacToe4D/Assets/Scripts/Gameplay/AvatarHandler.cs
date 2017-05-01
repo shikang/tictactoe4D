@@ -220,16 +220,20 @@ public class AvatarHandler : MonoBehaviour
 		return noofAvatars;
 	}
 
-	public void OnClickLocalPlayIcon1()
+	public void OnClickLocalPlayIcon1(bool playSound = true)
 	{
 		GlobalScript.Instance.avatarState = 1;
 		ChangeAllAvatarColor(1);
+
+		if(playSound)
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 	}
 
 	public void OnClickLocalPlayIcon2()
 	{
 		GlobalScript.Instance.avatarState = 2;
 		ChangeAllAvatarColor(2);
+		AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 	}
 		
 	public void SetAvatarIcon(int i)

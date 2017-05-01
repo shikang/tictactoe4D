@@ -19,7 +19,10 @@ public class AvatarClick : MonoBehaviour
 	{
 		// Avatar Page
 		if(btnType == 1)
+		{
 			AvatarHandler.Instance.SetAvatarIcon(ID);
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.AVATARSELECT);
+		}
 
 		// Buy Page
 		else if(btnType == 2)

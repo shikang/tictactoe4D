@@ -63,7 +63,7 @@ public class Defines : Singleton<Defines>
 	static public float GRID_SPACE = 1.05f;
 	static public float GRID_SIZE = 0.5f;
 	static public float	BIGGRID_GAP_X = 3.3f;
-	static public float	BIGGRID_GAP_Y = 3.3f;
+	static public float	BIGGRID_GAP_Y = 3.35f;
 
 	// Active Grid Settings
 	static public Vector3	ACTIVEGRID_POSITION_BIG = new Vector3(0.0f, 0.0f, -0.1f);
@@ -72,8 +72,8 @@ public class Defines : Singleton<Defines>
 
 	//player point stuff
 	public int playerScore;
-	static public int smallGridWin = 1;
-	static public int bigGridWin = 3;
+	static public int smallGridWin = 5;
+	static public int bigGridWin = 30;
 
 	// Money stuff
 	static public int GACHACOST = 100;

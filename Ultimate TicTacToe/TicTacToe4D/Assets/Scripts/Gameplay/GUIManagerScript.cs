@@ -73,11 +73,14 @@ public class GUIManagerScript : MonoBehaviour
 	float emoteP1AnimTimer = 0.0f;
 	float emoteP2AnimTimer = 0.0f;
 
+	bool isCDSoundPlayed6;
 	bool isCDSoundPlayed5;
 	bool isCDSoundPlayed4;
 	bool isCDSoundPlayed3;
 	bool isCDSoundPlayed2;
 	bool isCDSoundPlayed1;
+
+	bool addedMoney;
 
 	void Start ()
 	{
@@ -97,6 +100,7 @@ public class GUIManagerScript : MonoBehaviour
 		gridEffect_scaleSpeed = 4.0f;
 
 		ResetVars();
+		//AudioManager.Instance.PlaySoundEvent(SOUNDID.BGM);
 	}
 
 	void ResetVars()
@@ -137,8 +141,9 @@ public class GUIManagerScript : MonoBehaviour
 		emoteP2DownAnimation = false;
 		emoteP1AnimTimer = 0.0f;
 		emoteP2AnimTimer = 0.0f;
+		addedMoney = false;
 
-		isCDSoundPlayed5 = isCDSoundPlayed4 = isCDSoundPlayed3 = isCDSoundPlayed2 = isCDSoundPlayed1 = false;
+		isCDSoundPlayed6 = isCDSoundPlayed5 = isCDSoundPlayed4 = isCDSoundPlayed3 = isCDSoundPlayed2 = isCDSoundPlayed1 = false;
 
 		if (GetComponent<TurnHandler>() != null)
 		{
@@ -171,9 +176,9 @@ public class GUIManagerScript : MonoBehaviour
 			if(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().gameWinner == 0)
 				GUICenterText.GetComponent<Text>().text = "Draw!";
 			else if(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().gameWinner == 1)
-				GUICenterText.GetComponent<Text>().text = nameP1 + " Wins!";
+				GUICenterText.GetComponent<Text>().text = nameP1 + " wins!";
 			else if(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().gameWinner == 2)
-				GUICenterText.GetComponent<Text>().text = nameP2 + " Wins!";
+				GUICenterText.GetComponent<Text>().text = nameP2 + " wins!";
 
 			if(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().showWinScreen)
 			{
@@ -188,10 +193,14 @@ public class GUIManagerScript : MonoBehaviour
 				GUIEmoteScreen.SetActive(false);
 			}
 
-			// Add money
-			Debug.Log("Recieve coin: " + Defines.Instance.playerScore);
-			GameData.current.coin += Defines.Instance.playerScore;
-			SaveLoad.Save();
+			if(!addedMoney)
+			{
+				// Add money
+				Debug.Log("Recieve coin: " + Defines.Instance.playerScore);
+				GameData.current.coin += Defines.Instance.playerScore;
+				SaveLoad.Save();
+				addedMoney = true;
+			}
 
 		}
 		else if (GetComponent<TurnHandler>().turn == Defines.TURN.WAITING)
@@ -238,6 +247,11 @@ public class GUIManagerScript : MonoBehaviour
 			if(!TutorialScript.Instance.isTutorial)
 				timerP1 -= Time.deltaTime;
 
+			if(timerP1 < 6.0f && !isCDSoundPlayed6)
+			{
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.COUNTDOWN);
+				isCDSoundPlayed6 = true;
+			}
 			if(timerP1 < 5.0f && !isCDSoundPlayed5)
 			{
 				AudioManager.Instance.PlaySoundEvent(SOUNDID.COUNTDOWN);
@@ -324,6 +338,11 @@ public class GUIManagerScript : MonoBehaviour
 			if(!TutorialScript.Instance.isTutorial)
 				timerP2 -= Time.deltaTime;
 
+			if(timerP2 < 6.0f && !isCDSoundPlayed6)
+			{
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.COUNTDOWN);
+				isCDSoundPlayed6 = true;
+			}
 			if(timerP2 < 5.0f && !isCDSoundPlayed5)
 			{
 				AudioManager.Instance.PlaySoundEvent(SOUNDID.COUNTDOWN);
@@ -516,7 +535,7 @@ public class GUIManagerScript : MonoBehaviour
 	public void ResetTimer()
 	{
 		timerP1 = timerP2 = GlobalScript.Instance.timePerTurn;
-		isCDSoundPlayed5 = isCDSoundPlayed4 = isCDSoundPlayed3 = isCDSoundPlayed2 = isCDSoundPlayed1 = false;
+		isCDSoundPlayed6 = isCDSoundPlayed5 = isCDSoundPlayed4 = isCDSoundPlayed3 = isCDSoundPlayed2 = isCDSoundPlayed1 = false;
 	}
 
 	public void GridEffectAnim()
