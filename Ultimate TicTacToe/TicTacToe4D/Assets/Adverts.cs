@@ -22,7 +22,7 @@ public class Adverts : MonoBehaviour
 		Debug.Log("Removing Random Ads");
 	}
 
-#if UNITY_ANDROID || UNITY_IOS
+
 	//bool show = false;
 	public bool freeGacha = false;
 	public bool beginReward = false;
@@ -30,7 +30,9 @@ public class Adverts : MonoBehaviour
 	public int showChance;
 	int baseChance = 20;
 	int chanceIncrease = 10;
-	
+
+
+	#if UNITY_ANDROID || UNITY_IOS	
 	void Awake()
 	{
 
@@ -40,7 +42,13 @@ public class Adverts : MonoBehaviour
 			Destroy(this);
 			return;
 		}
-		Advertisement.Initialize("1268576", true);
+		#if UNITY_ANDROID
+			Advertisement.Initialize("1268576", true);
+		#endif
+
+		#if UNITY_IOS
+			Advertisement.Initialize("1268577", true);
+		#endif
 		Debug.Log(Advertisement.isInitialized);
 		Debug.Log(Advertisement.testMode);
 		Debug.Log(Advertisement.isSupported);
