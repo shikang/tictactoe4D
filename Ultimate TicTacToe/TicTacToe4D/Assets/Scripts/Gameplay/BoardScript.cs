@@ -237,7 +237,7 @@ public class BoardScript : MonoBehaviour
 			AudioManager.Instance.PlaySoundEvent(SOUNDID.WIN_GAME);
 
 			begin = true;
-			if (GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn == Defines.TURN.P1)
+			if (GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn == Defines.TURN.P1 && !TutorialScript.Instance.isTutorial)
 			{	
 				Defines.Instance.playerScore += Defines.bigGridWin;
 				GameObject tmp;

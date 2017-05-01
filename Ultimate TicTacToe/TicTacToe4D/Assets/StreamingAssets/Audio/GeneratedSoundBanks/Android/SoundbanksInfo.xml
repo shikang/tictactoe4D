@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <SoundBanksInfo Platform="Android" BasePlatform="Android" SchemaVersion="11" SoundbankVersion="118">
 	<RootPaths>
-		<ProjectRoot>C:\Users\SolidRocker\Desktop\WhyWool\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\</ProjectRoot>
-		<SourceFilesRoot>C:\Users\SolidRocker\Desktop\WhyWool\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\.cache\Android\</SourceFilesRoot>
-		<SoundBanksRoot>C:\Users\SolidRocker\Desktop\WhyWool\trunk\Ultimate TicTacToe\TicTacToe4D\Assets\StreamingAssets\Audio\GeneratedSoundBanks\Android\</SoundBanksRoot>
+		<ProjectRoot>C:\Users\SolidRocker\Desktop\WhyWool\UltimateTic\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\</ProjectRoot>
+		<SourceFilesRoot>C:\Users\SolidRocker\Desktop\WhyWool\UltimateTic\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\.cache\Android\</SourceFilesRoot>
+		<SoundBanksRoot>C:\Users\SolidRocker\Desktop\WhyWool\UltimateTic\trunk\Ultimate TicTacToe\TicTacToe4D\Assets\StreamingAssets\Audio\GeneratedSoundBanks\Android\</SoundBanksRoot>
 		<ExternalSourcesInputFile></ExternalSourcesInputFile>
-		<ExternalSourcesOutputRoot>C:\Users\SolidRocker\Desktop\WhyWool\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\GeneratedSoundBanks\Android\</ExternalSourcesOutputRoot>
+		<ExternalSourcesOutputRoot>C:\Users\SolidRocker\Desktop\WhyWool\UltimateTic\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\GeneratedSoundBanks\Android\</ExternalSourcesOutputRoot>
 	</RootPaths>
 	<DialogueEvents/>
 	<StreamedFiles/>
@@ -46,37 +46,25 @@
 					<ShortName>Gacha3.wav</ShortName>
 					<Path>SFX\Gacha3_9E69E797.wem</Path>
 				</File>
-				<File Id="106708872" Language="SFX">
-					<ShortName>Back2.wav</ShortName>
-					<Path>SFX\Back2_4E4945BB.wem</Path>
-				</File>
 				<File Id="140801951" Language="SFX">
 					<ShortName>Gacha2.wav</ShortName>
 					<Path>SFX\Gacha2_2C6CE14A.wem</Path>
 				</File>
-				<File Id="166666470" Language="SFX">
-					<ShortName>Shred P1.wav</ShortName>
-					<Path>SFX\Shred P1_4B8CC0C5.wem</Path>
-				</File>
-				<File Id="221178816" Language="SFX">
-					<ShortName>Back1.wav</ShortName>
-					<Path>SFX\Back1_206DA30D.wem</Path>
-				</File>
-				<File Id="309914675" Language="SFX">
-					<ShortName>Click1.wav</ShortName>
-					<Path>SFX\Click1_2428C131.wem</Path>
+				<File Id="232910334" Language="SFX">
+					<ShortName>Backe2.wav</ShortName>
+					<Path>SFX\Backe2_9E69E797.wem</Path>
 				</File>
 				<File Id="329215217" Language="SFX">
 					<ShortName>GetPoints.wav</ShortName>
 					<Path>SFX\GetPoints_9E69E797.wem</Path>
 				</File>
-				<File Id="341353006" Language="SFX">
-					<ShortName>Click2.wav</ShortName>
-					<Path>SFX\Click2_43C3C462.wem</Path>
-				</File>
 				<File Id="346329211" Language="SFX">
 					<ShortName>Scaling.wav</ShortName>
 					<Path>SFX\Scaling_9E69E797.wem</Path>
+				</File>
+				<File Id="356315295" Language="SFX">
+					<ShortName>Shred PP1.wav</ShortName>
+					<Path>SFX\Shred PP1_4B8CC0C5.wem</Path>
 				</File>
 				<File Id="390641870" Language="SFX">
 					<ShortName>Placement.wav</ShortName>
@@ -110,13 +98,29 @@
 					<ShortName>AvatarSelect3.wav</ShortName>
 					<Path>SFX\AvatarSelect3_6AA6BF28.wem</Path>
 				</File>
-				<File Id="749339467" Language="SFX">
-					<ShortName>Shred P2.wav</ShortName>
-					<Path>SFX\Shred P2_4B8CC0C5.wem</Path>
+				<File Id="716354945" Language="SFX">
+					<ShortName>Backe1.wav</ShortName>
+					<Path>SFX\Backe1_9E69E797.wem</Path>
+				</File>
+				<File Id="758821720" Language="SFX">
+					<ShortName>Clicke2.wav</ShortName>
+					<Path>SFX\Clicke2_9E69E797.wem</Path>
+				</File>
+				<File Id="761950348" Language="SFX">
+					<ShortName>Clicke1.wav</ShortName>
+					<Path>SFX\Clicke1_9E69E797.wem</Path>
+				</File>
+				<File Id="794968390" Language="SFX">
+					<ShortName>Clicke4.wav</ShortName>
+					<Path>SFX\Clicke4_9E69E797.wem</Path>
 				</File>
 				<File Id="810067903" Language="SFX">
 					<ShortName>WinBigGrid1.wav</ShortName>
 					<Path>SFX\WinBigGrid1_9A143C0A.wem</Path>
+				</File>
+				<File Id="822648536" Language="SFX">
+					<ShortName>Shred PP2.wav</ShortName>
+					<Path>SFX\Shred PP2_4B8CC0C5.wem</Path>
 				</File>
 				<File Id="828134313" Language="SFX">
 					<ShortName>AvatarSelect1.wav</ShortName>
@@ -140,7 +144,7 @@
 				</File>
 				<File Id="954038039" Language="SFX">
 					<ShortName>WinGame.wav</ShortName>
-					<Path>SFX\WinGame_BF7563AB.wem</Path>
+					<Path>SFX\WinGame_6996A9B1.wem</Path>
 				</File>
 				<File Id="975026500" Language="SFX">
 					<ShortName>BoughtIcon.wav</ShortName>
@@ -149,6 +153,10 @@
 				<File Id="1055088442" Language="SFX">
 					<ShortName>Place_Invalid.wav</ShortName>
 					<Path>SFX\Place_Invalid_72F1DEEE.wem</Path>
+				</File>
+				<File Id="1059125190" Language="SFX">
+					<ShortName>Clicke3.wav</ShortName>
+					<Path>SFX\Clicke3_9E69E797.wem</Path>
 				</File>
 			</IncludedMemoryFiles>
 		</SoundBank>

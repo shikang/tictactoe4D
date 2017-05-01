@@ -138,7 +138,7 @@ public class BigGridScript : MonoBehaviour
 				AudioManager.Instance.PlaySoundEvent(SOUNDID.WIN_BIGGRID);
 
 			//add the points
-			if (_turn == Defines.TURN.P1)
+			if (_turn == Defines.TURN.P1 && !TutorialScript.Instance.isTutorial)
 			{
 				Defines.Instance.playerScore += Defines.smallGridWin;
 				GameObject tmp;

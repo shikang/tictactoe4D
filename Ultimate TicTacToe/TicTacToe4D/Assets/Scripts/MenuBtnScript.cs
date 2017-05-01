@@ -236,7 +236,9 @@ public class MenuBtnScript : MonoBehaviour
 			Camera.main.GetComponent<MainMenuScript>().Avatar.SetActive(true);
 			Camera.main.GetComponent<MainMenuScript>().Settings.SetActive(true);
 			GlobalScript.Instance.avatarState = 0;
-			GachaScript.Instance.ResetGachaText();
+
+			if(GachaScript.Instance)
+				GachaScript.Instance.ResetGachaText();
 
 			AvatarHandler.Instance.OnClickLocalPlayIcon1(false);
 			AudioManager.Instance.PlaySoundEvent(SOUNDID.BACK);
@@ -314,6 +316,8 @@ public class MenuBtnScript : MonoBehaviour
 				#if UNITY_IOS && !UNITY_EDITOR
 				// @todo apple notification here
 				#endif
+
+				Adverts.Instance.freeGacha = true;
 			}
 			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 			break;
