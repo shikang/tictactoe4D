@@ -189,6 +189,7 @@ public class MenuBtnScript : MonoBehaviour
 			Camera.main.GetComponent<MainMenuScript>().Avatar.SetActive(false);
 			Camera.main.GetComponent<MainMenuScript>().Settings.SetActive(false);
 			GlobalScript.Instance.avatarState = 1;
+			AvatarHandler.Instance.UpdateUnlockedAvatarsStatus();
 			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 			break;
 
@@ -205,6 +206,7 @@ public class MenuBtnScript : MonoBehaviour
 			Camera.main.GetComponent<MainMenuScript>().ChangeScreen(3);
 			Camera.main.GetComponent<MainMenuScript>().Avatar.SetActive(false);
 			Camera.main.GetComponent<MainMenuScript>().Settings.SetActive(false);
+			AvatarHandler.Instance.UpdateUnlockedAvatarsStatus();
 			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 			break;
 
@@ -225,6 +227,7 @@ public class MenuBtnScript : MonoBehaviour
 			Camera.main.GetComponent<MainMenuScript>().Avatar.SetActive(false);
 			Camera.main.GetComponent<MainMenuScript>().Settings.SetActive(false);
 			GlobalScript.Instance.avatarState = 3;
+			AvatarHandler.Instance.UpdateUnlockedAvatarsStatus();
 			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 			break;
 

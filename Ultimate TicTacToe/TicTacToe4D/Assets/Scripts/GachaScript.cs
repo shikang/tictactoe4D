@@ -60,8 +60,8 @@ public class GachaScript : MonoBehaviour
 	{
 		currIcon.GetComponent<Image>().sprite =
 			IconManager.Instance.GetIcon(Defines.ICONS.LOCKED);
-		currIcon.GetComponent<Image>().color = IconFX.GetComponent<Image>().color =
-		BuyIcon.GetComponent<Image>().color = BuyIconFX.GetComponent<Image>().color = Defines.ICON_COLOR_P1;
+		//currIcon.GetComponent<Image>().color = IconFX.GetComponent<Image>().color =
+		//BuyIcon.GetComponent<Image>().color = BuyIconFX.GetComponent<Image>().color = Defines.ICON_COLOR_P1;
 
 		IconFX.SetActive(false);
 		BuyIcon.SetActive(false);
@@ -140,7 +140,8 @@ public class GachaScript : MonoBehaviour
 					prev = randomList[i-1];
 				do
 				{
-					randomList[i] = UnityEngine.Random.Range(Defines.Avatar_FirstIcon, AvatarHandler.Instance.GetNoofAvatars());
+					randomList[i] = IconManager.Instance.FindGachaIcon(UnityEngine.Random.Range(0, 99999));
+					//randomList[i] = UnityEngine.Random.Range(Defines.Avatar_FirstIcon, AvatarHandler.Instance.GetNoofAvatars());
 				}
 				while (IconManager.Instance.GetIsBuy(randomList[i]) || randomList[i] == prev );
 			}
@@ -160,9 +161,9 @@ public class GachaScript : MonoBehaviour
 
 			gachaInfoText.SetActive(false);
 			if(IconManager.Instance.GetIsUnlocked(unlockIcon))
-				gachaInfoText.GetComponent<Text>().text = "You already have this icon!";
+				gachaInfoText.GetComponent<Text>().text = "You already have this avatar!";
 			else
-				gachaInfoText.GetComponent<Text>().text = "You got a new " +  ((Defines.ICONS)unlockIcon).ToString() + " icon!";
+				gachaInfoText.GetComponent<Text>().text = "You got a new " +  ((Defines.ICONS)unlockIcon).ToString().Substring(5) + " avatar!";
 
 				
 			AvatarHandler.Instance.UnlockAvatar(unlockIcon);

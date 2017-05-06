@@ -235,7 +235,7 @@ public class MainMenuScript : MonoBehaviour
 			AvatarHandler.Instance.scrollGrandparent.GetComponent<RectTransform>().localPosition = new Vector3(0.3f, -65.5f, 0.0f);
 			AvatarHandler.Instance.scrollGrandparent.GetComponent<RectTransform>().sizeDelta = new Vector2(163.4f, 68.1f);
 			AvatarHandler.Instance.scrollParent.GetComponent<RectTransform>().localPosition = new Vector3(-0.0f, -34.0f, 0.0f);
-			AvatarHandler.Instance.scrollParent.GetComponent<RectTransform>().sizeDelta = new Vector2(314.0f, 130.6f);
+			AvatarHandler.Instance.scrollParent.GetComponent<RectTransform>().sizeDelta = new Vector2(314.0f, 200.6f);
 			break;
 
 		case 2:

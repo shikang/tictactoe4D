@@ -32,11 +32,11 @@ public class GlobalScript : MonoBehaviour
     public GameObject matchMaker;
 	public static string[] randomName = { "Tom", "Dick", "Harry", "John" };
 
-	public const int minIcon = (int)Defines.ICONS.CIRCLE;
-	public const int maxIcon = (int)Defines.ICONS.TREBLE;
-	public int myIcon = (int)Defines.ICONS.SPADE;
-	public int iconP1 = (int)Defines.ICONS.CIRCLE;
-	public int iconP2 = (int)Defines.ICONS.CROSS;
+	//public const int minIcon = (int)Defines.ICONS.C003_BOY;
+	//public const int maxIcon = (int)Defines.ICONS.TREBLE;
+	public int myIcon = (int)Defines.ICON_DEFAULT_P1;
+	public int iconP1 = (int)Defines.ICON_DEFAULT_P1;
+	public int iconP2 = (int)Defines.ICON_DEFAULT_P2;
 
 	public float timePerTurn;
 
@@ -126,11 +126,11 @@ public class GlobalScript : MonoBehaviour
 	}
 
 	// Used to cycle grid sprites when choosing icons before the game starts.
-	public void CyclePlayerIcon( /*int _player*/ )
-	{
-		myIcon = ( ( myIcon + 1 - minIcon ) % ( maxIcon - minIcon + 1 ) ) + minIcon;
-		Camera.main.GetComponent<MainMenuScript>().PlayerIcon.GetComponent<Image>().sprite = 
-			IconManager.Instance.GetIcon(myIcon);
+	//public void CyclePlayerIcon( /*int _player*/ )
+	//{
+	//	myIcon = ( ( myIcon + 1 - minIcon ) % ( maxIcon - minIcon + 1 ) ) + minIcon;
+	//	Camera.main.GetComponent<MainMenuScript>().PlayerIcon.GetComponent<Image>().sprite = 
+	//		IconManager.Instance.GetIcon(myIcon);
 
 		/*if(_player == 1)
 		{
@@ -158,7 +158,7 @@ public class GlobalScript : MonoBehaviour
 			if(playerIcon_2 >= noofIcons)
 				playerIcon_2 = 1;
 		}*/
-	}
+	//}
 
 	public void UpdateStartingPlayer(int _player)
 	{
@@ -256,10 +256,10 @@ public class GlobalScript : MonoBehaviour
 		//iconP1 = myIcon;
 		iconP1 = GameData.current.avatarIcon;
 
-		if(GameData.current.avatarIcon == (int)Defines.ICONS.CROSS)
-			iconP2 = (int)Defines.ICONS.CIRCLE;
+		if(GameData.current.avatarIcon == (int)Defines.ICON_DEFAULT_P2)
+			iconP2 = (int)Defines.ICON_DEFAULT_P1;
 		else
-			iconP2 = (int)Defines.ICONS.CROSS;
+			iconP2 = (int)Defines.ICON_DEFAULT_P2;
 	}
 
 	public void SetLocalMultiPlayerName()

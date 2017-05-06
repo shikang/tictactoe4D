@@ -30,7 +30,7 @@ public class Defines : Singleton<Defines>
 		INVALID,
 		LOCKED,
 
-		CIRCLE,
+		/*CIRCLE,
 		CROSS,
 
 		SPADE,
@@ -38,7 +38,33 @@ public class Defines : Singleton<Defines>
 		CLUB,
 		DIAMOND,
 
-		TREBLE,
+		TREBLE,*/
+
+		C001_KNIGHT,
+		C002_KING,
+		C003_BOY,
+		C004_PRINCE,
+		C005_PRINCESS,
+		C006_OLDMAN,
+
+		U001_CHICK,
+		U002_FROG,
+		U003_BEAR,
+		U004_OCTOPUS,
+		U005_PUFFER,
+
+		R001_DEER,
+		R002_RACCOON,
+		R003_FOX,
+
+		L001_PIG,
+		L002_UNICORN,
+
+		B001_COW,
+		B002_CHICKEN,
+		B003_CLAM,
+		B004_RAINBOWGIRL,
+
 		TOTAL
 	}
 	static public int Avatar_NoofColumns = 5;
@@ -52,6 +78,9 @@ public class Defines : Singleton<Defines>
 	static public Color ICON_COLOR_INVALID = new Color(0.886f, 0.118f, 0.043f);
 	static public Color ICON_COLOR_GREY = Color.grey;
 	static public Color ICON_COLOR_WHITE = Color.white;
+
+	static public ICONS ICON_DEFAULT_P1 = ICONS.C003_BOY;
+	static public ICONS ICON_DEFAULT_P2 = ICONS.C005_PRINCESS;
 
 	// Emotes
 	static public float EMOTE_SHOW_TIME = 2.5f;						//!< In seconds
@@ -77,7 +106,6 @@ public class Defines : Singleton<Defines>
 
 	// Money stuff
 	static public int GACHACOST = 100;
-
 	static public float FREE_ROLL_TIMER = 14400.0f;	//4 hours
 
 	static public float TIMEPERTURN_1 = 20.0f;
@@ -92,6 +120,12 @@ public class Defines : Singleton<Defines>
 	static public int V_WINBIGGRID = 350;
 
 	static public int MAX_PLAYER_NAME_LENGTH = 10;
+
+	//Gacha Stuff
+	static public int GACHARATE_TOTAL_C = 55000;	// Common
+	static public int GACHARATE_TOTAL_U = 30000;	// Uncommon
+	static public int GACHARATE_TOTAL_R = 10000;	// Rare
+	static public int GACHARATE_TOTAL_L = 5000;		// Legenrdary
 
 	public enum AdsInAppPurchase
 	{

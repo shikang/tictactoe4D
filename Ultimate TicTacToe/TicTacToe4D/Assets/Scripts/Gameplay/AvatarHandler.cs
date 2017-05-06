@@ -96,7 +96,7 @@ public class AvatarHandler : MonoBehaviour
 			avatarArray[i].GetComponent<AvatarClick>().SetAvatar(i, 1);
 
 			allFrames[i] = Instantiate(framePrefab);
-			allFrames[i].GetComponent<Image>().color = Defines.ICON_COLOR_P1;
+			//allFrames[i].GetComponent<Image>().color = Defines.ICON_COLOR_P1;
 			allFrames[i].transform.SetParent(frameParent.transform, false);
 
 			Vector3 temp = avatarArray[i].transform.localPosition;
@@ -113,7 +113,7 @@ public class AvatarHandler : MonoBehaviour
 
 		currRowCount = 0;
 		int count = 0;
-		for(int i = Defines.Avatar_FirstIcon; i < noofAvatars; ++i)
+		for(int i = Defines.Avatar_FirstIcon; i < (int)Defines.ICONS.TOTAL; ++i)
 		{
 			if(GetIconManager().GetIsBuy(i))
 			{
@@ -123,7 +123,7 @@ public class AvatarHandler : MonoBehaviour
 				buyArray[count].GetComponent<AvatarClick>().SetAvatar(i, 2);
 
 				buyAllFrames[count] = Instantiate(framePrefab);
-				buyAllFrames[count].GetComponent<Image>().color = Defines.ICON_COLOR_P1;
+				//buyAllFrames[count].GetComponent<Image>().color = Defines.ICON_COLOR_P1;
 				buyAllFrames[count].transform.SetParent(buyFrameParent.transform, false);
 
 				buyID[count] = i;
@@ -140,10 +140,8 @@ public class AvatarHandler : MonoBehaviour
 		// Set the current avatar to blue.
 		//currAvatar.GetComponent<Image>().color = Defines.ICON_COLOR_P1;
 
-		UpdateUnlockedAvatarsStatus();
-
-		localAvatar_P1 = (int)Defines.ICONS.CIRCLE;
-		localAvatar_P2 = (int)Defines.ICONS.CROSS;
+		localAvatar_P1 = (int)Defines.ICON_DEFAULT_P1;
+		localAvatar_P2 = (int)Defines.ICON_DEFAULT_P2;
 		avatarLocalPlay1.GetComponent<Image>().sprite = IconManager.Instance.GetIcon(localAvatar_P1);
 		avatarLocalPlay2.GetComponent<Image>().sprite = IconManager.Instance.GetIcon(localAvatar_P2);
 	}
@@ -174,22 +172,28 @@ public class AvatarHandler : MonoBehaviour
 		UpdateUnlockedAvatarsStatus();
 	}
 
-	void UpdateUnlockedAvatarsStatus()
+	public void UpdateUnlockedAvatarsStatus()
 	{
 		for (int i = Defines.Avatar_FirstIcon; i < noofAvatars; ++i)
 		{
 			if(GetIconManager().GetIsUnlocked(i))
+			{
 				avatarArray[i].GetComponent<Image>().sprite = GetIconManager().GetIcon(i);
+				allFrames[i].GetComponent<Image>().color = Defines.ICON_COLOR_P1;
+			}
 			else
+			{
 				avatarArray[i].GetComponent<Image>().sprite = GetIconManager().GetIcon(Defines.ICONS.LOCKED);
+				allFrames[i].GetComponent<Image>().color = Defines.ICON_COLOR_GREY;
+			}
 		}
 
 		for (int i = 0; i < buyArray.Length; ++i)
 		{
 			if( GetIconManager().GetIsUnlocked(buyID[i]) )
-				buyArray[i].GetComponent<Image>().color = Defines.ICON_COLOR_GREY;
+				buyAllFrames[i].GetComponent<Image>().color = Defines.ICON_COLOR_GREY;
 			else
-				buyArray[i].GetComponent<Image>().color = Defines.ICON_COLOR_WHITE;
+				buyAllFrames[i].GetComponent<Image>().color = Defines.ICON_COLOR_P1;
 		}
 	}
 
