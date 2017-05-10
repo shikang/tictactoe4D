@@ -40,11 +40,11 @@ public class Defines : Singleton<Defines>
 
 		TREBLE,*/
 
-		C001_KNIGHT,
-		C002_KING,
-		C003_BOY,
-		C004_PRINCE,
-		C005_PRINCESS,
+		C001_BOY,
+		C002_PRINCESS,
+		C003_KNIGHT,
+		C004_KING,
+		C005_PRINCE,
 		C006_OLDMAN,
 
 		U001_CHICK,
@@ -79,8 +79,8 @@ public class Defines : Singleton<Defines>
 	static public Color ICON_COLOR_GREY = Color.grey;
 	static public Color ICON_COLOR_WHITE = Color.white;
 
-	static public ICONS ICON_DEFAULT_P1 = ICONS.C003_BOY;
-	static public ICONS ICON_DEFAULT_P2 = ICONS.C005_PRINCESS;
+	static public ICONS ICON_DEFAULT_P1 = ICONS.C001_BOY;
+	static public ICONS ICON_DEFAULT_P2 = ICONS.C002_PRINCESS;
 
 	// Emotes
 	static public float EMOTE_SHOW_TIME = 2.5f;						//!< In seconds

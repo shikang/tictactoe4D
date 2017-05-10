@@ -27,7 +27,7 @@ public class GameData
 		icons = new List<Defines.ICONS>();
 		win = 0;
 		matchPlayed = 0;
-		avatarName = "abc";
+		avatarName = "Tom";
 		avatarIcon = 8;
 		nextFreeRollTime = DateTime.Now;
 		removeAds = false;

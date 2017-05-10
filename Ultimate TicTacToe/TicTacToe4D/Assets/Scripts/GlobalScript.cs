@@ -248,7 +248,7 @@ public class GlobalScript : MonoBehaviour
 	{
 		//iconP1 = myIcon;
 		UpdatePlayer1Name(AvatarHandler.Instance.currAvatarText.text);
-		UpdatePlayer2Name("Garret");
+		UpdatePlayer2Name("Jerry");
 	}
 
 	public void SetSinglePlayerIcon()

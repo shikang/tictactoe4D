@@ -42,6 +42,10 @@
 				<Event Id="3258849071" Name="WinGame" ObjectPath="\Events\Default Work Unit\Gameplay\WinGame"/>
 			</IncludedEvents>
 			<IncludedMemoryFiles>
+				<File Id="40138861" Language="SFX">
+					<ShortName>Shred PP2.wav</ShortName>
+					<Path>SFX\Shred PP2_4B8CC0C5.wem</Path>
+				</File>
 				<File Id="85938634" Language="SFX">
 					<ShortName>Gacha3.wav</ShortName>
 					<Path>SFX\Gacha3_9E69E797.wem</Path>
@@ -62,10 +66,6 @@
 					<ShortName>Scaling.wav</ShortName>
 					<Path>SFX\Scaling_9E69E797.wem</Path>
 				</File>
-				<File Id="356315295" Language="SFX">
-					<ShortName>Shred PP1.wav</ShortName>
-					<Path>SFX\Shred PP1_4B8CC0C5.wem</Path>
-				</File>
 				<File Id="390641870" Language="SFX">
 					<ShortName>Placement.wav</ShortName>
 					<Path>SFX\Placement_9E69E797.wem</Path>
@@ -77,6 +77,10 @@
 				<File Id="425723482" Language="SFX">
 					<ShortName>WinBigGrid2.wav</ShortName>
 					<Path>SFX\WinBigGrid2_BAA5D064.wem</Path>
+				</File>
+				<File Id="471297279" Language="SFX">
+					<ShortName>Shred PP1.wav</ShortName>
+					<Path>SFX\Shred PP1_4B8CC0C5.wem</Path>
 				</File>
 				<File Id="484115436" Language="SFX">
 					<ShortName>Gacha1.wav</ShortName>
@@ -117,10 +121,6 @@
 				<File Id="810067903" Language="SFX">
 					<ShortName>WinBigGrid1.wav</ShortName>
 					<Path>SFX\WinBigGrid1_9A143C0A.wem</Path>
-				</File>
-				<File Id="822648536" Language="SFX">
-					<ShortName>Shred PP2.wav</ShortName>
-					<Path>SFX\Shred PP2_4B8CC0C5.wem</Path>
 				</File>
 				<File Id="828134313" Language="SFX">
 					<ShortName>AvatarSelect1.wav</ShortName>

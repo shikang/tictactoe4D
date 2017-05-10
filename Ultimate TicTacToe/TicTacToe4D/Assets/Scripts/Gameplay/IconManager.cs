@@ -74,11 +74,11 @@ public class IconManager : MonoBehaviour
 		SetIconData(Defines.ICONS.INVALID,		"Icons/Invalid",	false, false, false, TIERS.NIL);
 		SetIconData(Defines.ICONS.LOCKED,		"Icons/Locked",		false, false, false, TIERS.NIL);
 
-		SetIconData(Defines.ICONS.C001_KNIGHT,	"Icons/C001_Knight",	true, false, true, TIERS.COMMON);
-		SetIconData(Defines.ICONS.C002_KING,	"Icons/C002_King",		false, false, true, TIERS.COMMON);
-		SetIconData(Defines.ICONS.C003_BOY,		"Icons/C003_Boy",		true, false, true, TIERS.COMMON);
-		SetIconData(Defines.ICONS.C004_PRINCE,	"Icons/C004_Prince",	false, false, true, TIERS.COMMON);
-		SetIconData(Defines.ICONS.C005_PRINCESS,"Icons/C005_Princess",	true, false, true, TIERS.COMMON);
+		SetIconData(Defines.ICONS.C001_BOY,		"Icons/C001_Boy",		true, false, true, TIERS.COMMON);
+		SetIconData(Defines.ICONS.C002_PRINCESS,"Icons/C002_Princess",	true, false, true, TIERS.COMMON);
+		SetIconData(Defines.ICONS.C003_KNIGHT,	"Icons/C003_Knight",	false, false, true, TIERS.COMMON);
+		SetIconData(Defines.ICONS.C004_KING,	"Icons/C004_King",		false, false, true, TIERS.COMMON);
+		SetIconData(Defines.ICONS.C005_PRINCE,	"Icons/C005_Prince",	false, false, true, TIERS.COMMON);
 		SetIconData(Defines.ICONS.C006_OLDMAN,	"Icons/C006_OldMan",	false, false, true, TIERS.COMMON);
 
 		SetIconData(Defines.ICONS.U001_CHICK,	"Icons/U001_Chick",		false, false, true, TIERS.UNCOMMON);

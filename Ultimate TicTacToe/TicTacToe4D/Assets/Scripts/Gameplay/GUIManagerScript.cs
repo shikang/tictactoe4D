@@ -50,8 +50,8 @@ public class GUIManagerScript : MonoBehaviour
 	public Sprite HighlightSprite;
 
 	public float textScaleSpeed;
-	public string nameP1 = "abc";
-	public string nameP2 = "xyz";
+	public string nameP1 = "Tom";
+	public string nameP2 = "Jerry";
 
 	public float timerP1;
 	public float timerP2;

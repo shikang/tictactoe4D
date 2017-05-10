@@ -205,10 +205,10 @@ public class GameStartAnim : MonoBehaviour
 		}
 		else if(headerStage == HEADER.BounceUp)
 		{
-			header.GetComponent<Transform>().localPosition = Vector3.Lerp(header.GetComponent<Transform>().localPosition, new Vector3(0.0f, -750.0f, 0.0f), Time.deltaTime * 2.0f);
-			if( Vector3.Distance(header.GetComponent<Transform>().localPosition, new Vector3(0.0f, -750.0f, 0.0f)) < 5.0f)
+			header.GetComponent<Transform>().localPosition = Vector3.Lerp(header.GetComponent<Transform>().localPosition, new Vector3(0.0f, -680.0f, 0.0f), Time.deltaTime * 2.0f);
+			if( Vector3.Distance(header.GetComponent<Transform>().localPosition, new Vector3(0.0f, -680.0f, 0.0f)) < 5.0f)
 			{
-				header.GetComponent<Transform>().localPosition = new Vector3(0.0f, -750.0f, 0.0f);
+				header.GetComponent<Transform>().localPosition = new Vector3(0.0f, -680.0f, 0.0f);
 				headerStage = HEADER.End;
 			}
 		}

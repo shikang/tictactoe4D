@@ -157,13 +157,13 @@ public class GachaScript : MonoBehaviour
 
 			// Unlock avatar
 			int unlockIcon = randomList[noofChanges - 1];
-			Debug.Log("Bought avatar: " + unlockIcon);
+			Debug.Log("Bought token: " + unlockIcon);
 
 			gachaInfoText.SetActive(false);
 			if(IconManager.Instance.GetIsUnlocked(unlockIcon))
-				gachaInfoText.GetComponent<Text>().text = "You already have this avatar!";
+				gachaInfoText.GetComponent<Text>().text = "You already have this token!";
 			else
-				gachaInfoText.GetComponent<Text>().text = "You got a new " +  ((Defines.ICONS)unlockIcon).ToString().Substring(5) + " avatar!";
+				gachaInfoText.GetComponent<Text>().text = "You got a new " +  ((Defines.ICONS)unlockIcon).ToString().Substring(5) + " token!";
 
 				
 			AvatarHandler.Instance.UnlockAvatar(unlockIcon);
