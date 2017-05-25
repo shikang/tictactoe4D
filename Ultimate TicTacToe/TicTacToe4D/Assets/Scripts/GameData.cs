@@ -28,7 +28,7 @@ public class GameData
 		win = 0;
 		matchPlayed = 0;
 		avatarName = "Tom";
-		avatarIcon = 8;
+		avatarIcon = 4;
 		nextFreeRollTime = DateTime.Now;
 		removeAds = false;
 		finishedTutorial = false;

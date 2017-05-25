@@ -132,6 +132,7 @@ public class Adverts : MonoBehaviour
 		         	//transit to gacha
 		         	//freeGacha = false;
 					GameObject.FindGameObjectWithTag("Gacha").GetComponent<GachaScript>().StartGacha(true);
+					GachaScript.Instance.SetGacha();
 		         }
 		         //GameData.current.coin += 10;
 		         //SaveLoad.Save();

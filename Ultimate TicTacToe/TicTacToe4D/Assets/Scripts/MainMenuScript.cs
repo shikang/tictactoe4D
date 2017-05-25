@@ -123,7 +123,7 @@ public class MainMenuScript : MonoBehaviour
 		BlackOverlay.GetComponent<Image>().color = Color.black;
 		isFading = true;
 
-		if(!GlobalScript.Instance.isBGMPlaying)
+		if(!GlobalScript.Instance.isBGMPlaying && GameData.current.hasBGM)
 		{
 			AudioManager.Instance.PlaySoundEvent(SOUNDID.BGM);
 		}

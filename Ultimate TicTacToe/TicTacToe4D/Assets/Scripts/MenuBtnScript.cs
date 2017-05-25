@@ -140,13 +140,13 @@ public class MenuBtnScript : MonoBehaviour
 		{
 			BGM_On.SetActive(true);
 			BGM_Off.SetActive(false);
-			AudioManager.Instance.SetBGMVol(100.0f);
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.BGM);
 		}
 		else
 		{
 			BGM_On.SetActive(false);
 			BGM_Off.SetActive(true);
-			AudioManager.Instance.SetBGMVol(0.001f);
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.STOPBGM);
 		}
 
 		if(GameData.current.hasSFX)
@@ -310,7 +310,6 @@ public class MenuBtnScript : MonoBehaviour
 				Adverts.Instance.ShowAd(AdVidType.video,options);
 				Adverts.Instance.freeGacha = true;
 				#endif
-				GachaScript.Instance.SetGacha();
 
 				#if UNITY_ANDROID && !UNITY_EDITOR
 				NotificationManager.SendWithAppIcon(System.TimeSpan.FromSeconds(Defines.FREE_ROLL_TIMER), "Ultimate Tic Tac Toe", "Get your free roll now!", Color.black);
