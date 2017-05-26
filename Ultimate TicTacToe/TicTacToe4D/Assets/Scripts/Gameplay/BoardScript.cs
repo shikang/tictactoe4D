@@ -325,11 +325,11 @@ public class BoardScript : MonoBehaviour
 
 	void UpdateScaleLimit()
 	{
-		scaleLimitX = scaleUnit * (boardSprite.transform.localScale.x - minScale);
-		scaleLimitY = scaleUnit * (boardSprite.transform.localScale.y - minScale);
+		//scaleLimitX = scaleUnit * (boardSprite.transform.localScale.x - minScale);
+		//scaleLimitY = scaleUnit * (boardSprite.transform.localScale.y - minScale);
 
-		Vector3 tempPos = boardSprite.transform.localPosition;
-		Vector3 tempScale = boardSprite.transform.localScale;
+		//Vector3 tempPos = boardSprite.transform.localPosition;
+		//Vector3 tempScale = boardSprite.transform.localScale;
 
 		// Moving
 		/*if(Input.touchCount == 1)

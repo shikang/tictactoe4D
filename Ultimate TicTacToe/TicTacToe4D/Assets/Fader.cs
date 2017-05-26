@@ -59,8 +59,8 @@ public class Fader : MonoBehaviour
 			if(squareCount > 1)
 			{
 				this.GetComponent<RectTransform>().sizeDelta = new Vector2(newwidth,newheight);
-				GameObject clone;
-				for ( int x = 0; x < squareCount ; ++x)
+				//GameObject clone;
+				/*for ( int x = 0; x < squareCount ; ++x)
 				{
 					for ( int y = 0 ; y < squareCount ; ++y)
 					{
@@ -68,20 +68,20 @@ public class Fader : MonoBehaviour
 						{}
 						else
 						{
-							clone = GameObject.Instantiate(this.gameObject);
+							//clone = GameObject.Instantiate(this.gameObject);
 							//remove the script of the cloned gameobject
 
 							//Debug.Log("AAAAAAAAAAAAAAA  " + clone.transform.parent);
 							//clone.transform.SetParent(this.transform.parent);//why?	
-							if (transform.parent == null)
-								Debug.Log("WTF");
+							//if (transform.parent == null)
+							//	Debug.Log("WTF");
 							//clone.transform.parent = transform.parent;
 							//clone.transform.parent = transform.parent;
 							//clone.GetComponent<RectTransform>().localPosition = new Vector2(newwidth*x,newheight*y);
 							//clones.Add(clone);
 						}
 					}
-				}
+				}*/
 			}
 		}
 		//Debug.Log("Height: "+cv.GetComponent<RectTransform>().rect.height);

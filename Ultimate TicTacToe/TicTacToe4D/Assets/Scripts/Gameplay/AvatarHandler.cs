@@ -87,7 +87,7 @@ public class AvatarHandler : MonoBehaviour
 		allFrames = new GameObject[noofAvatars];
 
 		// Avatars
-		int currRowCount = 0;
+		//int currRowCount = 0;
 		for(int i = Defines.Avatar_FirstIcon; i < noofAvatars; ++i)
 		{
 			avatarArray[i] = Instantiate(avatarPrefab);
@@ -111,7 +111,7 @@ public class AvatarHandler : MonoBehaviour
 		buyAllFrames = new GameObject[buyArray.Length];
 		buyID = new int[buyArray.Length];
 
-		currRowCount = 0;
+		//currRowCount = 0;
 		int count = 0;
 		for(int i = Defines.Avatar_FirstIcon; i < (int)Defines.ICONS.TOTAL; ++i)
 		{

@@ -83,7 +83,8 @@ public class MenuBtnScript : MonoBehaviour
 		currScreen = SCREENS.MAINMENU;
 
 		SaveLoad.Load();
-		UpdateSoundButton();
+		UpdateBGMButton();
+		UpdateSFXButton();
 	}
 
 	void Update ()
@@ -134,13 +135,16 @@ public class MenuBtnScript : MonoBehaviour
 		}
 	}
 
-	void UpdateSoundButton()
+	void UpdateBGMButton()
 	{
 		if(GameData.current.hasBGM)
 		{
-			BGM_On.SetActive(true);
-			BGM_Off.SetActive(false);
-			AudioManager.Instance.PlaySoundEvent(SOUNDID.BGM);
+			if(!GlobalScript.Instance.isBGMPlaying)
+			{
+				BGM_On.SetActive(true);
+				BGM_Off.SetActive(false);
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.BGM);
+			}
 		}
 		else
 		{
@@ -148,7 +152,10 @@ public class MenuBtnScript : MonoBehaviour
 			BGM_Off.SetActive(true);
 			AudioManager.Instance.PlaySoundEvent(SOUNDID.STOPBGM);
 		}
+	}
 
+	void UpdateSFXButton()
+	{
 		if(GameData.current.hasSFX)
 		{
 			SFX_On.SetActive(true);
@@ -412,14 +419,14 @@ public class MenuBtnScript : MonoBehaviour
 		case BUTTONTYPES.SETTINGS_BGM:
 			GameData.current.hasBGM = !GameData.current.hasBGM;
 			SaveLoad.Save();
-			UpdateSoundButton();
+			UpdateBGMButton();
 			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 			break;
 
 		case BUTTONTYPES.SETTINGS_SFX:
 			GameData.current.hasSFX = !GameData.current.hasSFX;
 			SaveLoad.Save();
-			UpdateSoundButton();
+			UpdateSFXButton();
 			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 			break;
 
