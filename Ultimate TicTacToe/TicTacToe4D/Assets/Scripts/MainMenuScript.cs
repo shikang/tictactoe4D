@@ -449,7 +449,7 @@ public class MainMenuScript : MonoBehaviour
         isMoving = true;
     }
 
-    public void blackFadeTransition()
+    /* void blackFadeTransition()
     {
         if (currentFadeTime <= faderDuration)
         {
@@ -460,7 +460,7 @@ public class MainMenuScript : MonoBehaviour
             isFading = false;
             blackOverlayImage.rectTransform.gameObject.SetActive(false);
         } 
-    }
+    }*/
 
     public void SetAnim(int id)
     {

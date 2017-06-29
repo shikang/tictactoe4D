@@ -3,7 +3,7 @@
 	<RootPaths>
 		<ProjectRoot>C:\Users\SolidRocker\Desktop\WhyWool\UltimateTic\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\</ProjectRoot>
 		<SourceFilesRoot>C:\Users\SolidRocker\Desktop\WhyWool\UltimateTic\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\.cache\Android\</SourceFilesRoot>
-		<SoundBanksRoot>C:\Users\SolidRocker\Desktop\WhyWool\UltimateTic\trunk\Ultimate TicTacToe\TicTacToe4D\Assets\StreamingAssets\Audio\GeneratedSoundBanks\Android\</SoundBanksRoot>
+		<SoundBanksRoot>C:\Users\SolidRocker\Desktop\WhyWool\UltimateTic\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\GeneratedSoundBanks\Android\</SoundBanksRoot>
 		<ExternalSourcesInputFile></ExternalSourcesInputFile>
 		<ExternalSourcesOutputRoot>C:\Users\SolidRocker\Desktop\WhyWool\UltimateTic\trunk\Ultimate TicTacToe\TicTacToe4D\WwiseProject\GeneratedSoundBanks\Android\</ExternalSourcesOutputRoot>
 	</RootPaths>

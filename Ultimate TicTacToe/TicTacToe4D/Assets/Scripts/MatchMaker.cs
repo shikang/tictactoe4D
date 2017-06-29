@@ -81,7 +81,7 @@ public class MatchMaker : Photon.PunBehaviour
         DebugLog(log);
 
         // Join or create
-        RoomOptions roomOptions = new RoomOptions() { isVisible = false, maxPlayers = 2 };
+        RoomOptions roomOptions = new RoomOptions() { IsVisible = false, MaxPlayers = 2 };
         PhotonNetwork.JoinOrCreateRoom(roomName, roomOptions, TypedLobby.Default);
 
         requestRoom = true;
@@ -114,7 +114,7 @@ public class MatchMaker : Photon.PunBehaviour
 		bRandom = true;
 		fRandomWaitTime = Defines.MATCH_MAKE_RANDOM_RETRY_INTERVAL + Random.Range( 0.0f, Defines.MATCH_MAKE_RANDOM_RETRY_INTERVAL * 0.5f );
 
-		RoomOptions roomOptions = new RoomOptions() { isVisible = true, maxPlayers = 2 };
+		RoomOptions roomOptions = new RoomOptions() { IsVisible = true, MaxPlayers = 2 };
 		PhotonNetwork.CreateRoom(null, roomOptions, TypedLobby.Default);
 	}
 
@@ -156,7 +156,7 @@ public class MatchMaker : Photon.PunBehaviour
 
     public override void OnPhotonPlayerConnected(PhotonPlayer newPlayer)
     {
-        int count = 1 + PhotonNetwork.otherPlayers.Length;
+        //int count = 1 + PhotonNetwork.otherPlayers.Length;
         string log = "OnPhotonPlayerConnected() : " + newPlayer.name + " has joined!";
         DebugLog(log);
 

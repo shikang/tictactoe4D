@@ -165,7 +165,6 @@ public class IconManager : MonoBehaviour
 
 	public int GetNoofBuyableIcons()
 	{
-		Debug.Log("DDD: " + counterBuyable);
 		return counterBuyable;
 	}
 

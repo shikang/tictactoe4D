@@ -35,7 +35,7 @@ public class TestMatchMaker : Photon.PunBehaviour
 
     void JoinRoom()
     {
-        RoomOptions roomOptions = new RoomOptions() { isVisible = false, maxPlayers = 2 };
+        RoomOptions roomOptions = new RoomOptions() { IsVisible = false, MaxPlayers = 2 };
         PhotonNetwork.JoinOrCreateRoom("WhyWoolTestRoom", roomOptions, TypedLobby.Default);
     }
 

@@ -69,6 +69,8 @@ public class AudioManager : MonoBehaviour
 		if(!go)
 			go = gameObject;
 
+		Debug.Log("SOUND: " + sid);
+
 		switch(sid)
 		{
 		case SOUNDID.CLICK:
@@ -173,7 +175,7 @@ public class AudioManager : MonoBehaviour
 
 	public void SetMasterVol(float vol)
 	{
-		//AkSoundEngine.SetRTPCValue("MasterVol", vol);
+		AkSoundEngine.SetRTPCValue("MasterVol", vol);
 	}
 
 	public void SetBGMVol(float vol)
