@@ -60,7 +60,7 @@ public class XMLParser
 		XMLNode rootNode = new XMLNode();
 		rootNode["_text"] = "";
 
-		string nodeContents = "";
+		//string nodeContents = "";
 		
 		bool inElement = false;
 		bool collectNodeName = false;

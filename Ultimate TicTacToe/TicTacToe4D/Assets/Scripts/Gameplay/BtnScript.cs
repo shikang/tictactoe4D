@@ -115,9 +115,9 @@ public class BtnScript : MonoBehaviour
 
 	public void BtnEmote()
 	{
-		if(TutorialScript.Instance.isTutorial)
+		if(!CanUseEmoji())
 			return;
-
+		
 		GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().ToogleEmoteMenu();
 		AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 	}
@@ -161,37 +161,78 @@ public class BtnScript : MonoBehaviour
 
 	public void BtnClickGoodGameEmote()
 	{
+		if(!CanUseEmoji())
+			return;
+
 		BtnClickEmote("Good Game");
 		AudioManager.Instance.PlaySoundEvent(SOUNDID.ICON_HIGHLIGHTED);
 	}
 
 	public void BtnClickWellPlayedEmote()
 	{
+		if(!CanUseEmoji())
+			return;
+
 		BtnClickEmote("Well Played!");
 		AudioManager.Instance.PlaySoundEvent(SOUNDID.ICON_HIGHLIGHTED);
 	}
 
 	public void BtnClickWowEmote()
 	{
+		if(!CanUseEmoji())
+			return;
+
 		BtnClickEmote("Wow!");
 		AudioManager.Instance.PlaySoundEvent(SOUNDID.ICON_HIGHLIGHTED);
 	}
 
 	public void BtnClickOopsEmote()
 	{
+		if(!CanUseEmoji())
+			return;
+
 		BtnClickEmote("Oops!");
 		AudioManager.Instance.PlaySoundEvent(SOUNDID.ICON_HIGHLIGHTED);
 	}
 
 	public void BtnClickThanksEmote()
 	{
+		if(!CanUseEmoji())
+			return;
+
 		BtnClickEmote("Thanks");
 		AudioManager.Instance.PlaySoundEvent(SOUNDID.ICON_HIGHLIGHTED);
 	}
 
 	public void BtnClickGoodLuckEmote()
 	{
+		if(!CanUseEmoji())
+			return;
+
 		BtnClickEmote("Good Luck!");
 		AudioManager.Instance.PlaySoundEvent(SOUNDID.ICON_HIGHLIGHTED);
+	}
+
+	bool CanUseEmoji()
+	{
+		// Tutorial
+		if(TutorialScript.Instance.isTutorial)
+			return false;
+
+		// If not your turn during online play
+		/*if( GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().gameMode == Defines.GAMEMODE.ONLINE)
+		{
+			if( (NetworkManager.IsPlayerOne() && GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn != Defines.TURN.P1)  ||
+			   (!NetworkManager.IsPlayerOne() && GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn != Defines.TURN.P2) )
+        		return false;
+        }*/
+
+        // If AI turn in single player
+		if(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().gameMode == Defines.GAMEMODE.AI)
+		{
+			if(GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn == Defines.TURN.P2 )
+				return false;
+		}
+		return true;
 	}
 }

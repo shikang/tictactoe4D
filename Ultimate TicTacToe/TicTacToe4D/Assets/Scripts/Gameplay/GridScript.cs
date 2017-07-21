@@ -231,7 +231,7 @@ public class GridScript : MonoBehaviour
 		case 4:	// Invalid (Red)
 			GetComponent<SpriteRenderer>().color = Defines.ICON_COLOR_INVALID;
 			GetComponent<Animator>().SetTrigger("isInvalid");
-			GetBoardScript().SetCurrentHighlight(10, 10);
+			//GetBoardScript().SetCurrentHighlight(10, 10);
 			mainIcon.SetActive(false);
 			AudioManager.Instance.PlaySoundEvent(SOUNDID.ICON_INVALID);
 			break;
@@ -250,6 +250,7 @@ public class GridScript : MonoBehaviour
 		parentGrid.GetComponent<BigGridScript>().ProcessBigGridCompleted(GetTurnHandler().turn);
 		GetTurnHandler().ChangeTurn();
 
+		GetGUIManagerScript().ChangeEmoteButtonColors();
 		GetGUIManagerScript().ResetTimer();
 
 		GetBoardScript().UpdateActiveGridBG(gridID);

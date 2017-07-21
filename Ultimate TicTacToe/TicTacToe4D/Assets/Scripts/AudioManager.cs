@@ -69,7 +69,7 @@ public class AudioManager : MonoBehaviour
 		if(!go)
 			go = gameObject;
 
-		Debug.Log("SOUND: " + sid);
+		//Debug.Log("SOUND: " + sid);
 
 		switch(sid)
 		{

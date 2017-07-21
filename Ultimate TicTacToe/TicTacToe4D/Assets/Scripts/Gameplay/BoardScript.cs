@@ -237,16 +237,20 @@ public class BoardScript : MonoBehaviour
 			AudioManager.Instance.PlaySoundEvent(SOUNDID.WIN_GAME);
 
 			begin = true;
-			if (GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn == Defines.TURN.P1 && !TutorialScript.Instance.isTutorial)
-			{	
-				Defines.Instance.playerScore += Defines.bigGridWin;
+			if(CanGetScore())
+			{
+				int _score = Defines.bigGridWin;
+				if(gameMode == Defines.GAMEMODE.LOCAL)
+					_score = Defines.bigGridWin_Local;
+
+				Defines.Instance.playerScore += _score;
 				GameObject tmp;
 
-				tmp = (GameObject)Instantiate(scrollingText);//.gameObject.GetComponent<FloatingText>().BeginScrolling(" + " + Defines.smallGridWin + "!");
+				tmp = (GameObject)Instantiate(scrollingText);//.gameObject.GetComponent<FloatingText>().BeginScrolling(" + " + _score + "!");
 				tmp.transform.SetParent(canvas.transform.transform);
 				tmp.transform.localScale = new Vector3(1,1,1);	
 				tmp.transform.localPosition =  new Vector3(0,0,0);
-				tmp.GetComponent<Text>().text = "+ " + Defines.bigGridWin + "!";
+				tmp.GetComponent<Text>().text = "+ " + _score + "!";
 				AudioManager.Instance.PlaySoundEvent(SOUNDID.GETPOINTS);
 			}
 		}
@@ -501,5 +505,32 @@ public class BoardScript : MonoBehaviour
 				return false;
 		}
 		return true;
+	}
+
+	bool CanGetScore()
+	{
+		// Tutorial
+		if(TutorialScript.Instance.isTutorial)
+			return true;
+
+		// If not your turn during online play
+		if(gameMode == Defines.GAMEMODE.ONLINE)
+		{
+			if((NetworkManager.IsPlayerOne() && GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn != Defines.TURN.P1)  ||
+			   (!NetworkManager.IsPlayerOne() && GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn != Defines.TURN.P2) )
+        		return true;
+        }
+
+        // If you win AI
+		if( gameMode == Defines.GAMEMODE.AI)
+		{
+			if(GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn == Defines.TURN.P2 )
+				return true;
+		}
+
+		if(gameMode == Defines.GAMEMODE.LOCAL)
+			return true;
+
+		return false;
 	}
 }

@@ -138,17 +138,21 @@ public class BigGridScript : MonoBehaviour
 				AudioManager.Instance.PlaySoundEvent(SOUNDID.WIN_BIGGRID);
 
 			//add the points
-			if (_turn == Defines.TURN.P1 && !TutorialScript.Instance.isTutorial)
+			if(CanGetScore())
 			{
-				Defines.Instance.playerScore += Defines.smallGridWin;
+				int _score = Defines.smallGridWin;
+				if(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().gameMode == Defines.GAMEMODE.LOCAL)
+					_score = Defines.smallGridWin_Local;
+
+				Defines.Instance.playerScore += _score;
 				GameObject tmp;
 
-				tmp = (GameObject)Instantiate(scrollingText);//.gameObject.GetComponent<FloatingText>().BeginScrolling(" + " + Defines.smallGridWin + "!");
+				tmp = (GameObject)Instantiate(scrollingText);//.gameObject.GetComponent<FloatingText>().BeginScrolling(" + " + _score + "!");
 				canvas = transform.parent.parent.gameObject.GetComponent<BoardScript>().canvas;
 				tmp.transform.SetParent(canvas.transform);
 				tmp.transform.localScale = new Vector3(1,1,1);
 				tmp.transform.localPosition =  new Vector3(0,0,0);
-				tmp.GetComponent<Text>().text = "+ " + Defines.smallGridWin + "!";
+				tmp.GetComponent<Text>().text = "+ " + _score + "!";
 				AudioManager.Instance.PlaySoundEvent(SOUNDID.GETPOINTS);
 			}
 
@@ -300,5 +304,32 @@ public class BigGridScript : MonoBehaviour
 			}
 		}
 		return _isDraw;
+	}
+
+	bool CanGetScore()
+	{
+		// Tutorial
+		if(TutorialScript.Instance.isTutorial)
+			return true;
+
+		// If not your turn during online play
+		if(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().gameMode == Defines.GAMEMODE.ONLINE)
+		{
+			if((NetworkManager.IsPlayerOne() && GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn == Defines.TURN.P1)  ||
+			   (!NetworkManager.IsPlayerOne() && GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn == Defines.TURN.P2) )
+        		return true;
+        }
+
+        // If you win AI
+		if(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().gameMode == Defines.GAMEMODE.AI)
+		{
+			if(GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn == Defines.TURN.P1 )
+				return true;
+		}
+
+		if(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().gameMode == Defines.GAMEMODE.LOCAL)
+			return true;
+
+		return false;
 	}
 }
