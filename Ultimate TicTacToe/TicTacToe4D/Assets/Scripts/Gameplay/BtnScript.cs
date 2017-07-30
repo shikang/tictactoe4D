@@ -26,6 +26,7 @@ public class BtnScript : MonoBehaviour
 
 		GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().pausedState = 1;
 		GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().SetCfmAlpha(true);
+		GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().GUIForfeitCoinText.SetActive(true);
 		GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().GUICfmText.GetComponent<Text>().text
 			= "Are you sure you want to restart?";
 
@@ -39,6 +40,7 @@ public class BtnScript : MonoBehaviour
 
 		GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().pausedState = 2;
 		GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().SetCfmAlpha(true);
+		GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().GUIForfeitCoinText.SetActive(true);
 		GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().GUICfmText.GetComponent<Text>().text
 			= "Are you sure you want to quit?";
 
@@ -62,6 +64,12 @@ public class BtnScript : MonoBehaviour
         }
 		else if(GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().pausedState == 2)
         {
+			GameObject [] allGUI = GameObject.FindGameObjectsWithTag("GUIManager");
+			foreach(GameObject curr in allGUI)
+			{
+				Destroy(curr);
+			}
+
             if (NetworkManager.IsConnected())
             {
                 NetworkGameLogic networkLogic = NetworkGameLogic.GetNetworkGameLogic();

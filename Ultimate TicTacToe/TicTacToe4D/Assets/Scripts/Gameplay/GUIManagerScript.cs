@@ -10,6 +10,7 @@ public class GUIManagerScript : MonoBehaviour
 	public GameObject GUICenterText;
 
 	public GameObject GUICfmText;
+	public GameObject GUIForfeitCoinText;
 	public GameObject GUICfmYes;
 	public GameObject GUICfmNo;
 	public GameObject GUICfmNewGame;
@@ -28,6 +29,13 @@ public class GUIManagerScript : MonoBehaviour
 	private float p1EmoteTimer = 0.0f;
 	private float p2EmoteTimer = 0.0f;
 
+	public GameObject Emote_GoodGame;
+	public GameObject Emote_WellPlayed;
+	public GameObject Emote_GoodLuck;
+	public GameObject Emote_Wow;
+	public GameObject Emote_Thanks;
+	public GameObject Emote_Oops;
+
 	public GameObject GUIScoreDraw;
 	public GameObject GUIScoreP1;
 	public GameObject GUIScoreP2;
@@ -41,7 +49,7 @@ public class GUIManagerScript : MonoBehaviour
 	public GameObject FrameRight;
 	public GameObject ImageLeft;
 	public GameObject ImageRight;
-  
+
 	public float currMin;
 	public float currMax;
 	public float frameScaleSpeed;
@@ -56,6 +64,8 @@ public class GUIManagerScript : MonoBehaviour
 	public float timerP1;
 	public float timerP2;
 	public float startTime;
+
+	public GameObject gameBG;
 
 	public GameObject	gridEffect;
 	float				gridEffect_minSize;
@@ -84,6 +94,13 @@ public class GUIManagerScript : MonoBehaviour
 
 	void Start ()
 	{
+		GameObject [] allGUI = GameObject.FindGameObjectsWithTag("GUIManager");
+		foreach(GameObject curr in allGUI)
+		{
+			if(curr != gameObject)
+				Destroy(curr);
+		}
+
 		textScaleSpeed = 2.0f;
 		Application.targetFrameRate = 60;
 
@@ -142,6 +159,7 @@ public class GUIManagerScript : MonoBehaviour
 		emoteP1AnimTimer = 0.0f;
 		emoteP2AnimTimer = 0.0f;
 		addedMoney = false;
+		Defines.Instance.playerScore = 0;
 
 		isCDSoundPlayed6 = isCDSoundPlayed5 = isCDSoundPlayed4 = isCDSoundPlayed3 = isCDSoundPlayed2 = isCDSoundPlayed1 = false;
 
@@ -150,6 +168,9 @@ public class GUIManagerScript : MonoBehaviour
 			GetComponent<TurnHandler>().UpdatePlayerIcons();
 			SetAvatar();
 		}
+
+		BGManager.Instance.SetCurrBG();
+		gameBG.GetComponent<SpriteRenderer>().sprite = BGManager.Instance.GetCurrBGImage();
 	}
 
 	void Update()
@@ -200,6 +221,7 @@ public class GUIManagerScript : MonoBehaviour
 				GameData.current.coin += Defines.Instance.playerScore;
 				SaveLoad.Save();
 				addedMoney = true;
+				Defines.Instance.playerScore = 0;
 			}
 
 		}
@@ -308,7 +330,7 @@ public class GUIManagerScript : MonoBehaviour
 			GUITimerP2.GetComponent<Text>().color = Color.grey;
 
 			GUITurn.GetComponent<Text>().text = nameP1 + "'s Turn";
-			GUITurn.GetComponent<Text>().color = Defines.ICON_COLOR_P1;
+			//GUITurn.GetComponent<Text>().color = Defines.ICON_COLOR_P1;
 
 			// Icon Frame Animation during the player's turn
 			FrameLeft.GetComponent<Animator>().SetBool("isMoving", true);
@@ -401,7 +423,7 @@ public class GUIManagerScript : MonoBehaviour
 				GUITimerP2.GetComponent<Text>().color = Defines.ICON_COLOR_P2;
 
 			GUITurn.GetComponent<Text>().text = nameP2 + "'s Turn";
-			GUITurn.GetComponent<Text>().color = Defines.ICON_COLOR_P2;
+			//GUITurn.GetComponent<Text>().color = Defines.ICON_COLOR_P2;
 
 			// Icon Frame Animation during the player's turn
 			FrameLeft.GetComponent<Animator>().SetBool("isMoving", false);
@@ -440,6 +462,8 @@ public class GUIManagerScript : MonoBehaviour
 		GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().ChangeTurn();
 		GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().activeBigGrid = 10;
 		GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().UpdateActiveGridBG(10, false);
+		GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().ResetAllHighlights();
+		gridEffect_growStage = 13;
 		ChangeEmoteButtonColors();
 		ResetTimer();
 	}
@@ -483,6 +507,7 @@ public class GUIManagerScript : MonoBehaviour
 	public void SetCfmAlpha(bool _Setter)
 	{
 		GUICfmText.SetActive(_Setter);
+		GUIForfeitCoinText.SetActive(_Setter);
 		GUICfmYes.SetActive(_Setter);
 		GUICfmNo.SetActive(_Setter);
 		GUICfmFrame.SetActive(_Setter);
@@ -799,27 +824,46 @@ public class GUIManagerScript : MonoBehaviour
 
 	public void ChangeEmoteButtonColors()
 	{
-		// No change for online play
-
-		// AI: Grey during AI turn, blue during player turn
-		if(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().gameMode == Defines.GAMEMODE.AI)
+		// Emoji button colors are same as player colors
+		if(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().gameMode == Defines.GAMEMODE.ONLINE)
 		{
-			if(GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn == Defines.TURN.P1)
-				GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().BtnEmote.GetComponent<Image>().color = Defines.ICON_COLOR_P1;
-			else
-				GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().BtnEmote.GetComponent<Image>().color = Defines.ICON_COLOR_GREY;
+			// Default is player one, so we just have to set for player 2.
+			if(!NetworkManager.IsPlayerOne())
+			{
+				GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().BtnEmote.GetComponent<Image>().color = Defines.ICON_COLOR_P2;
+				Emote_GoodGame.GetComponent<Image>().color =
+				Emote_WellPlayed.GetComponent<Image>().color =
+				Emote_GoodLuck.GetComponent<Image>().color =
+				Emote_Wow.GetComponent<Image>().color =
+				Emote_Thanks.GetComponent<Image>().color =
+				Emote_Oops.GetComponent<Image>().color = Defines.ICON_COLOR_P2;	
+			}
+
 		}
 
 		// Local: Blue during P1 turn, red during P2 turn
 		if(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().gameMode == Defines.GAMEMODE.LOCAL)
 		{
 			if(GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn == Defines.TURN.P1)
+			{
 				GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().BtnEmote.GetComponent<Image>().color = Defines.ICON_COLOR_P1;
+				Emote_GoodGame.GetComponent<Image>().color =
+				Emote_WellPlayed.GetComponent<Image>().color =
+				Emote_GoodLuck.GetComponent<Image>().color =
+				Emote_Wow.GetComponent<Image>().color =
+				Emote_Thanks.GetComponent<Image>().color =
+				Emote_Oops.GetComponent<Image>().color = Defines.ICON_COLOR_P1;	
+			}
 			else
+			{
 				GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().BtnEmote.GetComponent<Image>().color = Defines.ICON_COLOR_P2;
+				Emote_GoodGame.GetComponent<Image>().color =
+				Emote_WellPlayed.GetComponent<Image>().color =
+				Emote_GoodLuck.GetComponent<Image>().color =
+				Emote_Wow.GetComponent<Image>().color =
+				Emote_Thanks.GetComponent<Image>().color =
+				Emote_Oops.GetComponent<Image>().color = Defines.ICON_COLOR_P2;	
+			}
 		}
-
-		if(GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().GUIEmoteScreen.GetActive())
-			GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().ToogleEmoteMenu();
 	}
 }

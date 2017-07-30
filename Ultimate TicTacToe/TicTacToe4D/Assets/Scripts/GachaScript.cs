@@ -7,13 +7,16 @@ public class GachaScript : MonoBehaviour
 {
 	public GameObject currIcon;
 	public GameObject IconFX;
+	int unlockedIcon;
 
+	public GameObject gachaStartButton;
 	public GameObject BuyIcon;
 	public GameObject BuyIconFX;
 	int BuyID;
 
 	public GameObject moneyText;
 	public GameObject gachaInfoText;
+	public GameObject gachaInfoSpecial;
 
 	int [] randomList;
 	float [] changeTimer;
@@ -31,6 +34,8 @@ public class GachaScript : MonoBehaviour
 
 	public GameObject GachaPage;
 	public GameObject BuyPage;
+
+	bool isSpecialTextGolding;
 
 	// Free Roll Stuff
 	public GameObject freeRollButton;
@@ -68,6 +73,7 @@ public class GachaScript : MonoBehaviour
 		BuyIconFX.SetActive(false);
 
 		noofChanges = 20;
+		unlockedIcon = 0;
 		randomList = new int[noofChanges];
 
 		isGachaing = false;
@@ -76,6 +82,9 @@ public class GachaScript : MonoBehaviour
 		InitTiming();
 		SetGreyBG(false);
 		ResetGachaText();
+
+		UpdateGachaButton();
+		ResetSpecialText();
 
 		moneyText.GetComponent<Text>().text = GameData.current.coin.ToString();
 	}
@@ -93,6 +102,41 @@ public class GachaScript : MonoBehaviour
 
 		UpdateGreyBG();
 		UpdateFreeRoll();
+
+		Color tmp = gachaInfoSpecial.GetComponent<Text>().color;
+		if(isSpecialTextGolding)
+		{
+			if(tmp.r > 0.7f)
+			{
+				tmp.r -= 0.33f * Time.deltaTime;
+				tmp.g -= 0.33f * Time.deltaTime;
+				tmp.b -= 1.0f * Time.deltaTime;
+			}
+			else
+			{
+				isSpecialTextGolding = false;
+			}
+		}
+		else
+		{
+			if(tmp.r < 1.0f)
+			{
+				tmp.r += 0.33f * Time.deltaTime;
+				tmp.g += 0.33f * Time.deltaTime;
+				tmp.b += 1.0f * Time.deltaTime;
+			}
+			else
+			{
+				isSpecialTextGolding = true;
+			}
+		}
+		gachaInfoSpecial.GetComponent<Text>().color = tmp;
+
+		if(currIcon.GetActive() && !currIcon.GetComponent<Animator>().GetBool("isRot"))
+		{
+			Quaternion temp = new Quaternion(0, 0, 0, 0);
+			currIcon.GetComponent<RectTransform>().rotation = temp;
+		}
 	}
 
 	void InitTiming()
@@ -124,6 +168,8 @@ public class GachaScript : MonoBehaviour
 	{
 		if(GameData.current.coin >= Defines.GACHACOST || free)
 		{
+			ResetSpecialText();
+
 			// Set Grey BG
 			SetGreyBG(true);
 
@@ -154,17 +200,38 @@ public class GachaScript : MonoBehaviour
 			if(!free)
 				GameData.current.coin -= Defines.GACHACOST;
 			moneyText.GetComponent<Text>().text = GameData.current.coin.ToString();
+			UpdateGachaButton();
 
 			// Unlock avatar
 			int unlockIcon = randomList[noofChanges - 1];
-			Debug.Log("Bought token: " + unlockIcon);
+			unlockedIcon = unlockIcon;
+			//Debug.Log("Bought token: " + unlockIcon);
 
 			gachaInfoText.SetActive(false);
+			gachaInfoSpecial.SetActive(false);
 			if(IconManager.Instance.GetIsUnlocked(unlockIcon))
+			{
 				gachaInfoText.GetComponent<Text>().text = "You already have this token!";
+				gachaInfoSpecial.GetComponent<Text>().text = "";
+			}
 			else
-				gachaInfoText.GetComponent<Text>().text = "You got a new " +  ((Defines.ICONS)unlockIcon).ToString().Substring(5) + " token!";
-
+			{
+				if(((Defines.ICONS)unlockIcon).ToString().Substring(0, 1) == "R")
+				{
+					gachaInfoText.GetComponent<Text>().text = "";
+					gachaInfoSpecial.GetComponent<Text>().text = "YOU GOT RARE " +  ((Defines.ICONS)unlockIcon).ToString().Substring(5) + " TOKEN!!!";
+				}
+				else if(((Defines.ICONS)unlockIcon).ToString().Substring(0, 1) == "L")
+				{
+					gachaInfoText.GetComponent<Text>().text = "";
+					gachaInfoSpecial.GetComponent<Text>().text = "YOU GOT LEGENDARY " +  ((Defines.ICONS)unlockIcon).ToString().Substring(5) + " TOKEN!!!";
+				}
+				else
+				{
+					gachaInfoSpecial.GetComponent<Text>().text = "";
+					gachaInfoText.GetComponent<Text>().text = "You got a new " +  ((Defines.ICONS)unlockIcon).ToString().Substring(5) + " token!";
+				}
+			}
 				
 			AvatarHandler.Instance.UnlockAvatar(unlockIcon);
 			if(!GameData.current.icons.Contains((Defines.ICONS)unlockIcon))
@@ -224,6 +291,10 @@ public class GachaScript : MonoBehaviour
 
 			isAnimating = isAnimatingBuy = false;
 			gachaInfoText.SetActive(true);
+			gachaInfoSpecial.SetActive(true);
+
+			if(((Defines.ICONS)unlockedIcon).ToString().Substring(0, 1) == "R" || ((Defines.ICONS)unlockedIcon).ToString().Substring(0, 1) == "L")
+				currIcon.GetComponent<Animator>().SetBool("isRot", true);
 		}
 	}
 
@@ -265,6 +336,17 @@ public class GachaScript : MonoBehaviour
 		}
 	}
 
+	void UpdateGachaButton()
+	{
+		gachaStartButton.GetComponent<Image>().color = Defines.ICON_COLOR_P1;
+		gachaStartButton.GetComponentInChildren<Text>().text = "Roll for Tokens!";
+		if(GameData.current.coin < Defines.GACHACOST)
+		{
+			gachaStartButton.GetComponent<Image>().color = Defines.ICON_COLOR_GREY;
+			gachaStartButton.GetComponentInChildren<Text>().text = "Not Enough Coins!";
+		}
+	}
+
 	public void SetGreyBG (bool setter)
 	{
 		GreyBG.SetActive(setter);
@@ -274,11 +356,25 @@ public class GachaScript : MonoBehaviour
 			GreyFadeState = 2;
 	}
 
+	public void ResetSpecialText()
+	{
+		isSpecialTextGolding = true;
+		gachaInfoSpecial.GetComponent<Text>().color = Color.white;
+		gachaInfoSpecial.SetActive(false);
+		gachaInfoText.SetActive(true);
+
+		currIcon.GetComponent<Animator>().SetBool("isRot", false);
+		Quaternion tmp = new Quaternion(0, 0, 0, 0);
+		currIcon.GetComponent<RectTransform>().rotation = tmp;
+		currIcon.GetComponent<Image>().sprite = IconManager.Instance.GetIcon(Defines.ICONS.LOCKED);
+	}
+
 	public void BuyButtonClick()
 	{
 		GameObject.FindGameObjectWithTag("MainMenuCanvas").GetComponent<MenuBtnScript>().currScreen = SCREENS.GACHA_MONEY;
 		GachaPage.SetActive(false);
 		BuyPage.SetActive(true);
+		ResetSpecialText();
 		AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 	}
 

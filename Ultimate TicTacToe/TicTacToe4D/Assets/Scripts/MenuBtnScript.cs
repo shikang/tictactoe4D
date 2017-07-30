@@ -248,7 +248,10 @@ public class MenuBtnScript : MonoBehaviour
 			GlobalScript.Instance.avatarState = 0;
 
 			if(GachaScript.Instance)
+			{
 				GachaScript.Instance.ResetGachaText();
+				GachaScript.Instance.ResetSpecialText();
+			}
 
 			AvatarHandler.Instance.OnClickLocalPlayIcon1(false);
 			AudioManager.Instance.PlaySoundEvent(SOUNDID.BACK);

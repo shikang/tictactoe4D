@@ -136,7 +136,7 @@ public class BigGridScript : MonoBehaviour
 
 			if( !(TutorialScript.Instance.isTutorial && bigGridID == 7) && !(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().IsBigGridCompleted()) )
 				AudioManager.Instance.PlaySoundEvent(SOUNDID.WIN_BIGGRID);
-
+			
 			//add the points
 			if(CanGetScore())
 			{

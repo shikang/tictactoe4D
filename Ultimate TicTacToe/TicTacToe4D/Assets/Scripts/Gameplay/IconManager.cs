@@ -81,23 +81,23 @@ public class IconManager : MonoBehaviour
 		SetIconData(Defines.ICONS.C005_PRINCE,	"Icons/C005_Prince",	false, false, true, TIERS.COMMON);
 		SetIconData(Defines.ICONS.C006_OLDMAN,	"Icons/C006_OldMan",	false, false, true, TIERS.COMMON);
 
-		SetIconData(Defines.ICONS.U001_CHICK,	"Icons/U001_Chick",		false, false, true, TIERS.UNCOMMON);
+		SetIconData(Defines.ICONS.U001_COW,		"Icons/U001_Cow",		false, false, true, TIERS.UNCOMMON);
 		SetIconData(Defines.ICONS.U002_FROG,	"Icons/U002_Frog",		false, false, true, TIERS.UNCOMMON);
 		SetIconData(Defines.ICONS.U003_BEAR,	"Icons/U003_Bear",		false, false, true, TIERS.UNCOMMON);
-		SetIconData(Defines.ICONS.U004_OCTOPUS,	"Icons/U004_Octopus",	false, false, true, TIERS.UNCOMMON);
-		SetIconData(Defines.ICONS.U005_PUFFER,	"Icons/U005_Puffer",	false, false, true, TIERS.UNCOMMON);
+		SetIconData(Defines.ICONS.U004_RACCOON,	"Icons/U004_Raccoon",	false, false, true, TIERS.UNCOMMON);
+		SetIconData(Defines.ICONS.U005_DEER,	"Icons/U005_Deer",		false, false, true, TIERS.UNCOMMON);
 
-		SetIconData(Defines.ICONS.R001_DEER,	"Icons/R001_Deer",		false, false, true, TIERS.RARE);
-		SetIconData(Defines.ICONS.R002_RACCOON,	"Icons/R002_Raccoon",	false, false, true, TIERS.RARE);
+		SetIconData(Defines.ICONS.R001_CHICKEN,	"Icons/R001_Chicken",	false, false, true, TIERS.RARE);
+		SetIconData(Defines.ICONS.R002_CHICK,	"Icons/R002_Chick",		false, false, true, TIERS.RARE);
 		SetIconData(Defines.ICONS.R003_FOX,		"Icons/R003_Fox",		false, false, true, TIERS.RARE);
 
-		SetIconData(Defines.ICONS.L001_PIG,		"Icons/L001_Pig",		false, false, true, TIERS.LEGENDARY);
+		SetIconData(Defines.ICONS.L001_RAINBOWGIRL,	"Icons/L001_RainbowGirl",		false, false, true, TIERS.LEGENDARY);
 		SetIconData(Defines.ICONS.L002_UNICORN,	"Icons/L002_Unicorn",	false, false, true, TIERS.LEGENDARY);
 
-		SetIconData(Defines.ICONS.B001_COW,		"Icons/B001_Cow",		false, true, false, TIERS.BUY);
-		SetIconData(Defines.ICONS.B002_CHICKEN,	"Icons/B002_Chicken",	false, true, false, TIERS.BUY);
+		SetIconData(Defines.ICONS.B001_PIG,		"Icons/B001_Pig",		false, true, false, TIERS.BUY);
+		SetIconData(Defines.ICONS.B002_PUFFER,	"Icons/B002_Puffer",	false, true, false, TIERS.BUY);
 		SetIconData(Defines.ICONS.B003_CLAM,	"Icons/B003_Clam",		false, true, false, TIERS.BUY);
-		SetIconData(Defines.ICONS.B004_RAINBOWGIRL,		"Icons/B004_RainbowGirl",	false, true, false, TIERS.BUY);
+		SetIconData(Defines.ICONS.B004_OCTOPUS,	"Icons/B004_Octopus",	false, true, false, TIERS.BUY);
 
 		CalculateGachaRates();
 
@@ -212,7 +212,7 @@ public class IconManager : MonoBehaviour
 			if(randomedNumber < mIcon[i].gachaChance)
 				return i;
 		}
-		return (int)Defines.ICONS.L001_PIG;
+		return (int)Defines.ICONS.L001_RAINBOWGIRL;
 	}
 
 	void Update()

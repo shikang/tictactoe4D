@@ -61,6 +61,12 @@ public class AIMiniMax : MonoBehaviour
 
 	void Update()
 	{
+		if( GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().gameMode == Defines.GAMEMODE.AI &&
+			GameObject.FindGameObjectWithTag("GUIManager") &&
+			GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().BtnEmote.GetActive())
+		{
+			GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().BtnEmote.SetActive(false);
+		}
 	}
 
 	public void UpdateAI()
@@ -72,7 +78,8 @@ public class AIMiniMax : MonoBehaviour
 				return;
 		}
 
-		if(GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn != AITurn)
+		if( GameObject.FindGameObjectWithTag("GUIManager") &&
+			GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn != AITurn)
 			return;
 
 		// Set timer: How long AI takes to highlight a grid

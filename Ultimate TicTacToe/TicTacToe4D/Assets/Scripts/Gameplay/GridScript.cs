@@ -273,7 +273,7 @@ public class GridScript : MonoBehaviour
 		{
 			gridState = 0;
 			GetComponent<SpriteRenderer>().color = Defines.ICON_COLOR_GREY;
-			GetComponent<Animator>().SetBool("isHighlighted", false);
+			GetComponent<Animator>().SetTrigger("isHighlighted");
 		}
 	}
 
