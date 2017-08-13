@@ -34,6 +34,7 @@ public static class SaveLoad
 
 	public static void Print()
 	{
+		/*For Debug Purposes
 		Debug.Log("Coins: " + GameData.current.coin);
 		Debug.Log("Match played: " + GameData.current.matchPlayed);
 		Debug.Log("Match win: " + GameData.current.win);
@@ -43,6 +44,6 @@ public static class SaveLoad
 		foreach (Defines.ICONS i in GameData.current.icons)
 		{
 			Debug.Log("Icons: " + i.ToString());
-		}
+		}*/
 	}
 }

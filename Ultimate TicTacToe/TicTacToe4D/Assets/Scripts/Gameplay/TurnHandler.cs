@@ -87,6 +87,16 @@ public class TurnHandler : MonoBehaviour
 		return IconManager.Instance.GetIcon(spriteID_P2);
 	}
 
+	public string GetIconNameP1()
+	{
+		return IconManager.Instance.GetName(spriteID_P1);
+	}
+
+	public string GetIconNameP2()
+	{
+		return IconManager.Instance.GetName(spriteID_P2);
+	}
+
 	public Sprite GetSpriteHighlight()
 	{
 		return IconManager.Instance.GetIcon(spriteID_Highlight);

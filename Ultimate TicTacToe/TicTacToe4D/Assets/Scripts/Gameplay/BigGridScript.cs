@@ -143,6 +143,8 @@ public class BigGridScript : MonoBehaviour
 				int _score = Defines.smallGridWin;
 				if(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().gameMode == Defines.GAMEMODE.LOCAL)
 					_score = Defines.smallGridWin_Local;
+				else if(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().gameMode == Defines.GAMEMODE.AI)
+					_score = Defines.smallGridWin_AI;
 
 				Defines.Instance.playerScore += _score;
 				GameObject tmp;
@@ -310,7 +312,7 @@ public class BigGridScript : MonoBehaviour
 	{
 		// Tutorial
 		if(TutorialScript.Instance.isTutorial)
-			return true;
+			return false;
 
 		// If not your turn during online play
 		if(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().gameMode == Defines.GAMEMODE.ONLINE)

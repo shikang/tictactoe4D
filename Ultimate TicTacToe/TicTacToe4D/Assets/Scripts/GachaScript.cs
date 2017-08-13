@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
+using UnityEngine.Analytics;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using Assets.SimpleAndroidNotifications;
 
 public class GachaScript : MonoBehaviour
 {
@@ -36,6 +39,7 @@ public class GachaScript : MonoBehaviour
 	public GameObject BuyPage;
 
 	bool isSpecialTextGolding;
+	public bool isFreeRollNotified;
 
 	// Free Roll Stuff
 	public GameObject freeRollButton;
@@ -78,6 +82,7 @@ public class GachaScript : MonoBehaviour
 
 		isGachaing = false;
 		isAnimating = false;
+		isFreeRollNotified = true;
 
 		InitTiming();
 		SetGreyBG(false);
@@ -231,6 +236,11 @@ public class GachaScript : MonoBehaviour
 					gachaInfoSpecial.GetComponent<Text>().text = "";
 					gachaInfoText.GetComponent<Text>().text = "You got a new " +  ((Defines.ICONS)unlockIcon).ToString().Substring(5) + " token!";
 				}
+
+				Analytics.CustomEvent("AvatarUnlocked", new Dictionary<string, object>
+				{
+					{"Unlocked", ((Defines.ICONS)unlockIcon).ToString().Substring(5)}
+				});
 			}
 				
 			AvatarHandler.Instance.UnlockAvatar(unlockIcon);
@@ -320,9 +330,14 @@ public class GachaScript : MonoBehaviour
 
 	void UpdateFreeRoll()
 	{
-		if(CanGacha())
+		if(CanFreeRoll())
 		{
 			freeRollButtonGrey.SetActive(false);
+			if(!isFreeRollNotified)
+			{
+				NotificationManager.SendWithAppIcon(TimeSpan.Zero, "Ultimate Tic Tac Toe", "Get your free roll now!", Color.black);
+				isFreeRollNotified = true;
+			}
 		}
 		else
 		{
@@ -411,6 +426,11 @@ public class GachaScript : MonoBehaviour
 			GameObject go = GameObject.FindGameObjectWithTag("IAPManager");
 			InAppPurchaser purchaser = go.GetComponent<InAppPurchaser>();
 			purchaser.BuyProduct(InAppProductList.ProductType.AVATAR, BuyID);
+
+			Analytics.CustomEvent("AvatarPrePurchase", new Dictionary<string, object>
+			{
+				{"AvatarPrePurchase", BuyID}
+			});
 		}
 	}
 
@@ -469,7 +489,7 @@ public class GachaScript : MonoBehaviour
 		}
 	}
 
-	public bool CanGacha()
+	public bool CanFreeRoll()
 	{
 		return DateTime.Now.Subtract(GameData.current.nextFreeRollTime) >= TimeSpan.Zero;
 	}

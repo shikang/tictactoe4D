@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Analytics;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System.Collections.Generic;
 
 public class BtnScript : MonoBehaviour
 {
@@ -57,6 +59,12 @@ public class BtnScript : MonoBehaviour
             }
             else
             {
+				Analytics.CustomEvent("RestartGame", new Dictionary<string, object>
+				{
+					{"RestartGame", 1},
+					{"Duration", GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().gameDuration}
+				});
+
 				AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 				BackToMainMenu(2, false);
                 Adverts.Instance.RandomShowAd();
@@ -64,6 +72,12 @@ public class BtnScript : MonoBehaviour
         }
 		else if(GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().pausedState == 2)
         {
+			Analytics.CustomEvent("QuitGame", new Dictionary<string, object>
+			{
+				{"QuitGame", 1},
+				{"Duration", GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().gameDuration}
+			});
+
 			GameObject [] allGUI = GameObject.FindGameObjectsWithTag("GUIManager");
 			foreach(GameObject curr in allGUI)
 			{

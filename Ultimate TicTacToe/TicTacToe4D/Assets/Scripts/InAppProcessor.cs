@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Analytics;
 using System;
 using System.Collections.Generic;
 
@@ -48,7 +49,13 @@ public class InAppProcessor : Singleton<InAppProcessor>
 					GameObject go = GameObject.FindGameObjectWithTag( "Gacha" );
 					GachaScript gacha = go.GetComponent<GachaScript>();
 					gacha.ProcessBuyIcon( productParam.m_nProductParam );
+
+					Analytics.CustomEvent("AvatarPurchased", new Dictionary<string, object>
+					{
+						{"AvatarPurchased", ((Defines.ICONS)productParam.m_nProductParam).ToString() }
+					});
 					break;
+
 				case InAppProductList.ProductType.ADS:
 					Defines.AdsInAppPurchase adsProductParam = (Defines.AdsInAppPurchase)productParam.m_nProductParam;
 
@@ -63,6 +70,10 @@ public class InAppProcessor : Singleton<InAppProcessor>
 							mainMenu.EnableDisableAdsButton(true);
 							mainMenu.DisableDisableAdsButton();
 
+							Analytics.CustomEvent("AdsPurchased", new Dictionary<string, object>
+							{
+								{"AdsPurchased", 1}
+							});
 							break;
 						default:
 							Debug.Log( string.Format( "InAppProcessor::ProcessPurchase: FAIL. Unrecognized Ads Product Params: '{0}'", productIdentifier ) );

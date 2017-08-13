@@ -18,6 +18,7 @@ public class AvatarHandler : MonoBehaviour
 
 	public GameObject avatarLocalPlay1;
 	public GameObject avatarLocalPlay2;
+	public GameObject avatarLocalPlay1PlaceHolder;
 
 	public Text avatarLocalPlay1Text;
 	public Text avatarLocalPlay2Text;
@@ -317,6 +318,11 @@ public class AvatarHandler : MonoBehaviour
 		currAvatarName = (name == null) ? "" : name;
 		//currAvatarText.text = currAvatarName;
 		currAvatarText.transform.parent.GetComponent<InputField>().text = currAvatarName;
+	}
+
+	public void SetAvatarPlaceHolderText()
+	{
+		avatarLocalPlay1PlaceHolder.GetComponent<Text>().text = localAvatarName_P1 = currAvatarText.text;
 	}
 
 	public void SetMyAvatarIcon(int icon)

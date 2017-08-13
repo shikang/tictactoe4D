@@ -20,6 +20,9 @@ public class GridScript : MonoBehaviour
 
 	void OnMouseDown()
 	{
+		if(GetTurnHandler().turn != Defines.TURN.P1 && GetTurnHandler().turn != Defines.TURN.P2)
+			return;
+
 		if( GetBoardScript().gameMode == Defines.GAMEMODE.AI &&
 			GetTurnHandler().turn == GameObject.FindGameObjectWithTag("AIMiniMax").GetComponent<AIMiniMax>().AITurn )
 		{
@@ -169,6 +172,9 @@ public class GridScript : MonoBehaviour
 
 	void OnMouseUp()
 	{
+		if(GetTurnHandler().turn != Defines.TURN.P1 && GetTurnHandler().turn != Defines.TURN.P2)
+			return;
+
 		if(gridState == 4)
 			PlaceOnGrid(0);
 		else if(gridState == 1 || gridState == 2)

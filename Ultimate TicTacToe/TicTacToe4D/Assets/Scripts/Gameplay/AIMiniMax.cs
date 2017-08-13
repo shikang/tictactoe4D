@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
+
 enum Difficulty 
 {
 	None=0,
@@ -66,6 +68,15 @@ public class AIMiniMax : MonoBehaviour
 			GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().BtnEmote.GetActive())
 		{
 			GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().BtnEmote.SetActive(false);
+
+			Vector3 tmp = GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().BtnMainMenu.GetComponent<RectTransform>().localPosition;
+			tmp.x = 110.0f;
+			GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().BtnMainMenu.GetComponent<RectTransform>().localPosition = tmp;
+
+			tmp = GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().BtnRestart.GetComponent<RectTransform>().localPosition;
+			tmp.x = -110.0f;
+			GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().BtnRestart.GetComponent<RectTransform>().localPosition = tmp;
+
 		}
 	}
 
@@ -85,7 +96,7 @@ public class AIMiniMax : MonoBehaviour
 		// Set timer: How long AI takes to highlight a grid
 		if(AIStage == 0)
 		{
-			AI_ThinkingTimerMax = Random.Range(1.0f, 2.5f);
+			AI_ThinkingTimerMax = UnityEngine.Random.Range(0.5f, 1.7f);
 			//AI_ThinkingTimerMax = 0.0f;
 			AI_ThinkingTimerCurr = 0.0f;
 			AIStage = 1;
@@ -118,7 +129,7 @@ public class AIMiniMax : MonoBehaviour
 		// Set timer: How long AI takes to confirm a highlighted grid
 		else if(AIStage == 4)
 		{
-			AI_ThinkingTimerMax = Random.Range(0.5f, 2.0f);
+			AI_ThinkingTimerMax = UnityEngine.Random.Range(0.5f, 2.0f);
 			//AI_ThinkingTimerMax = 0.0f;
 			AI_ThinkingTimerCurr = 0.0f;
 			AIStage = 5;
@@ -151,12 +162,9 @@ public class AIMiniMax : MonoBehaviour
 			// Print message after computer places cell.
 			if(m_iUtility == MIN_VALUE)
 			{
-				Debug.Log("Player Wins!");
 			}
 			if(terminalValue == 0)
 			{
-				// Draw
-				Debug.Log("Draw!");
 				return false;
 			}
 			return true;
@@ -200,6 +208,7 @@ public class AIMiniMax : MonoBehaviour
 				tmpval[i] = -INFINITE;
 			}
 		}
+
 		//Debug.Log("Min: "+MinVal+"\nChangeCount: " + changecount);
 		/*if(diff == Difficulty.Easy)
 		{
@@ -234,14 +243,16 @@ public class AIMiniMax : MonoBehaviour
 			int tmpposval = posVals[tmpval];
 			FinalGrid =  tmpposval;
 		}*/
-		string s="";
+
+		/*string s="";
 		for(int j =0 ; j <9 ; ++j)
 		{
 			s += "[" + tmpval[j] + "] ";
 			if(j%3 == 2)
 				s+= "\n";
 		}
-		Debug.Log(s);
+		Debug.Log(s);*/
+
 		//Debug.Log("Empty Slots: " + maxEmptySlots);
 		//if some or all of the positions are equally viable, they will have the same values
 		//so we randomnize it between them
@@ -266,12 +277,11 @@ public class AIMiniMax : MonoBehaviour
 			tmppos[changecount] = FinalGrid;
 			++changecount;
 			Debug.Log("Randomizing because there are duplicate max vals");
-			int rand = Random.Range(0,changecount+1);
+			int rand = UnityEngine.Random.Range(0,changecount+1);
 			Debug.Log("Rand: " + rand);
 			FinalGrid = tmppos[rand];
 			Debug.Log("Randomed placement: " + FinalGrid);
 		}
-
 		Place(FinalGrid, AITurn);
 		GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().bigGrids[currentBigGrid].GetComponent<BigGridScript>().grids[FinalGrid].GetComponent<GridScript>().HighlightGrid();
 		return true;
@@ -314,7 +324,7 @@ public class AIMiniMax : MonoBehaviour
 		{
 			BigGridScript go = GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().bigGrids[currentBigGrid].GetComponent<BigGridScript>();
 			terminalValue = EvaluationTest(go);
-			Debug.Log("ES: " + terminalValue);
+			//Debug.Log("ES: " + terminalValue);
 			return true;
 		}
 		return false;
@@ -371,10 +381,10 @@ public class AIMiniMax : MonoBehaviour
 			{
 				if(go.grids[i].GetComponent<GridScript>().gridState == (int)AITurn)
 				{
-					if(Random.Range(1,101) <=60)
+					if(UnityEngine.Random.Range(1,101) <=60)
 						++noofLines;
 				}
-					//add a chance to add to the no of lines
+				//add a chance to add to the no of lines
 			}
 		}
 
@@ -426,7 +436,7 @@ public class AIMiniMax : MonoBehaviour
 		//if this number is 8, it means all the board have the same chance of winning
 		//so we will random a board between all of them
 		if(sameweight == 8)
-			bestID = Random.Range(0,9);
+			bestID = UnityEngine.Random.Range(0,9);
 
 		return bestID;
 	}

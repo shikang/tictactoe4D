@@ -9,8 +9,8 @@ public class NetworkManager : UnityEngine.MonoBehaviour
     // Use this for initialization
 	void Start () 
     {
-        string log = GetPlayersInfoPrefix() + "GameStart!\n";
-        DebugLog(log);
+        //string log = GetPlayersInfoPrefix() + "GameStart!\n";
+        //DebugLog(log);
 	}
 	
 	// Update is called once per frame
@@ -31,6 +31,7 @@ public class NetworkManager : UnityEngine.MonoBehaviour
 
     static public string GetPlayersInfoPrefix()
     {
+        /* DEBUG ONLY
         if (IsConnected())
         {
             return "[1] " + PhotonNetwork.player.name + " (Me)\n" +
@@ -39,14 +40,15 @@ public class NetworkManager : UnityEngine.MonoBehaviour
         else
         {
             return "Not in room! Playing alone!\n";
-        }
+        }*/
+        return "";
     }
 
     static public void DebugLog(string log)
     {
-        Debug.Log(log);
+        /*Debug.Log(log);
         GameObject debugText = GameObject.Find("DebugText");
-        debugText.GetComponent<Text>().text = log;
+        debugText.GetComponent<Text>().text = log;*/
     }
 
 	static public void LeaveRoom()

@@ -177,18 +177,18 @@ public class GlobalScript : MonoBehaviour
 
 	public void UpdatePlayer1Name(string str)
 	{
-			if(str == "")
-				return;
-			nameP1 = str.Substring(0, System.Math.Min(Defines.MAX_PLAYER_NAME_LENGTH, str.Length));
-			//Debug.Log (nameP1);
+		if(str == "")
+			return;
+		nameP1 = str.Substring(0, System.Math.Min(Defines.MAX_PLAYER_NAME_LENGTH, str.Length));
+		//Debug.Log (nameP1);
 	}
 
 	public void UpdatePlayer2Name(string str)
 	{
-			if(str =="")
-				return;
-			nameP2 = str.Substring(0, System.Math.Min(Defines.MAX_PLAYER_NAME_LENGTH, str.Length));		
-			//Debug.Log (nameP2);
+		if(str =="")
+			return;
+		nameP2 = str.Substring(0, System.Math.Min(Defines.MAX_PLAYER_NAME_LENGTH, str.Length));		
+		//Debug.Log (nameP2);
 	}
 
 	static public string RandomAName()

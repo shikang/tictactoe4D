@@ -1,13 +1,16 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Analytics;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System.Collections.Generic;
 using Photon;
 using UnityEngine.Events;
 
 public class MatchMaker : Photon.PunBehaviour 
 {
     public GameObject roomInputField;
+    public GameObject MaxCCUText;
 
     private string roomName = "";
     private bool joinedLobby = false;
@@ -33,6 +36,7 @@ public class MatchMaker : Photon.PunBehaviour
         PhotonNetwork.player.name = "Player2";
 
 		GlobalScript.Instance.matchMaker = this.gameObject;
+		MaxCCUText.SetActive(false);
 
 		continueWithGame.AddListener( delegate{ GlobalScript.Instance.FoundFriend(); } );
 		stopGame.AddListener( delegate{ GlobalScript.Instance.ResetCountdown(); } );
@@ -73,6 +77,11 @@ public class MatchMaker : Photon.PunBehaviour
         PhotonNetwork.JoinRandomRoom();
 
         requestRoom = true;
+
+		Analytics.CustomEvent("JoinedGame_Public", new Dictionary<string, object>
+		{
+			{"JoinedGame_Public", 1}
+		});
     }
 
     void JoinPrivateRoom()
@@ -85,6 +94,11 @@ public class MatchMaker : Photon.PunBehaviour
         PhotonNetwork.JoinOrCreateRoom(roomName, roomOptions, TypedLobby.Default);
 
         requestRoom = true;
+
+		Analytics.CustomEvent("JoinedGame_Private", new Dictionary<string, object>
+		{
+			{"JoinedGame_Private", 1}
+		});
     }
 
     public override void OnJoinedLobby()
@@ -126,7 +140,7 @@ public class MatchMaker : Photon.PunBehaviour
 		fRandomTimer += Time.deltaTime;
 		if ( fRandomTimer >= fRandomWaitTime )
 		{
-			LeaveRoom();
+			LeaveRoom(false);
 			JoinRandomRoom();
 		}
 	}
@@ -138,6 +152,12 @@ public class MatchMaker : Photon.PunBehaviour
 
         joinedRoom = true;
         PhotonNetwork.player.name = "Player1";
+
+		MaxCCUText.SetActive(false);
+		Analytics.CustomEvent("LobbyCreateRoom", new Dictionary<string, object>
+		{
+			{"LobbyCreateRoom", 1}
+		});
     }
 
     public override void OnJoinedRoom()
@@ -151,6 +171,13 @@ public class MatchMaker : Photon.PunBehaviour
 
 		GlobalScript.Instance.SetMyPlayerName();
 		GlobalScript.Instance.SetMyPlayerIcon();
+
+		MaxCCUText.SetActive(false);
+		Analytics.CustomEvent("LobbyJoinRoom", new Dictionary<string, object>
+		{
+			{"LobbyJoinRoom", 1}
+		});
+
 		ProceedToGame();
 	}
 
@@ -161,6 +188,15 @@ public class MatchMaker : Photon.PunBehaviour
         DebugLog(log);
 
         ProceedToGame();
+	}
+
+	public void OnPhotonMaxCcuReached()
+	{
+		MaxCCUText.SetActive(true);
+		Analytics.CustomEvent("CCUReached", new Dictionary<string, object>
+		{
+			{"CCUReached", 1}
+		});
 	}
 
     /*
@@ -187,6 +223,11 @@ public class MatchMaker : Photon.PunBehaviour
         {
 			bStartRandomTimer = false;
 			bRandom = false;
+
+			Analytics.CustomEvent("GameModeNetwork", new Dictionary<string, object>
+			{
+				{"GameModeNetwork", 1}
+			});
 
 			// Proceed
 			string log = "Proceeding to game...\n" +
@@ -218,7 +259,7 @@ public class MatchMaker : Photon.PunBehaviour
         joiningRoom = true;
     }
 
-    public void LeaveRoom()
+    public void LeaveRoom(bool reallyLeave = true)
     {
 		if(PhotonNetwork.inRoom)
 			PhotonNetwork.LeaveRoom();
@@ -227,6 +268,14 @@ public class MatchMaker : Photon.PunBehaviour
         joinedRoom = false;
 		bStartRandomTimer = false;
 		bRandom = false;
+
+		if(reallyLeave)
+		{
+			Analytics.CustomEvent("LobbyLeftRoom", new Dictionary<string, object>
+			{
+				{"LobbyLeftRoom", 1}
+			});
+		}
 
 		StartDisconnecting();
 	}

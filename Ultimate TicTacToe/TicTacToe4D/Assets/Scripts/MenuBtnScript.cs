@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Analytics;
 using System.Collections;
 using UnityEngine.Advertisements;
+using System.Collections.Generic;
 using Assets.SimpleAndroidNotifications;
 
 public enum BUTTONTYPES
@@ -187,6 +189,12 @@ public class MenuBtnScript : MonoBehaviour
 
 			if(GameData.current.finishedTutorial)
 				AudioManager.Instance.PlaySoundEvent(SOUNDID.STARTGAME);
+
+			Analytics.CustomEvent("GameModeSingle", new Dictionary<string, object>
+			{
+				{"GameModeSingle", 1}
+			});
+
 			break;
 
 		case BUTTONTYPES.MAIN_LOCALPLAY:
@@ -197,6 +205,7 @@ public class MenuBtnScript : MonoBehaviour
 			Camera.main.GetComponent<MainMenuScript>().Settings.SetActive(false);
 			GlobalScript.Instance.avatarState = 1;
 			AvatarHandler.Instance.UpdateUnlockedAvatarsStatus();
+			AvatarHandler.Instance.SetAvatarPlaceHolderText();
 			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 			break;
 
@@ -265,6 +274,11 @@ public class MenuBtnScript : MonoBehaviour
 			GlobalScript.Instance.SetLocalMultiPlayerName();
 			GlobalScript.Instance.SetLocalMultiPlayerIcon();
 			AudioManager.Instance.PlaySoundEvent(SOUNDID.STARTGAME);
+
+			Analytics.CustomEvent("GameModeLocal", new Dictionary<string, object>
+			{
+				{"GameModeLocal", 1}
+			});
 			break;
 
 		case BUTTONTYPES.NETWORK_PUBLICGAME:
@@ -313,16 +327,22 @@ public class MenuBtnScript : MonoBehaviour
 			break;
 
 		case BUTTONTYPES.ADS_WATCH_VIDEO:
-			if(GachaScript.Instance.CanGacha())
+			if(GachaScript.Instance.CanFreeRoll())
 			{
 				#if UNITY_ANDROID || UNITY_IOS
 				var options = new ShowOptions { resultCallback = Adverts.Instance.FreeGachaHandler};
 				Adverts.Instance.ShowAd(AdVidType.video,options);
 				Adverts.Instance.freeGacha = true;
+				GachaScript.Instance.isFreeRollNotified = false;
+
+				Analytics.CustomEvent("FreeRollUsed", new Dictionary<string, object>
+				{
+					{"FreeRollUsed", 1}
+				});
 				#endif
 
 				#if UNITY_ANDROID && !UNITY_EDITOR
-				NotificationManager.SendWithAppIcon(System.TimeSpan.FromSeconds(Defines.FREE_ROLL_TIMER), "Ultimate Tic Tac Toe", "Get your free roll now!", Color.black);
+				//NotificationManager.SendWithAppIcon(System.TimeSpan.FromSeconds(Defines.FREE_ROLL_TIMER), "Ultimate Tic Tac Toe", "Get your free roll now!", Color.black);
 				#endif
 
 				#if UNITY_IOS && !UNITY_EDITOR
@@ -351,6 +371,8 @@ public class MenuBtnScript : MonoBehaviour
 				Camera.main.GetComponent<MainMenuScript>().Settings.SetActive(true);
 
 				GlobalScript.Instance.network_allowButtonClicks = 0;
+
+				GameObject.FindGameObjectWithTag("MatchMaker").GetComponent<MatchMaker>().MaxCCUText.SetActive(true);
 
 				GlobalScript.Instance.LeaveRoom();
 		        GlobalScript.Instance.ResetCountdown();
@@ -394,6 +416,12 @@ public class MenuBtnScript : MonoBehaviour
 			GameObject IAPManager = GameObject.Find("IAPManager");
 			InAppPurchaser iapPurchaser = IAPManager.GetComponent<InAppPurchaser>();
 			iapPurchaser.BuyProduct( InAppProductList.ProductType.ADS, (int)Defines.AdsInAppPurchase.DISABLE );
+
+			Analytics.CustomEvent("AdsPrePurchase", new Dictionary<string, object>
+			{
+				{"AdsPrePurchase", 1}
+			});
+
 			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 			break;
 

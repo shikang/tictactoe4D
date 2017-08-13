@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Analytics;
 using System.Collections;
+using System.Collections.Generic;
 
 public class BoardScript : MonoBehaviour
 {
@@ -95,7 +97,7 @@ public class BoardScript : MonoBehaviour
 
 	void Update ()
 	{
-		if(Input.GetKeyUp(KeyCode.P))
+		/*if(Input.GetKeyUp(KeyCode.P))
 		{
 			begin = true;
 			pos1 = 2;
@@ -103,7 +105,7 @@ public class BoardScript : MonoBehaviour
 			pos3 = 6;
 			//Debug.Log(bigGrids[pos1].GetComponentInChildren<Shaker>().duration + " name: " + bigGrids[pos1].GetComponentInChildren<Shaker>().name);
 			//Debug.Log(bigGrids[pos1].name);
-		}
+		}*/
 
 		if(begin)
 		{
@@ -144,9 +146,17 @@ public class BoardScript : MonoBehaviour
 				SetWinner(gameWinner);
 				showWinScreen = true;
 				begin = false;
+
+				Analytics.CustomEvent("EndGame", new Dictionary<string, object>
+				{
+					{"EndGame", 1},
+					{"Duration", GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().gameDuration}
+				});
 			}
 		}
-		else if(gameMode == Defines.GAMEMODE.AI)
+		else if(gameMode == Defines.GAMEMODE.AI &&
+				GameObject.FindGameObjectWithTag("GUIManager") &&
+				GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn == Defines.TURN.P2)
 		{
 			GameObject.FindGameObjectWithTag("AIMiniMax").GetComponent<AIMiniMax>().UpdateAI();
 		}
@@ -227,6 +237,8 @@ public class BoardScript : MonoBehaviour
 			else if(GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn == Defines.TURN.P2)
 				gameWinner = 1;
 
+			GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn = Defines.TURN.GAMEOVER;
+
 			if(VibrationManager.HasVibrator())
 			{
 				long [] pattern;
@@ -242,6 +254,8 @@ public class BoardScript : MonoBehaviour
 				int _score = Defines.bigGridWin;
 				if(gameMode == Defines.GAMEMODE.LOCAL)
 					_score = Defines.bigGridWin_Local;
+				if(gameMode == Defines.GAMEMODE.AI)
+					_score = Defines.bigGridWin_AI;
 
 				Defines.Instance.playerScore += _score;
 				GameObject tmp;
@@ -303,7 +317,6 @@ public class BoardScript : MonoBehaviour
 	public void SetWinner(int _winner)
 	{
 		gameWinner = _winner;
-		GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn = Defines.TURN.GAMEOVER;
 		//GameObject.FindGameObjectWithTag("ScoreBoard").GetComponent<ScoreBoardScript>().scores[gameWinner]++;
 		
 		Color temp = GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().GUICfmNewGame.GetComponent<Image>().color;
@@ -511,7 +524,7 @@ public class BoardScript : MonoBehaviour
 	{
 		// Tutorial
 		if(TutorialScript.Instance.isTutorial)
-			return true;
+			return false;
 
 		// If not your turn during online play
 		if(gameMode == Defines.GAMEMODE.ONLINE)

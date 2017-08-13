@@ -102,9 +102,11 @@ public class Defines : Singleton<Defines>
 	//player point stuff
 	public int playerScore;
 	static public int smallGridWin = 5;
-	static public int bigGridWin = 30;
-	static public int smallGridWin_Local = 3;
-	static public int bigGridWin_Local = 20;
+	static public int bigGridWin = 35;
+	static public int smallGridWin_AI = 2;
+	static public int bigGridWin_AI = 20;
+	static public int smallGridWin_Local = 1;
+	static public int bigGridWin_Local = 8;
 
 	// Money stuff
 	static public int GACHACOST = 100;

@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Analytics;
 using System.Collections;
+using System.Collections.Generic;
+
 
 public class GUIManagerScript : MonoBehaviour
 {
@@ -24,6 +27,7 @@ public class GUIManagerScript : MonoBehaviour
 
 	// Emote
 	public GameObject GUIEmoteScreen;
+	public GameObject GUIEmoteFrame;
 	public GameObject GUIP1EmoteSpeech;
 	public GameObject GUIP2EmoteSpeech;
 	private float p1EmoteTimer = 0.0f;
@@ -64,6 +68,8 @@ public class GUIManagerScript : MonoBehaviour
 	public float timerP1;
 	public float timerP2;
 	public float startTime;
+	public float gameDuration;
+	bool isBGSet;
 
 	public GameObject gameBG;
 
@@ -124,7 +130,13 @@ public class GUIManagerScript : MonoBehaviour
 	{
 		gridEffect_growStage = 0;
 		startTime = 300.0f;
+		gameDuration = 0.0f;
 		timerP1 = timerP2 = GlobalScript.Instance.timePerTurn;
+
+		Analytics.CustomEvent("TurnDuration", new Dictionary<string, object>
+		{
+			{"TurnDuration", GlobalScript.Instance.timePerTurn}
+		});
 
 		nameP1 = GlobalScript.Instance.nameP1;
 		nameP2 = GlobalScript.Instance.nameP2;
@@ -138,10 +150,6 @@ public class GUIManagerScript : MonoBehaviour
 		SetCfmAlpha(false);
 
 		GUICenterText.transform.localScale = new Vector3(4.0f, 4.0f, 1.0f);
-
-		Color tmp = GUICfmFrame.GetComponent<Image>().color;
-		tmp.a = 0.8f;
-		GUICfmFrame.GetComponent<Image>().color = tmp;
 		GUICfmFrame.SetActive(false);
 
 		GUIEmoteScreen.SetActive(false);
@@ -160,6 +168,7 @@ public class GUIManagerScript : MonoBehaviour
 		emoteP2AnimTimer = 0.0f;
 		addedMoney = false;
 		Defines.Instance.playerScore = 0;
+		isBGSet = false;
 
 		isCDSoundPlayed6 = isCDSoundPlayed5 = isCDSoundPlayed4 = isCDSoundPlayed3 = isCDSoundPlayed2 = isCDSoundPlayed1 = false;
 
@@ -168,13 +177,20 @@ public class GUIManagerScript : MonoBehaviour
 			GetComponent<TurnHandler>().UpdatePlayerIcons();
 			SetAvatar();
 		}
-
-		BGManager.Instance.SetCurrBG();
-		gameBG.GetComponent<SpriteRenderer>().sprite = BGManager.Instance.GetCurrBGImage();
 	}
 
 	void Update()
 	{
+		if(GetComponent<TurnHandler>().turn == Defines.TURN.P1 || GetComponent<TurnHandler>().turn == Defines.TURN.P2)
+			gameDuration += Time.deltaTime;
+
+		if(!isBGSet)
+		{
+			BGManager.Instance.SetCurrBG();
+			gameBG.GetComponent<SpriteRenderer>().sprite = BGManager.Instance.GetCurrBGImage();
+			isBGSet = true;
+		}
+
 		ScaleText(GUITurn.transform, 0.7f);
 		ScaleText(GUICenterText.transform, 1.2f);
 
@@ -194,6 +210,7 @@ public class GUIManagerScript : MonoBehaviour
 		//   Game End
 		else if(GetComponent<TurnHandler>().turn == Defines.TURN.GAMEOVER)
 		{
+			GUICenterText.SetActive(false);
 			if(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().gameWinner == 0)
 				GUICenterText.GetComponent<Text>().text = "Draw!";
 			else if(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().gameWinner == 1)
@@ -707,6 +724,12 @@ public class GUIManagerScript : MonoBehaviour
 
 		ImageRight.GetComponent<Image>().sprite =
 			GetComponent<TurnHandler>().GetSpriteP2();
+
+		Analytics.CustomEvent("AvatarUsed", new Dictionary<string, object>
+		{
+			{"P1", GetComponent<TurnHandler>().GetIconNameP1()},
+			{"P2", GetComponent<TurnHandler>().GetIconNameP2()}
+		}); 
 	}
 
 	public void ToogleEmoteMenu()
@@ -830,13 +853,15 @@ public class GUIManagerScript : MonoBehaviour
 			// Default is player one, so we just have to set for player 2.
 			if(!NetworkManager.IsPlayerOne())
 			{
-				GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().BtnEmote.GetComponent<Image>().color = Defines.ICON_COLOR_P2;
+				BtnEmote.GetComponent<Image>().color = Defines.ICON_COLOR_P2;
 				Emote_GoodGame.GetComponent<Image>().color =
 				Emote_WellPlayed.GetComponent<Image>().color =
 				Emote_GoodLuck.GetComponent<Image>().color =
 				Emote_Wow.GetComponent<Image>().color =
 				Emote_Thanks.GetComponent<Image>().color =
-				Emote_Oops.GetComponent<Image>().color = Defines.ICON_COLOR_P2;	
+				Emote_Oops.GetComponent<Image>().color = Defines.ICON_COLOR_P2;
+
+				GUIEmoteFrame.GetComponent<Image>().color = new Color(0.8f, 0.6f, 0.1f, 1.0f);
 			}
 
 		}
@@ -844,25 +869,29 @@ public class GUIManagerScript : MonoBehaviour
 		// Local: Blue during P1 turn, red during P2 turn
 		if(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().gameMode == Defines.GAMEMODE.LOCAL)
 		{
-			if(GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn == Defines.TURN.P1)
+			if(GetComponent<TurnHandler>().turn == Defines.TURN.P1)
 			{
-				GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().BtnEmote.GetComponent<Image>().color = Defines.ICON_COLOR_P1;
+				BtnEmote.GetComponent<Image>().color = Defines.ICON_COLOR_P1;
 				Emote_GoodGame.GetComponent<Image>().color =
 				Emote_WellPlayed.GetComponent<Image>().color =
 				Emote_GoodLuck.GetComponent<Image>().color =
 				Emote_Wow.GetComponent<Image>().color =
 				Emote_Thanks.GetComponent<Image>().color =
-				Emote_Oops.GetComponent<Image>().color = Defines.ICON_COLOR_P1;	
+				Emote_Oops.GetComponent<Image>().color = Defines.ICON_COLOR_P1;
+
+				GUIEmoteFrame.GetComponent<Image>().color = new Color(0.1f, 0.8f, 0.69f);
 			}
 			else
 			{
-				GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().BtnEmote.GetComponent<Image>().color = Defines.ICON_COLOR_P2;
+				BtnEmote.GetComponent<Image>().color = Defines.ICON_COLOR_P2;
 				Emote_GoodGame.GetComponent<Image>().color =
 				Emote_WellPlayed.GetComponent<Image>().color =
 				Emote_GoodLuck.GetComponent<Image>().color =
 				Emote_Wow.GetComponent<Image>().color =
 				Emote_Thanks.GetComponent<Image>().color =
 				Emote_Oops.GetComponent<Image>().color = Defines.ICON_COLOR_P2;	
+
+				GUIEmoteFrame.GetComponent<Image>().color = new Color(0.8f, 0.6f, 0.1f, 1.0f);
 			}
 		}
 	}

@@ -15,6 +15,7 @@ public struct mICON
 {
 	public Sprite image;
 	public bool isUnlocked;
+	public string name;
 
 	public bool isBuy;
 	public bool isGacha;
@@ -119,6 +120,7 @@ public class IconManager : MonoBehaviour
 		mIcon[(int)ID].isBuy 		= isBuy_;
 		mIcon[(int)ID].isGacha		= isGacha_;
 		mIcon[(int)ID].gachaTier	= gachaTier_;
+		mIcon[(int)ID].name			= imagePath.ToString().Substring(6);
 
 		if(mIcon[(int)ID].gachaTier == TIERS.COMMON)
 			counterGacha_Common++;
@@ -166,6 +168,11 @@ public class IconManager : MonoBehaviour
 	public int GetNoofBuyableIcons()
 	{
 		return counterBuyable;
+	}
+
+	public string GetName(Defines.ICONS i)
+	{
+		return mIcon[(int)i].name;
 	}
 
 	public void CalculateGachaRates()

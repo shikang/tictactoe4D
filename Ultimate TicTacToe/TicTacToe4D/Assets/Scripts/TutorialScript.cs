@@ -81,14 +81,14 @@ public class TutorialScript : MonoBehaviour
 			tFrame.SetActive(true);
 			tText_NoBtn.SetActive(false);
 			//tFrame.GetComponent<RectTransform>().localPosition = new Vector3(0.0f, -40.0f, 0.0f);
-			tText_Btn.GetComponent<Text>().text = "Welcome! In this tutorial, you will learn how to play the game!";
+			tText_Btn.GetComponent<Text>().text = "Welcome! Let's run through the basics of the game!";
 		}
 		else if(tStage == TUTORIALSTAGE.PLACE_TOPLEFT_P)
 		{
 			tButton.SetActive(false);
 			tText_Btn.SetActive(false);
 			tText_NoBtn.SetActive(true);
-			tText_NoBtn.GetComponent<Text>().text = "See that glowing board on the <color=green>top left</color>? That's where you can place. Try placing the <color=blue>middle-right</color> box!";
+			tText_NoBtn.GetComponent<Text>().text = "See that glowing board on the big <color=green>top left</color> grid? That shows where you can place your piece. Try placing in the <color=blue>middle-right</color> box!";
 
 			GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().bigGrids[0].GetComponent<BigGridScript>().grids[5].GetComponent<GridScript>().
 				GetComponent<Animator>().SetTrigger("isIconPlaced");
@@ -96,7 +96,7 @@ public class TutorialScript : MonoBehaviour
 		}
 		else if(tStage == TUTORIALSTAGE.ICON_HIGHLIGHTED)
 		{
-			tText_NoBtn.GetComponent<Text>().text = "The first tap highlights the token. Tap on it again to <color=green>confirm</color> placement!";
+			tText_NoBtn.GetComponent<Text>().text = "The first tap highlights the box. Tap on it again to <color=green>confirm</color> placement!";
 
 			GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().bigGrids[0].GetComponent<BigGridScript>().grids[5].GetComponent<GridScript>().
 				GetComponent<Animator>().SetTrigger("isIconPlaced");
@@ -106,13 +106,16 @@ public class TutorialScript : MonoBehaviour
 			tButton.SetActive(true);
 			tText_Btn.SetActive(true);
 			tText_NoBtn.SetActive(false);
-			tText_Btn.GetComponent<Text>().text = "By placing your token on the <color=green>middle-right</color> box, you've sent the opponent to the <color=green>middle-right</color> board!";
+			tText_Btn.GetComponent<Text>().text = "By placing your piece on the <color=green>middle-right</color> box of this grid, you've sent the opponent to the big <color=green>middle-right</color> grid!";
 
 			//tFrame.GetComponent<RectTransform>().localPosition = new Vector3(0.0f, -80.0f, 0.0f);
 		}
 		else if(tStage == TUTORIALSTAGE.PLACE_MIDRIGHT_C)
 		{
-			tFrame.SetActive(false);
+			tButton.SetActive(false);
+			tText_Btn.SetActive(false);
+			tText_NoBtn.SetActive(true);
+			tText_NoBtn.GetComponent<Text>().text = "Waiting for opponent...";
 		}
 		else if(tStage == TUTORIALSTAGE.PLACE_BOTLEFT)
 		{
@@ -120,7 +123,7 @@ public class TutorialScript : MonoBehaviour
 			tButton.SetActive(false);
 			tText_Btn.SetActive(false);
 			tText_NoBtn.SetActive(true);
-			tText_NoBtn.GetComponent<Text>().text = "The opponent has sent you to the <color=green>bottom-left board!</color> Win it!!";
+			tText_NoBtn.GetComponent<Text>().text = "The opponent has sent you to the big <color=green>bottom-left grid!</color> Win it!!";
 
 			//tFrame.GetComponent<RectTransform>().localPosition = new Vector3(0.0f, -10.0f, 0.0f);
 
@@ -132,13 +135,16 @@ public class TutorialScript : MonoBehaviour
 			tButton.SetActive(true);
 			tText_Btn.SetActive(true);
 			tText_NoBtn.SetActive(false);
-			tText_Btn.GetComponent<Text>().text = "Again, by placing on the <color=green>top-right</color> box, you've sent the opponent to the <color=green>top-right</color> board!";
+			tText_Btn.GetComponent<Text>().text = "Again, by placing your piece on the <color=green>top-right</color> box of this grid, you've sent the opponent to the big <color=green>top-right</color> grid!";
 
 			//tFrame.GetComponent<RectTransform>().localPosition = new Vector3(0.0f, -50.0f, 0.0f);
 		}
 		else if(tStage == TUTORIALSTAGE.PLACE_TOPRIGHT_C)
 		{
-			tFrame.SetActive(false);
+			tButton.SetActive(false);
+			tText_Btn.SetActive(false);
+			tText_NoBtn.SetActive(true);
+			tText_NoBtn.GetComponent<Text>().text = "Waiting for opponent...";
 		}
 		else if(tStage == TUTORIALSTAGE.PLACE_BOTRIGHT_P1)
 		{
@@ -146,7 +152,7 @@ public class TutorialScript : MonoBehaviour
 			tButton.SetActive(true);
 			tText_Btn.SetActive(true);
 			tText_NoBtn.SetActive(false);
-			tText_Btn.GetComponent<Text>().text = "The opponent has placed on the <color=green>bottom-center</color> box! Since it is completed, you can place <color=blue>ANYWHERE</color>!";
+			tText_Btn.GetComponent<Text>().text = "Your opponent has placed on the <color=green>bottom-center</color> box of the grid, which is already completed! So, you can now place <color=blue>ANYWHERE</color>!";
 
 			//tFrame.GetComponent<RectTransform>().localPosition = new Vector3(0.0f, -15.0f, 0.0f);
 		}
@@ -155,7 +161,7 @@ public class TutorialScript : MonoBehaviour
 			tButton.SetActive(false);
 			tText_Btn.SetActive(false);
 			tText_NoBtn.SetActive(true);
-			tText_NoBtn.GetComponent<Text>().text = "Win this game by winning the bottom boards!";
+			tText_NoBtn.GetComponent<Text>().text = "Win this game by winning the bottom big grids!";
 
 			GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().bigGrids[8].GetComponent<BigGridScript>().grids[1].GetComponent<GridScript>().
 				GetComponent<Animator>().SetTrigger("isIconPlaced");
@@ -166,7 +172,7 @@ public class TutorialScript : MonoBehaviour
 			tButton.SetActive(false);
 			tText_Btn.SetActive(false);
 			tText_NoBtn.SetActive(true);
-			tText_NoBtn.GetComponent<Text>().text = "Congratulations! You are now ready to play the game!";
+			tText_NoBtn.GetComponent<Text>().text = "Congratulations! You are now ready to challenge other players!";
 
 			winCountdown -= Time.deltaTime;
 			if(winCountdown <= 0.0f)
@@ -217,7 +223,6 @@ public class TutorialScript : MonoBehaviour
 
 		currBigGrid = GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().bigGrids[2].GetComponent<BigGridScript>();
 		currBigGrid.grids[0].GetComponent<GridScript>().PlaceOnGrid(1);
-		currBigGrid.grids[1].GetComponent<GridScript>().PlaceOnGrid(2);
 		currBigGrid.grids[2].GetComponent<GridScript>().PlaceOnGrid(1);
 		currBigGrid.grids[3].GetComponent<GridScript>().PlaceOnGrid(1);
 		currBigGrid.grids[4].GetComponent<GridScript>().PlaceOnGrid(2);
