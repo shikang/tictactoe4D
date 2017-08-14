@@ -116,6 +116,10 @@ public class BGManager : MonoBehaviour
 
 	void Update ()
 	{
+		if (GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn != Defines.TURN.P1 &&
+			GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn != Defines.TURN.P2)
+			return;
+
 		timeToNextPart -= Time.deltaTime;
 
 		if(maxNoofParts > currNoofParts && timeToNextPart <= 0.0f)

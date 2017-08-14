@@ -122,7 +122,6 @@ public class BigGridScript : MonoBehaviour
 				}
 
 				sWinFrame.GetComponent<Animator>().SetTrigger("isSpin");
-				GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().ProcessBoardCompleted();
 			}
 		}
 	}
@@ -184,6 +183,8 @@ public class BigGridScript : MonoBehaviour
 				transform.Find("LeftSlash").GetComponent<WinLine>().startLine(grids[pos1].GetComponent<Shaker>().duration*3);
 			else if(winMethod == WINMETHOD.SLASH)
 				transform.Find("RightSlash").GetComponent<WinLine>().startLine(grids[pos1].GetComponent<Shaker>().duration*3);
+
+			GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().ProcessBoardCompleted();
 		}
 		else if(IsDraw())
 		{

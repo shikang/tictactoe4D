@@ -335,7 +335,7 @@ public class GachaScript : MonoBehaviour
 			freeRollButtonGrey.SetActive(false);
 			if(!isFreeRollNotified)
 			{
-				NotificationManager.SendWithAppIcon(TimeSpan.Zero, "Ultimate Tic Tac Toe", "Get your free roll now!", Color.black);
+				NotificationManager.SendWithAppIcon(TimeSpan.Zero, "Free roll ready!", "Come and roll for a new avatar!", Color.black);
 				isFreeRollNotified = true;
 			}
 		}

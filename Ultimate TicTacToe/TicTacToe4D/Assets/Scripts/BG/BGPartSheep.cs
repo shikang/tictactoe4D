@@ -8,9 +8,9 @@ public class BGPartSheep : MonoBehaviour
 
 	void Start()
 	{
-		//int yPos = Random.Range(-1050, -900);
+		int yPos = Random.Range(-960, -940);
 		int xPos = Random.Range(-400, 500);
-		transform.localPosition = new Vector3((float)xPos, -970.0f);
+		transform.localPosition = new Vector3((float)xPos, yPos);
 
 		timerNextMove = 0.0f;
 	}
@@ -37,7 +37,7 @@ public class BGPartSheep : MonoBehaviour
 			GetComponentInChildren<Transform>().localScale = new Vector3(5.65f, 5.65f, 5.65f);
 			GetComponentInChildren<Animator>().SetInteger("animType", 1);
 			GetComponentInChildren<Animator>().SetTrigger("canPlay");
-			GetComponentInChildren<Transform>().localPosition += new Vector3(6.0f, 0.0f, 0.0f);
+			transform.localPosition += new Vector3(6.0f, 0.0f, 0.0f);
 		}
 	}
 
@@ -48,7 +48,7 @@ public class BGPartSheep : MonoBehaviour
 			GetComponentInChildren<Transform>().localScale = new Vector3(-5.65f, 5.65f, 5.65f);
 			GetComponentInChildren<Animator>().SetInteger("animType", 2);
 			GetComponentInChildren<Animator>().SetTrigger("canPlay");
-			GetComponentInChildren<Transform>().localPosition += new Vector3(-6.0f, 0.0f, 0.0f);
+			transform.localPosition += new Vector3(-6.0f, 0.0f, 0.0f);
 		}
 	}
 }
