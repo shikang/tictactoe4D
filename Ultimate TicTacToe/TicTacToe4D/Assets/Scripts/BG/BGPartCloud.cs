@@ -18,7 +18,7 @@ public class BGPartCloud : MonoBehaviour
 		if(Random.Range(0, 2) == 0)
 			isLeft = true;
 
-		float xPos = isLeft ? -950.0f : 950.0f;
+		float xPos = isLeft ? -1220.0f : 1220.0f;
 		transform.localPosition = new Vector3(xPos, yPos);
 
 		// Set speed, and invert speed if it goes from left to right
@@ -35,8 +35,8 @@ public class BGPartCloud : MonoBehaviour
 		currPos.x -= speed * Time.deltaTime;
 		transform.localPosition = currPos;
 
-		if( (isLeft && transform.localPosition.x > 950.0f) ||
-			(!isLeft && transform.localPosition.x < -950.0f) )
+		if( (isLeft && transform.localPosition.x > 1220.0f) ||
+			(!isLeft && transform.localPosition.x < -1220.0f) )
 		{
 			BGManager.Instance.currNoofParts -= 1;
 			Destroy(gameObject);

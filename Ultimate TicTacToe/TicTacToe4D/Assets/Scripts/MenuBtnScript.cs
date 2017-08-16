@@ -372,7 +372,7 @@ public class MenuBtnScript : MonoBehaviour
 
 				GlobalScript.Instance.network_allowButtonClicks = 0;
 
-				GameObject.FindGameObjectWithTag("MatchMaker").GetComponent<MatchMaker>().MaxCCUText.SetActive(true);
+				GameObject.FindGameObjectWithTag("MatchMaker").GetComponent<MatchMaker>().MaxCCUText.SetActive(false);
 
 				GlobalScript.Instance.LeaveRoom();
 		        GlobalScript.Instance.ResetCountdown();

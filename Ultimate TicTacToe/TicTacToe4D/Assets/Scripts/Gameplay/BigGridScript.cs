@@ -84,6 +84,7 @@ public class BigGridScript : MonoBehaviour
 	{
 		if(begin)
 		{
+			GlobalScript.Instance.isInputPaused = true;
 			if(grids[pos1].GetComponent<Shaker>().IsShakeComplete())
 			{
 				grids[pos2].GetComponent<Shaker>().StartShaking();
@@ -116,11 +117,14 @@ public class BigGridScript : MonoBehaviour
 				}
 
 				begin = false;
+				GlobalScript.Instance.isInputPaused = false;
+
 				for(int i = 0; i <9;++i)
 				{
 					grids[i].GetComponent<Shaker>().StartShaking(0.75f);
 				}
 
+				GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().ProcessBoardCompleted();
 				sWinFrame.GetComponent<Animator>().SetTrigger("isSpin");
 			}
 		}
@@ -183,8 +187,6 @@ public class BigGridScript : MonoBehaviour
 				transform.Find("LeftSlash").GetComponent<WinLine>().startLine(grids[pos1].GetComponent<Shaker>().duration*3);
 			else if(winMethod == WINMETHOD.SLASH)
 				transform.Find("RightSlash").GetComponent<WinLine>().startLine(grids[pos1].GetComponent<Shaker>().duration*3);
-
-			GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().ProcessBoardCompleted();
 		}
 		else if(IsDraw())
 		{

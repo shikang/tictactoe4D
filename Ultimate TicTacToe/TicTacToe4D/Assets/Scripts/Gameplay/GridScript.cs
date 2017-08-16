@@ -20,7 +20,7 @@ public class GridScript : MonoBehaviour
 
 	void OnMouseDown()
 	{
-		if(GetTurnHandler().turn != Defines.TURN.P1 && GetTurnHandler().turn != Defines.TURN.P2)
+		if(GlobalScript.Instance.isInputPaused)
 			return;
 
 		if( GetBoardScript().gameMode == Defines.GAMEMODE.AI &&
@@ -172,7 +172,7 @@ public class GridScript : MonoBehaviour
 
 	void OnMouseUp()
 	{
-		if(GetTurnHandler().turn != Defines.TURN.P1 && GetTurnHandler().turn != Defines.TURN.P2)
+		if(GlobalScript.Instance.isInputPaused)
 			return;
 
 		if(gridState == 4)

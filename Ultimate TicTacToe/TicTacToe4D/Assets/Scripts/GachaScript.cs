@@ -216,7 +216,7 @@ public class GachaScript : MonoBehaviour
 			gachaInfoSpecial.SetActive(false);
 			if(IconManager.Instance.GetIsUnlocked(unlockIcon))
 			{
-				gachaInfoText.GetComponent<Text>().text = "You already have this token!";
+				gachaInfoText.GetComponent<Text>().text = "You already have this Tac!";
 				gachaInfoSpecial.GetComponent<Text>().text = "";
 			}
 			else
@@ -224,17 +224,17 @@ public class GachaScript : MonoBehaviour
 				if(((Defines.ICONS)unlockIcon).ToString().Substring(0, 1) == "R")
 				{
 					gachaInfoText.GetComponent<Text>().text = "";
-					gachaInfoSpecial.GetComponent<Text>().text = "YOU GOT RARE " +  ((Defines.ICONS)unlockIcon).ToString().Substring(5) + " TOKEN!!!";
+					gachaInfoSpecial.GetComponent<Text>().text = "YOU GOT RARE " +  ((Defines.ICONS)unlockIcon).ToString().Substring(5) + " TAC!!!";
 				}
 				else if(((Defines.ICONS)unlockIcon).ToString().Substring(0, 1) == "L")
 				{
 					gachaInfoText.GetComponent<Text>().text = "";
-					gachaInfoSpecial.GetComponent<Text>().text = "YOU GOT LEGENDARY " +  ((Defines.ICONS)unlockIcon).ToString().Substring(5) + " TOKEN!!!";
+					gachaInfoSpecial.GetComponent<Text>().text = "YOU GOT LEGENDARY " +  ((Defines.ICONS)unlockIcon).ToString().Substring(5) + " TAC!!!";
 				}
 				else
 				{
 					gachaInfoSpecial.GetComponent<Text>().text = "";
-					gachaInfoText.GetComponent<Text>().text = "You got a new " +  ((Defines.ICONS)unlockIcon).ToString().Substring(5) + " token!";
+					gachaInfoText.GetComponent<Text>().text = "You got a new " +  ((Defines.ICONS)unlockIcon).ToString().Substring(5) + " TAC!";
 				}
 
 				Analytics.CustomEvent("AvatarUnlocked", new Dictionary<string, object>
@@ -335,7 +335,7 @@ public class GachaScript : MonoBehaviour
 			freeRollButtonGrey.SetActive(false);
 			if(!isFreeRollNotified)
 			{
-				NotificationManager.SendWithAppIcon(TimeSpan.Zero, "Free roll ready!", "Come and roll for a new avatar!", Color.black);
+				NotificationManager.SendWithAppIcon(TimeSpan.Zero, "Free roll ready!", "Come and roll for a new Tac!", Color.black);
 				isFreeRollNotified = true;
 			}
 		}
@@ -354,7 +354,7 @@ public class GachaScript : MonoBehaviour
 	void UpdateGachaButton()
 	{
 		gachaStartButton.GetComponent<Image>().color = Defines.ICON_COLOR_P1;
-		gachaStartButton.GetComponentInChildren<Text>().text = "Roll for Tokens!";
+		gachaStartButton.GetComponentInChildren<Text>().text = "Roll for Tacs!";
 		if(GameData.current.coin < Defines.GACHACOST)
 		{
 			gachaStartButton.GetComponent<Image>().color = Defines.ICON_COLOR_GREY;

@@ -93,6 +93,7 @@ public class BoardScript : MonoBehaviour
 		currHighlighted_BigGrid = 10;
 		currHighlighted_Grid = 10;
 		showWinScreen = false;
+		GlobalScript.Instance.isInputPaused = false;
 	}
 
 	void Update ()
@@ -109,6 +110,8 @@ public class BoardScript : MonoBehaviour
 
 		if(begin)
 		{
+			GlobalScript.Instance.isInputPaused = true;
+
 			time -= Time.deltaTime;
 			if(time <=0 && time > -1)
 				time = 0;
@@ -146,6 +149,7 @@ public class BoardScript : MonoBehaviour
 				SetWinner(gameWinner);
 				showWinScreen = true;
 				begin = false;
+				GlobalScript.Instance.isInputPaused = false;
 
 				Analytics.CustomEvent("EndGame", new Dictionary<string, object>
 				{

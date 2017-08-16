@@ -171,10 +171,10 @@ public class GameStartAnim : MonoBehaviour
 
 		else if(currStage == STAGE.PlayerLerpOut)
 		{
-			playerGroup1.transform.localPosition = Vector3.Lerp(playerGroup1.transform.localPosition, new Vector3(-250.0f, 0.0f, 0.0f), Time.deltaTime * 8.0f);
-			playerGroup2.transform.localPosition = Vector3.Lerp(playerGroup2.transform.localPosition, new Vector3(250.0f, 0.0f, 0.0f), Time.deltaTime * 8.0f);
+			playerGroup1.transform.localPosition = Vector3.Lerp(playerGroup1.transform.localPosition, new Vector3(-300.0f, 0.0f, 0.0f), Time.deltaTime * 8.0f);
+			playerGroup2.transform.localPosition = Vector3.Lerp(playerGroup2.transform.localPosition, new Vector3(300.0f, 0.0f, 0.0f), Time.deltaTime * 8.0f);
 
-			if(Vector3.Distance(playerGroup1.transform.localPosition, new Vector3(-250.0f, 0.0f, 0.0f)) < 10.0f)
+			if(Vector3.Distance(playerGroup1.transform.localPosition, new Vector3(-300.0f, 0.0f, 0.0f)) < 10.0f)
 			{
 				currStage = STAGE.FadeOut;
 			}

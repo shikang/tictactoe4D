@@ -25,6 +25,7 @@ public class GlobalScript : MonoBehaviour
 	int gameInit;
 	public int gameMode;
 	public int network_allowButtonClicks;
+	public bool isInputPaused;
 
 	public bool bStartCountdown;
 	public float countdownTimerToStart;
