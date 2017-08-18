@@ -190,11 +190,6 @@ public class MenuBtnScript : MonoBehaviour
 			if(GameData.current.finishedTutorial)
 				AudioManager.Instance.PlaySoundEvent(SOUNDID.STARTGAME);
 
-			Analytics.CustomEvent("GameModeSingle", new Dictionary<string, object>
-			{
-				{"GameModeSingle", 1}
-			});
-
 			break;
 
 		case BUTTONTYPES.MAIN_LOCALPLAY:
@@ -274,11 +269,6 @@ public class MenuBtnScript : MonoBehaviour
 			GlobalScript.Instance.SetLocalMultiPlayerName();
 			GlobalScript.Instance.SetLocalMultiPlayerIcon();
 			AudioManager.Instance.PlaySoundEvent(SOUNDID.STARTGAME);
-
-			Analytics.CustomEvent("GameModeLocal", new Dictionary<string, object>
-			{
-				{"GameModeLocal", 1}
-			});
 			break;
 
 		case BUTTONTYPES.NETWORK_PUBLICGAME:
@@ -335,10 +325,7 @@ public class MenuBtnScript : MonoBehaviour
 				Adverts.Instance.freeGacha = true;
 				GachaScript.Instance.isFreeRollNotified = false;
 
-				Analytics.CustomEvent("FreeRollUsed", new Dictionary<string, object>
-				{
-					{"FreeRollUsed", 1}
-				});
+				Analytics.CustomEvent("FreeRoll_Used", new Dictionary<string, object>{});
 				#endif
 
 				#if UNITY_ANDROID && !UNITY_EDITOR
@@ -359,6 +346,10 @@ public class MenuBtnScript : MonoBehaviour
 			{
 				currScreen = SCREENS.ONLINEPLAY;
 				Camera.main.GetComponent<MainMenuScript>().networkMenuAnimStage = 2;
+
+				if(GameObject.Find("Password"))
+					GameObject.Find("Password").GetComponent<InputField>().interactable = true;
+
 				GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().SearchGrey.SetActive(false);
 
 				Camera.main.GetComponent<MainMenuScript>().UpdateText.SetActive(false);
@@ -371,7 +362,6 @@ public class MenuBtnScript : MonoBehaviour
 				Camera.main.GetComponent<MainMenuScript>().Settings.SetActive(true);
 
 				GlobalScript.Instance.network_allowButtonClicks = 0;
-
 				GameObject.FindGameObjectWithTag("MatchMaker").GetComponent<MatchMaker>().MaxCCUText.SetActive(false);
 
 				GlobalScript.Instance.LeaveRoom();
@@ -417,10 +407,7 @@ public class MenuBtnScript : MonoBehaviour
 			InAppPurchaser iapPurchaser = IAPManager.GetComponent<InAppPurchaser>();
 			iapPurchaser.BuyProduct( InAppProductList.ProductType.ADS, (int)Defines.AdsInAppPurchase.DISABLE );
 
-			Analytics.CustomEvent("AdsPrePurchase", new Dictionary<string, object>
-			{
-				{"AdsPrePurchase", 1}
-			});
+			Analytics.CustomEvent("PreBuy_Ads", new Dictionary<string, object>{});
 
 			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 			break;

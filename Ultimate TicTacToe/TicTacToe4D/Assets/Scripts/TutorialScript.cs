@@ -152,7 +152,7 @@ public class TutorialScript : MonoBehaviour
 			tButton.SetActive(true);
 			tText_Btn.SetActive(true);
 			tText_NoBtn.SetActive(false);
-			tText_Btn.GetComponent<Text>().text = "Your opponent has placed on the <color=green>bottom-center</color> box of the grid, which is already completed! So, you can now place <color=blue>ANYWHERE</color>!";
+			tText_Btn.GetComponent<Text>().text = "You've been sent to the <color=green>bottom-center</color> box of the grid, which is already completed! So, you can now place <color=blue>ANYWHERE</color>!";
 
 			//tFrame.GetComponent<RectTransform>().localPosition = new Vector3(0.0f, -15.0f, 0.0f);
 		}

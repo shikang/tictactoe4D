@@ -6,7 +6,7 @@ public class PlatformUtilies : Singleton<PlatformUtilies>
 	const string ANDRIOD_BUNDLE_NAME = "com.WhyWool.TicTacToe4D";
 	const string IOS_BUNDLE_NAME = "com.WhyWool.TicTacToe4D";
 	const string FACEBOOK_PAGE_ID = "1825892051004820";
-	const string FACEBOOK_PAGE = "https://www.facebook.com/utttgame/";
+	const string FACEBOOK_PAGE = "https://www.facebook.com/whywool/";
 
 	protected PlatformUtilies()
 	{

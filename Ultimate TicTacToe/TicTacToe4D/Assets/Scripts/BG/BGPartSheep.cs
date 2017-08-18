@@ -8,7 +8,7 @@ public class BGPartSheep : MonoBehaviour
 
 	void Start()
 	{
-		int yPos = Random.Range(-960, -940);
+		int yPos = Random.Range(-865, -790);
 		int xPos = Random.Range(-400, 500);
 		transform.localPosition = new Vector3((float)xPos, yPos);
 

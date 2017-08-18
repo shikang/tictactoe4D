@@ -78,10 +78,7 @@ public class MatchMaker : Photon.PunBehaviour
 
         requestRoom = true;
 
-		Analytics.CustomEvent("JoinedGame_Public", new Dictionary<string, object>
-		{
-			{"JoinedGame_Public", 1}
-		});
+		Analytics.CustomEvent("JoinedGame_Public", new Dictionary<string, object>{});
     }
 
     void JoinPrivateRoom()
@@ -95,10 +92,7 @@ public class MatchMaker : Photon.PunBehaviour
 
         requestRoom = true;
 
-		Analytics.CustomEvent("JoinedGame_Private", new Dictionary<string, object>
-		{
-			{"JoinedGame_Private", 1}
-		});
+		Analytics.CustomEvent("JoinedGame_Private", new Dictionary<string, object>{});
     }
 
     public override void OnJoinedLobby()
@@ -154,10 +148,7 @@ public class MatchMaker : Photon.PunBehaviour
         PhotonNetwork.player.name = "Player1";
 
 		MaxCCUText.SetActive(false);
-		Analytics.CustomEvent("LobbyCreateRoom", new Dictionary<string, object>
-		{
-			{"LobbyCreateRoom", 1}
-		});
+		Analytics.CustomEvent("LobbyCreateRoom", new Dictionary<string, object>{});
     }
 
     public override void OnJoinedRoom()
@@ -173,10 +164,7 @@ public class MatchMaker : Photon.PunBehaviour
 		GlobalScript.Instance.SetMyPlayerIcon();
 
 		MaxCCUText.SetActive(false);
-		Analytics.CustomEvent("LobbyJoinRoom", new Dictionary<string, object>
-		{
-			{"LobbyJoinRoom", 1}
-		});
+		Analytics.CustomEvent("LobbyJoinRoom", new Dictionary<string, object>{});
 
 		ProceedToGame();
 	}
@@ -193,10 +181,7 @@ public class MatchMaker : Photon.PunBehaviour
 	public void OnPhotonMaxCcuReached()
 	{
 		MaxCCUText.SetActive(true);
-		Analytics.CustomEvent("CCUReached", new Dictionary<string, object>
-		{
-			{"CCUReached", 1}
-		});
+		Analytics.CustomEvent("MaxCCUReached", new Dictionary<string, object>{});
 	}
 
     /*
@@ -223,11 +208,6 @@ public class MatchMaker : Photon.PunBehaviour
         {
 			bStartRandomTimer = false;
 			bRandom = false;
-
-			Analytics.CustomEvent("GameModeNetwork", new Dictionary<string, object>
-			{
-				{"GameModeNetwork", 1}
-			});
 
 			// Proceed
 			string log = "Proceeding to game...\n" +
@@ -271,10 +251,7 @@ public class MatchMaker : Photon.PunBehaviour
 
 		if(reallyLeave)
 		{
-			Analytics.CustomEvent("LobbyLeftRoom", new Dictionary<string, object>
-			{
-				{"LobbyLeftRoom", 1}
-			});
+			Analytics.CustomEvent("Lobby_LeftRoom", new Dictionary<string, object>{});
 		}
 
 		StartDisconnecting();
@@ -283,8 +260,8 @@ public class MatchMaker : Photon.PunBehaviour
     void DebugLog(string log)
     {
         Debug.Log(log);
-        GameObject debugText = GameObject.Find("DebugText");
-        debugText.GetComponent<Text>().text = log;
+        //GameObject debugText = GameObject.Find("DebugText");
+        //debugText.GetComponent<Text>().text = log;
     }
 
 	static public bool IsPlayerOne()

@@ -224,7 +224,7 @@ public class GachaScript : MonoBehaviour
 				if(((Defines.ICONS)unlockIcon).ToString().Substring(0, 1) == "R")
 				{
 					gachaInfoText.GetComponent<Text>().text = "";
-					gachaInfoSpecial.GetComponent<Text>().text = "YOU GOT RARE " +  ((Defines.ICONS)unlockIcon).ToString().Substring(5) + " TAC!!!";
+					gachaInfoSpecial.GetComponent<Text>().text = "YOU GOT RARE " +  ((Defines.ICONS)unlockIcon).ToString().Substring(5) + " TAC!!";
 				}
 				else if(((Defines.ICONS)unlockIcon).ToString().Substring(0, 1) == "L")
 				{
@@ -234,12 +234,12 @@ public class GachaScript : MonoBehaviour
 				else
 				{
 					gachaInfoSpecial.GetComponent<Text>().text = "";
-					gachaInfoText.GetComponent<Text>().text = "You got a new " +  ((Defines.ICONS)unlockIcon).ToString().Substring(5) + " TAC!";
+					gachaInfoText.GetComponent<Text>().text = "You got a new " +  ((Defines.ICONS)unlockIcon).ToString().Substring(5) + " Tac!";
 				}
 
-				Analytics.CustomEvent("AvatarUnlocked", new Dictionary<string, object>
+				Analytics.CustomEvent("Unlocked_Tac", new Dictionary<string, object>
 				{
-					{"Unlocked", ((Defines.ICONS)unlockIcon).ToString().Substring(5)}
+					{((Defines.ICONS)unlockIcon).ToString().Substring(0, 4), 1}
 				});
 			}
 				
@@ -427,9 +427,9 @@ public class GachaScript : MonoBehaviour
 			InAppPurchaser purchaser = go.GetComponent<InAppPurchaser>();
 			purchaser.BuyProduct(InAppProductList.ProductType.AVATAR, BuyID);
 
-			Analytics.CustomEvent("AvatarPrePurchase", new Dictionary<string, object>
+			Analytics.CustomEvent("PreBuy_Tac", new Dictionary<string, object>
 			{
-				{"AvatarPrePurchase", BuyID}
+				{((Defines.ICONS)BuyID).ToString().Substring(0, 4), 1}
 			});
 		}
 	}

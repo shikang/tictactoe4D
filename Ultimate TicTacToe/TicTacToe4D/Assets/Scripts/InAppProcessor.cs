@@ -50,9 +50,9 @@ public class InAppProcessor : Singleton<InAppProcessor>
 					GachaScript gacha = go.GetComponent<GachaScript>();
 					gacha.ProcessBuyIcon( productParam.m_nProductParam );
 
-					Analytics.CustomEvent("AvatarPurchased", new Dictionary<string, object>
+					Analytics.CustomEvent("Bought_Tac", new Dictionary<string, object>
 					{
-						{"AvatarPurchased", ((Defines.ICONS)productParam.m_nProductParam).ToString() }
+						{((Defines.ICONS)productParam.m_nProductParam).ToString().Substring(0, 4), 1}
 					});
 					break;
 
@@ -70,10 +70,7 @@ public class InAppProcessor : Singleton<InAppProcessor>
 							mainMenu.EnableDisableAdsButton(true);
 							mainMenu.DisableDisableAdsButton();
 
-							Analytics.CustomEvent("AdsPurchased", new Dictionary<string, object>
-							{
-								{"AdsPurchased", 1}
-							});
+							Analytics.CustomEvent("Bought_Ads", new Dictionary<string, object>{});
 							break;
 						default:
 							Debug.Log( string.Format( "InAppProcessor::ProcessPurchase: FAIL. Unrecognized Ads Product Params: '{0}'", productIdentifier ) );

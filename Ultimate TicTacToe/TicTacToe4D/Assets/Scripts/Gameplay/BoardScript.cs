@@ -150,12 +150,7 @@ public class BoardScript : MonoBehaviour
 				showWinScreen = true;
 				begin = false;
 				GlobalScript.Instance.isInputPaused = false;
-
-				Analytics.CustomEvent("EndGame", new Dictionary<string, object>
-				{
-					{"EndGame", 1},
-					{"Duration", GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().gameDuration}
-				});
+				GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().UpdateAnalyticsGameEnd(true);
 			}
 		}
 		else if(gameMode == Defines.GAMEMODE.AI &&

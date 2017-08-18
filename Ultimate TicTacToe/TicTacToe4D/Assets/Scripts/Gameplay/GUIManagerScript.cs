@@ -131,13 +131,8 @@ public class GUIManagerScript : MonoBehaviour
 		gridEffect_growStage = 0;
 		startTime = 300.0f;
 		gameDuration = 0.0f;
+
 		timerP1 = timerP2 = GlobalScript.Instance.timePerTurn;
-
-		Analytics.CustomEvent("TurnDuration", new Dictionary<string, object>
-		{
-			{"TurnDuration", GlobalScript.Instance.timePerTurn}
-		});
-
 		nameP1 = GlobalScript.Instance.nameP1;
 		nameP2 = GlobalScript.Instance.nameP2;
 
@@ -244,7 +239,9 @@ public class GUIManagerScript : MonoBehaviour
 		}
 		else if (GetComponent<TurnHandler>().turn == Defines.TURN.WAITING)
 		{
-			GUICenterText.GetComponent<Text>().text = "Waiting for other player...";
+			GUICfmText.GetComponent<Text>().text = "Waiting for other player...";
+			GUICfmText.SetActive(true);
+			GUICenterText.SetActive(false);
 			GUICfmNewGame.SetActive(false);
 			GUICfmEndGame.SetActive(false);
 
@@ -724,12 +721,6 @@ public class GUIManagerScript : MonoBehaviour
 
 		ImageRight.GetComponent<Image>().sprite =
 			GetComponent<TurnHandler>().GetSpriteP2();
-
-		Analytics.CustomEvent("AvatarUsed", new Dictionary<string, object>
-		{
-			{"P1", GetComponent<TurnHandler>().GetIconNameP1()},
-			{"P2", GetComponent<TurnHandler>().GetIconNameP2()}
-		}); 
 	}
 
 	public void ToogleEmoteMenu()
@@ -894,5 +885,34 @@ public class GUIManagerScript : MonoBehaviour
 				GUIEmoteFrame.GetComponent<Image>().color = new Color(0.8f, 0.6f, 0.1f, 1.0f);
 			}
 		}
+	}
+
+	public void UpdateAnalyticsGameEnd(bool level_complete = false)
+	{
+		string game_mode = "AI";
+		if(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().gameMode == Defines.GAMEMODE.ONLINE)
+			game_mode = "Online";
+		else if(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().gameMode == Defines.GAMEMODE.LOCAL)
+			game_mode = "Local";
+
+		int time_mode = (int)GlobalScript.Instance.timePerTurn;
+		string tac_P1 = GetComponent<TurnHandler>().GetIconNameP1();
+		string tac_P2 = GetComponent<TurnHandler>().GetIconNameP2();
+		int game_duration = (int)gameDuration;
+
+		Analytics.CustomEvent("GameEndInfo", new Dictionary<string, object>
+		{
+			{"game_mode", game_mode},
+			{"time_mode", time_mode},
+			{"tac_p1", tac_P1},
+			{"tac_p2", tac_P2},
+			{"level_complete", level_complete},
+			{"duration", game_duration}
+		});
+	}
+
+	void OnApplicationQuit()
+	{
+		UpdateAnalyticsGameEnd();
 	}
 }

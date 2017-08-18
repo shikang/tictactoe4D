@@ -120,7 +120,7 @@ public class IconManager : MonoBehaviour
 		mIcon[(int)ID].isBuy 		= isBuy_;
 		mIcon[(int)ID].isGacha		= isGacha_;
 		mIcon[(int)ID].gachaTier	= gachaTier_;
-		mIcon[(int)ID].name			= imagePath.ToString().Substring(6);
+		mIcon[(int)ID].name			= imagePath.Substring(6, 4);
 
 		if(mIcon[(int)ID].gachaTier == TIERS.COMMON)
 			counterGacha_Common++;

@@ -80,6 +80,7 @@ public class BGManager : MonoBehaviour
 		hasInitOnce = false;
 		currNoofParts = 0;
 		timeToNextPart = 0.0f;
+		partsParent.SetActive(true);
 	}
 
 	void SetBGData(int ID, string imagePath, bool _isUnlocked, int _gachaRate)

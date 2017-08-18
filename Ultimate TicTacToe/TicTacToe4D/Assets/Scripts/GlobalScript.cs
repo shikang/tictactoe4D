@@ -115,6 +115,8 @@ public class GlobalScript : MonoBehaviour
 		if (bStartCountdown)
 		{
 			Debug.Log("Counting downing");
+			GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().UpdateText.GetComponent<Text>().text =
+			GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().UpdateText_PublicGame.GetComponent<Text>().text = "Game Starting...";
 			UpdateCountdownToPlay();
 		}
 	}
@@ -328,12 +330,13 @@ public class GlobalScript : MonoBehaviour
 
 	public void SearchFriend()
 	{
-		GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().UpdateText.SetActive(true);
-
         // This is a non update fn, so if you want to search for friend here, need some kind of boolean trigger.
         //bStartCountdown = true;
         matchMaker.GetComponent<MatchMaker>().JoiningRoom();
-		GameObject.Find("Password").GetComponent<InputField>().enabled = false;
+		GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().UpdateText.SetActive(true);
+
+		if(GameObject.Find("Password"))
+			GameObject.Find("Password").GetComponent<InputField>().interactable = false;
 	}
 
     public void LeaveRoom()

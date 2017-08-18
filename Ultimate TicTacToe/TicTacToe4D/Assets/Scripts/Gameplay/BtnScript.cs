@@ -59,24 +59,17 @@ public class BtnScript : MonoBehaviour
             }
             else
             {
-				Analytics.CustomEvent("RestartGame", new Dictionary<string, object>
-				{
-					{"RestartGame", 1},
-					{"Duration", GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().gameDuration}
-				});
-
+				GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().UpdateAnalyticsGameEnd();
 				AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
+				BGManager.Instance.partsParent.SetActive(false);
 				BackToMainMenu(2, false);
                 Adverts.Instance.RandomShowAd();
             }
         }
 		else if(GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().pausedState == 2)
         {
-			Analytics.CustomEvent("QuitGame", new Dictionary<string, object>
-			{
-				{"QuitGame", 1},
-				{"Duration", GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().gameDuration}
-			});
+			GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().UpdateAnalyticsGameEnd();
+			BGManager.Instance.partsParent.SetActive(false);
 
 			GameObject [] allGUI = GameObject.FindGameObjectsWithTag("GUIManager");
 			foreach(GameObject curr in allGUI)
@@ -89,11 +82,9 @@ public class BtnScript : MonoBehaviour
                 NetworkGameLogic networkLogic = NetworkGameLogic.GetNetworkGameLogic();
                 networkLogic.AfterActionDecision(NetworkGameLogic.GetPlayerNumber(), NetworkGameLogic.AFTERMATH_ACTION.QUIT);
             }
-            else
-            {
-				AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
-				BackToMainMenu(1, false);
-            }
+
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
+			BackToMainMenu(1, false);
             Adverts.Instance.RandomShowAd();
         }
 	}
@@ -117,14 +108,13 @@ public class BtnScript : MonoBehaviour
             NetworkGameLogic networkLogic = NetworkGameLogic.GetNetworkGameLogic();
             networkLogic.AfterActionDecision(NetworkGameLogic.GetPlayerNumber(), NetworkGameLogic.AFTERMATH_ACTION.RESTART);
             GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().WaitingForOtherPlayer();
-			AudioManager.Instance.PlaySoundEvent(SOUNDID.BACK);
         }
         else
         {
             SceneManager.LoadScene("GameScene");
         }
 		AudioManager.Instance.PlaySoundEvent(SOUNDID.BGM);
-		Adverts.Instance.RandomShowAd();
+		//Adverts.Instance.RandomShowAd();
     }
 
 	public void BtnConfirmMainMenu()
