@@ -21,6 +21,7 @@ public class MatchMaker : Photon.PunBehaviour
 
     public UnityEvent continueWithGame;
     public UnityEvent stopGame;
+	public UnityEvent onConnected;
 
 	private bool bRandom = false;
 	private float fRandomTimer = 0.0f;
@@ -40,6 +41,7 @@ public class MatchMaker : Photon.PunBehaviour
 
 		continueWithGame.AddListener( delegate{ GlobalScript.Instance.FoundFriend(); } );
 		stopGame.AddListener( delegate{ GlobalScript.Instance.ResetCountdown(); } );
+		onConnected.AddListener( delegate{ Camera.main.GetComponent<MainMenuScript>().OnConnected(roomName == ""); } );
 
 		fRandomTimer = 0.0f;
 		bStartRandomTimer = false;
@@ -100,7 +102,10 @@ public class MatchMaker : Photon.PunBehaviour
         base.OnJoinedLobby();
 
         joinedLobby = true;
-    }
+
+		if (onConnected != null)
+			onConnected.Invoke();
+	}
 
     public override void OnConnectedToMaster()
     {
@@ -222,10 +227,12 @@ public class MatchMaker : Photon.PunBehaviour
         }
     }
 
+	/*
     void OnGUI()
     {
         GUILayout.Label(PhotonNetwork.connectionStateDetailed.ToString());
     }
+	*/
 
     public void JoiningRoom()
     {

@@ -22,7 +22,9 @@ public class MainMenuScript : MonoBehaviour
 	public GameObject LikeFacebookScreen;
 
 	public GameObject UpdateText;
+	public GameObject UpdateConnectingText;
 	public GameObject UpdateText_PublicGame;
+	public GameObject UpdateText_Connecting;
 	public GameObject PasswordText;
 	public GameObject PasswordField;
 	public GameObject SearchBtn;
@@ -242,14 +244,16 @@ public class MainMenuScript : MonoBehaviour
 		// Network
 			StartGameNetworkedScreen.SetActive(true);
 			UpdateText.SetActive(false);
+			UpdateConnectingText.SetActive(false);
 			UpdateText_PublicGame.SetActive(false);
+			UpdateText_Connecting.SetActive(false);
 			PasswordText.SetActive(false);
 			PasswordField.SetActive(false);
 			SearchBtn.SetActive(false);
 			SearchGrey.SetActive(false);
 			FindFriendButton.SetActive(true);
 			JoinPublicButton.SetActive(true);
-
+				
 			GlobalScript.Instance.ResetGreyBtns();
 			//PlayerNameInput.GetComponent<InputField>().enabled = true;
 			//PlayerIconInput.GetComponent<Button>().interactable = true;
@@ -496,4 +500,18 @@ public class MainMenuScript : MonoBehaviour
 			}
 		}
     }
+
+	public void OnConnected(bool pub)
+	{
+		if (pub)
+		{
+			UpdateText_PublicGame.SetActive(true);
+			UpdateText_Connecting.SetActive(false);
+		}
+		else
+		{
+			UpdateText.SetActive(true);
+			UpdateConnectingText.SetActive(false);
+		}
+	}
 }

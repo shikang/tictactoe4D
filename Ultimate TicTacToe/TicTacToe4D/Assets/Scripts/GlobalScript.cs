@@ -305,10 +305,11 @@ public class GlobalScript : MonoBehaviour
 	public void FindPublicGame()
 	{
 		SetPlayerName();
-		GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().UpdateText_PublicGame.SetActive(true);
-        // This is a non update fn, so if you want to search for game here, need some kind of boolean trigger.
-        //bStartCountdown = true;
-        matchMaker.GetComponent<MatchMaker>().roomInputField.GetComponent<InputField>().text = "";
+		GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().UpdateText_PublicGame.SetActive(false);
+		GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().UpdateText_Connecting.SetActive(true);
+		// This is a non update fn, so if you want to search for game here, need some kind of boolean trigger.
+		//bStartCountdown = true;
+		matchMaker.GetComponent<MatchMaker>().roomInputField.GetComponent<InputField>().text = "";
         matchMaker.GetComponent<MatchMaker>().JoiningRoom();
 
 		//ShowRoomChoice(false);
@@ -333,9 +334,10 @@ public class GlobalScript : MonoBehaviour
         // This is a non update fn, so if you want to search for friend here, need some kind of boolean trigger.
         //bStartCountdown = true;
         matchMaker.GetComponent<MatchMaker>().JoiningRoom();
-		GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().UpdateText.SetActive(true);
+		GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().UpdateText.SetActive(false);
+		GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().UpdateConnectingText.SetActive(true);
 
-		if(GameObject.Find("Password"))
+		if (GameObject.Find("Password"))
 			GameObject.Find("Password").GetComponent<InputField>().interactable = false;
 	}
 
