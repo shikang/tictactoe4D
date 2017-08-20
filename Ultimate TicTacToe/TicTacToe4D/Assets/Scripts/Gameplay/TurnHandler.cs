@@ -33,9 +33,10 @@ public class TurnHandler : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		if(turn == Defines.TURN.NOTSTARTED)
+		if (turn == Defines.TURN.NOTSTARTED)
 		{
-			if(GameStartAnim.Instance.GameStartAnimEnded())
+			if (GameStartAnim.Instance.GameStartAnimEnded() &&
+				GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().IsNetworkReady())
 			{
 				turn = Defines.TURN.P1;
 			}

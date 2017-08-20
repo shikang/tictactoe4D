@@ -48,7 +48,8 @@ public class GridScript : MonoBehaviour
 			GetTurnHandler().turn == Defines.TURN.NOTSTARTED ||
 			GetTurnHandler().turn == Defines.TURN.GAMEOVER ||
 			GetGUIManagerScript().GUIEmoteScreen.GetActive() ||
-			GetTurnHandler().pausedState != 0)
+			GetTurnHandler().pausedState != 0 ||
+			GetTurnHandler().turn == Defines.TURN.DISCONNECTED)
 			return;
 
 

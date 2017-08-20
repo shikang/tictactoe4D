@@ -97,6 +97,7 @@ public class GUIManagerScript : MonoBehaviour
 	bool isCDSoundPlayed1;
 
 	bool addedMoney;
+	bool networkStart = false;
 
 	void Start ()
 	{
@@ -172,6 +173,9 @@ public class GUIManagerScript : MonoBehaviour
 			GetComponent<TurnHandler>().UpdatePlayerIcons();
 			SetAvatar();
 		}
+
+		if ( !NetworkManager.IsPlayerOne() )
+			NetworkGameLogic.GetNetworkGameLogic().SendReadySignal( GlobalScript.Instance.timePerTurn );
 	}
 
 	void Update()
@@ -914,5 +918,22 @@ public class GUIManagerScript : MonoBehaviour
 	void OnApplicationQuit()
 	{
 		UpdateAnalyticsGameEnd();
+	}
+
+	public void SetNetworkReady(float timer)
+	{
+		if ( !NetworkManager.IsConnected() )
+			return;
+
+		networkStart = true;
+		timerP1 = timerP2 = GlobalScript.Instance.timePerTurn = Mathf.Max(timer, GlobalScript.Instance.timePerTurn);
+
+		if ( NetworkManager.IsPlayerOne() )
+			NetworkGameLogic.GetNetworkGameLogic().SendReadySignal( GlobalScript.Instance.timePerTurn );
+	}
+
+	public bool IsNetworkReady()
+	{
+		return !NetworkManager.IsConnected() || networkStart;
 	}
 }

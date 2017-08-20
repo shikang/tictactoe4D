@@ -136,7 +136,12 @@ public class NetworkGameLogic : Photon.PunBehaviour
         photonView.RPC("AfterActionDecision_RPC", PhotonTargets.Others, player, action);
     }
 
-    [PunRPC]
+	public void SendReadySignal(float timer)
+	{
+		photonView.RPC("SendReadySignal_RPC", PhotonTargets.Others, timer);
+	}
+
+	[PunRPC]
     void SendMessage_RPC(string message)
     {
         string log = NetworkManager.GetPlayersInfoPrefix() + message + "\n";
@@ -228,5 +233,11 @@ public class NetworkGameLogic : Photon.PunBehaviour
 		{
 			GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().ShowP1EmoteSpeech(emote);
 		}
+	}
+
+	[PunRPC]
+	void SendReadySignal_RPC(float timer)
+	{
+		GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().SetNetworkReady(timer);
 	}
 }
