@@ -32,7 +32,8 @@ public class BtnScript : MonoBehaviour
 		GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().GUICfmText.GetComponent<Text>().text
 			= "Are you sure you want to restart?";
 
-		AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
+		if(AudioManager.Instance)
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 	}
 
 	public void BtnMainMenu()
@@ -46,7 +47,8 @@ public class BtnScript : MonoBehaviour
 		GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().GUICfmText.GetComponent<Text>().text
 			= "Are you sure you want to quit?";
 
-		AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
+		if(AudioManager.Instance)
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 	}
 
 	public void BtnYes()
@@ -60,7 +62,8 @@ public class BtnScript : MonoBehaviour
             else
             {
 				GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().UpdateAnalyticsGameEnd();
-				AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
+				if(AudioManager.Instance)
+					AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 				BGManager.Instance.partsParent.SetActive(false);
 				BackToMainMenu(2, false);
                 Adverts.Instance.RandomShowAd();
@@ -79,11 +82,14 @@ public class BtnScript : MonoBehaviour
 
             if (NetworkManager.IsConnected())
             {
+				Debug.Log("ttt: : " + GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn);
                 NetworkGameLogic networkLogic = NetworkGameLogic.GetNetworkGameLogic();
                 networkLogic.AfterActionDecision(NetworkGameLogic.GetPlayerNumber(), NetworkGameLogic.AFTERMATH_ACTION.QUIT);
+				GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn = Defines.TURN.DISCONNECTED;
             }
 
-			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
+			if(AudioManager.Instance)
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 			BackToMainMenu(1, false);
             Adverts.Instance.RandomShowAd();
         }
@@ -96,7 +102,8 @@ public class BtnScript : MonoBehaviour
 			GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().pausedState = 0;
 			GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().SetCfmAlpha(false);
 			GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().GUICfmText.GetComponent<Text>().text = "";
-			AudioManager.Instance.PlaySoundEvent(SOUNDID.BACK);
+			if(AudioManager.Instance)
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.BACK);
 		}
 	}
 
@@ -113,7 +120,8 @@ public class BtnScript : MonoBehaviour
         {
             SceneManager.LoadScene("GameScene");
         }
-		AudioManager.Instance.PlaySoundEvent(SOUNDID.BGM);
+		if(AudioManager.Instance)
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.BGM);
 		//Adverts.Instance.RandomShowAd();
     }
 
@@ -121,8 +129,9 @@ public class BtnScript : MonoBehaviour
 	{
 		NetworkManager.LeaveRoom();
 		BackToMainMenu();
-		Adverts.Instance.RandomShowAd();
-		AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
+		//Adverts.Instance.RandomShowAd();
+		if(AudioManager.Instance)
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 	}
 
 	public void BtnEmote()
@@ -131,7 +140,9 @@ public class BtnScript : MonoBehaviour
 			return;
 		
 		GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().ToogleEmoteMenu();
-		AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
+
+		if(AudioManager.Instance)
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 	}
 
 	void BtnClickEmote(string emote)
@@ -160,13 +171,15 @@ public class BtnScript : MonoBehaviour
 		}
 
 		GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().HideEmoteMenu();
-		AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
+
+		if(AudioManager.Instance)
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 	}
 
 	public void BackToMainMenu(int dest = 1, bool playSound = true)
 	{
 		// Do fade out logic here
-		if(playSound)
+		if(AudioManager.Instance && playSound)
 			AudioManager.Instance.PlaySoundEvent(SOUNDID.BACK);
 		GameStartAnim.Instance.FadeOut(dest);
 	}
@@ -177,7 +190,9 @@ public class BtnScript : MonoBehaviour
 			return;
 
 		BtnClickEmote("Good Game");
-		AudioManager.Instance.PlaySoundEvent(SOUNDID.ICON_HIGHLIGHTED);
+
+		if(AudioManager.Instance)
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.ICON_HIGHLIGHTED);
 	}
 
 	public void BtnClickWellPlayedEmote()
@@ -186,7 +201,9 @@ public class BtnScript : MonoBehaviour
 			return;
 
 		BtnClickEmote("Well Played!");
-		AudioManager.Instance.PlaySoundEvent(SOUNDID.ICON_HIGHLIGHTED);
+
+		if(AudioManager.Instance)
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.ICON_HIGHLIGHTED);
 	}
 
 	public void BtnClickWowEmote()
@@ -195,7 +212,8 @@ public class BtnScript : MonoBehaviour
 			return;
 
 		BtnClickEmote("Wow!");
-		AudioManager.Instance.PlaySoundEvent(SOUNDID.ICON_HIGHLIGHTED);
+		if(AudioManager.Instance)
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.ICON_HIGHLIGHTED);
 	}
 
 	public void BtnClickOopsEmote()
@@ -204,7 +222,8 @@ public class BtnScript : MonoBehaviour
 			return;
 
 		BtnClickEmote("Oops!");
-		AudioManager.Instance.PlaySoundEvent(SOUNDID.ICON_HIGHLIGHTED);
+		if(AudioManager.Instance)
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.ICON_HIGHLIGHTED);
 	}
 
 	public void BtnClickThanksEmote()
@@ -213,7 +232,8 @@ public class BtnScript : MonoBehaviour
 			return;
 
 		BtnClickEmote("Thanks");
-		AudioManager.Instance.PlaySoundEvent(SOUNDID.ICON_HIGHLIGHTED);
+		if(AudioManager.Instance)
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.ICON_HIGHLIGHTED);
 	}
 
 	public void BtnClickGoodLuckEmote()
@@ -222,7 +242,8 @@ public class BtnScript : MonoBehaviour
 			return;
 
 		BtnClickEmote("Good Luck!");
-		AudioManager.Instance.PlaySoundEvent(SOUNDID.ICON_HIGHLIGHTED);
+		if(AudioManager.Instance)
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.ICON_HIGHLIGHTED);
 	}
 
 	bool CanUseEmoji()

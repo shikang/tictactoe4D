@@ -85,13 +85,13 @@ public class GlobalScript : MonoBehaviour
 		bStartCountdown = false;
 		gameInit = 0;
 
-		countdownTimerToStart = 5.0f;
+		countdownTimerToStart = 3.0f;
 	}
 
     public void ResetCountdown()
     {
         bStartCountdown = false;
-        countdownTimerToStart = 5.0f;
+        countdownTimerToStart = 3.0f;
 
         GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().UpdateText.SetActive(false);
 		GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().UpdateText_PublicGame.SetActive(false);
@@ -334,7 +334,6 @@ public class GlobalScript : MonoBehaviour
         // This is a non update fn, so if you want to search for friend here, need some kind of boolean trigger.
         //bStartCountdown = true;
         matchMaker.GetComponent<MatchMaker>().JoiningRoom();
-		GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().UpdateText.SetActive(false);
 		GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().UpdateConnectingText.SetActive(true);
 
 		if (GameObject.Find("Password"))
@@ -370,7 +369,7 @@ public class GlobalScript : MonoBehaviour
 		{
 			bStartCountdown = false;
 
-			countdownTimerToStart = 5.0f;
+			countdownTimerToStart = 3.0f;
 			GameObject.FindGameObjectWithTag("MainMenuCanvas").GetComponent<MenuBtnScript>().isStartingGame = true;
 		}
 	}

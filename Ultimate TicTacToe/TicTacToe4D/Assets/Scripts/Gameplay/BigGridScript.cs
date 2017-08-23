@@ -134,11 +134,14 @@ public class BigGridScript : MonoBehaviour
 	{
 		if(IsGridCompleted(_turn))
 		{
-			if(VibrationManager.HasVibrator())
+			if(GameData.current.hasVibrate && VibrationManager.HasVibrator())
 				VibrationManager.Vibrate(Defines.V_WINBIGGRID);
 
 			if( !(TutorialScript.Instance.isTutorial && bigGridID == 7) && !(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().IsBigGridCompleted()) )
-				AudioManager.Instance.PlaySoundEvent(SOUNDID.WIN_BIGGRID);
+			{
+				if(AudioManager.Instance)
+					AudioManager.Instance.PlaySoundEvent(SOUNDID.WIN_BIGGRID);
+			}
 			
 			//add the points
 			if(CanGetScore())
@@ -158,7 +161,9 @@ public class BigGridScript : MonoBehaviour
 				tmp.transform.localScale = new Vector3(1,1,1);
 				tmp.transform.localPosition =  new Vector3(0,0,0);
 				tmp.GetComponent<Text>().text = "+ " + _score + "!";
-				AudioManager.Instance.PlaySoundEvent(SOUNDID.GETPOINTS);
+
+				if(AudioManager.Instance)
+					AudioManager.Instance.PlaySoundEvent(SOUNDID.GETPOINTS);
 			}
 
 			//begin to do the shakings
@@ -190,7 +195,7 @@ public class BigGridScript : MonoBehaviour
 		}
 		else if(IsDraw())
 		{
-			if(VibrationManager.HasVibrator())
+			if(GameData.current.hasVibrate && VibrationManager.HasVibrator())
 				VibrationManager.Vibrate(Defines.V_WINBIGGRID);
 
 			gridWinner = 3;

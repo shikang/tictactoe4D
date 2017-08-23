@@ -273,7 +273,9 @@ public class GachaScript : MonoBehaviour
 
 				// Reset Grey BG
 				SetGreyBG(false);
-				AudioManager.Instance.PlaySoundEvent(SOUNDID.GACHAEND);
+
+				if(AudioManager.Instance)
+					AudioManager.Instance.PlaySoundEvent(SOUNDID.GACHAEND);
 			}
 
 			// Keep looping icons
@@ -283,7 +285,9 @@ public class GachaScript : MonoBehaviour
 				currIcon.GetComponent<Image>().sprite =
 					IconManager.Instance.GetIcon(randomList[currCounter]);
 				currTime = changeTimer[currCounter];
-				AudioManager.Instance.PlaySoundEvent(SOUNDID.GACHACOUNT);
+
+				if(AudioManager.Instance)
+					AudioManager.Instance.PlaySoundEvent(SOUNDID.GACHACOUNT);
 			}
 		}
 	}
@@ -390,7 +394,9 @@ public class GachaScript : MonoBehaviour
 		GachaPage.SetActive(false);
 		BuyPage.SetActive(true);
 		ResetSpecialText();
-		AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
+
+		if(AudioManager.Instance)
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 	}
 
 	public void BackBuyButtonClick()
@@ -399,7 +405,9 @@ public class GachaScript : MonoBehaviour
 		GachaPage.SetActive(true);
 		BuyPage.SetActive(false);
 		BuyIcon.SetActive(false);
-		AudioManager.Instance.PlaySoundEvent(SOUNDID.BACK);
+
+		if(AudioManager.Instance)
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.BACK);
 	}
 
 	public void SetBuyIcon(int i)
@@ -407,7 +415,9 @@ public class GachaScript : MonoBehaviour
 		BuyIcon.SetActive(true);
 		BuyIcon.GetComponent<Image>().sprite = IconManager.Instance.GetIcon(i);
 		BuyID = i;
-		AudioManager.Instance.PlaySoundEvent(SOUNDID.AVATARSELECT);
+
+		if(AudioManager.Instance)
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.AVATARSELECT);
 	}
 
 	public void BuyCurrentIcon()
@@ -455,7 +465,9 @@ public class GachaScript : MonoBehaviour
 		BuyIconFX.SetActive(true);
 		BuyIconFX.GetComponent<Image>().sprite = BuyIcon.GetComponent<Image>().sprite;
 		isAnimatingBuy = true;
-		AudioManager.Instance.PlaySoundEvent(SOUNDID.ICON_BOUGHT);
+
+		if(AudioManager.Instance)
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.ICON_BOUGHT);
 
 		// Enable UI
 		EnableBuyUI(true);

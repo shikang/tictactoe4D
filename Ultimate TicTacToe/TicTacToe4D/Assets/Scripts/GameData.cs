@@ -20,6 +20,7 @@ public class GameData
 	public bool shownLikeFacebook;
 	public bool hasBGM;
 	public bool hasSFX;
+	public bool hasVibrate;
 
 	public GameData()
 	{
@@ -27,7 +28,7 @@ public class GameData
 		icons = new List<Defines.ICONS>();
 		win = 0;
 		matchPlayed = 0;
-		avatarName = "Tom";
+		avatarName = RandomName();
 		avatarIcon = 4;
 		nextFreeRollTime = DateTime.Now;
 		removeAds = false;
@@ -35,5 +36,23 @@ public class GameData
 		shownRateApp = false;
 		hasBGM = true;
 		hasSFX = true;
+		hasVibrate = true;
+	}
+
+	string RandomName()
+	{
+		int rand = UnityEngine.Random.Range(0, 7);
+		switch(rand)
+		{
+		case 0: return "Peter";
+		case 1: return "Jane";
+		case 2: return "Chris";
+		case 3: return "Tony";
+		case 4: return "Bruce";
+		case 5: return "Mary";
+		case 6: return "Natasha";
+		default: return "Tommy";
+		}
+		return "Stephen";
 	}
 }

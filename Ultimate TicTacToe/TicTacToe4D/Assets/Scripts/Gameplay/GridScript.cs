@@ -206,10 +206,10 @@ public class GridScript : MonoBehaviour
 			mainIcon.GetComponent<SpriteRenderer>().sprite = GetTurnHandler().GetSpriteP1();
 			mainIcon.SetActive(true);
 
-			if(GameStartAnim.Instance.GameStartAnimEnded())
+			if(GameStartAnim.Instance.GameStartAnimEnded() && AudioManager.Instance)
 				AudioManager.Instance.PlaySoundEvent(SOUNDID.ICON_CONFIRMED);
 
-			if(VibrationManager.HasVibrator())
+			if(GameData.current.hasVibrate && VibrationManager.HasVibrator())
 				VibrationManager.Vibrate(Defines.V_PLACEICON);
 			break;
 
@@ -219,10 +219,10 @@ public class GridScript : MonoBehaviour
 			mainIcon.GetComponent<SpriteRenderer>().sprite = GetTurnHandler().GetSpriteP2();
 			mainIcon.SetActive(true);
 
-			if(GameStartAnim.Instance.GameStartAnimEnded())
+			if(GameStartAnim.Instance.GameStartAnimEnded() && AudioManager.Instance)
 				AudioManager.Instance.PlaySoundEvent(SOUNDID.ICON_CONFIRMED);
 
-			if(VibrationManager.HasVibrator())
+			if(GameData.current.hasVibrate && VibrationManager.HasVibrator())
 				VibrationManager.Vibrate(Defines.V_PLACEICON);
 			break;
 
@@ -232,7 +232,9 @@ public class GridScript : MonoBehaviour
 			GetGUIManagerScript().gridEffect_growStage = 10;
 			GetGUIManagerScript().gridEffect.transform.position = transform.position;
 			mainIcon.SetActive(false);
-			AudioManager.Instance.PlaySoundEvent(SOUNDID.ICON_HIGHLIGHTED);
+
+			if(AudioManager.Instance)
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.ICON_HIGHLIGHTED);
 			break;
 
 		case 4:	// Invalid (Red)
@@ -240,7 +242,9 @@ public class GridScript : MonoBehaviour
 			GetComponent<Animator>().SetTrigger("isInvalid");
 			//GetBoardScript().SetCurrentHighlight(10, 10);
 			mainIcon.SetActive(false);
-			AudioManager.Instance.PlaySoundEvent(SOUNDID.ICON_INVALID);
+
+			if(AudioManager.Instance)
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.ICON_INVALID);
 			break;
 
 		default:

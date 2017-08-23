@@ -238,14 +238,17 @@ public class BoardScript : MonoBehaviour
 
 			GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn = Defines.TURN.GAMEOVER;
 
-			if(VibrationManager.HasVibrator())
+			if(GameData.current.hasVibrate && VibrationManager.HasVibrator())
 			{
 				long [] pattern;
 				pattern = new long[]{0, 100, 100, 100, 100, 350};
 				VibrationManager.Vibrate(pattern, -1);
 			}
-			AudioManager.Instance.PlaySoundEvent(SOUNDID.STOPBGM);
-			AudioManager.Instance.PlaySoundEvent(SOUNDID.WIN_GAME);
+			if(AudioManager.Instance)
+			{
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.STOPBGM);
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.WIN_GAME);
+			}
 
 			begin = true;
 			if(CanGetScore())
@@ -264,7 +267,9 @@ public class BoardScript : MonoBehaviour
 				tmp.transform.localScale = new Vector3(1,1,1);	
 				tmp.transform.localPosition =  new Vector3(0,0,0);
 				tmp.GetComponent<Text>().text = "+ " + _score + "!";
-				AudioManager.Instance.PlaySoundEvent(SOUNDID.GETPOINTS);
+
+				if(AudioManager.Instance)
+					AudioManager.Instance.PlaySoundEvent(SOUNDID.GETPOINTS);
 			}
 		}
 		else if(IsDraw()) // Draw. All boards filled
@@ -272,7 +277,7 @@ public class BoardScript : MonoBehaviour
 			SetWinner(0);
 			showWinScreen = true;
 
-			if(VibrationManager.HasVibrator())
+			if(GameData.current.hasVibrate && VibrationManager.HasVibrator())
 			{
 				long [] pattern;
 				pattern = new long[]{0, 200, 200, 200, 200, 200};

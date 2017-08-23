@@ -125,7 +125,7 @@ public class MainMenuScript : MonoBehaviour
 		BlackOverlay.GetComponent<Image>().color = Color.black;
 		isFading = true;
 
-		if(!GlobalScript.Instance.isBGMPlaying && GameData.current.hasBGM)
+		if(!GlobalScript.Instance.isBGMPlaying && GameData.current.hasBGM && AudioManager.Instance)
 		{
 			AudioManager.Instance.PlaySoundEvent(SOUNDID.BGM);
 		}
@@ -511,6 +511,7 @@ public class MainMenuScript : MonoBehaviour
 		else
 		{
 			UpdateText.SetActive(true);
+			UpdateText.GetComponent<Text>().text = "Finding Game...";
 			UpdateConnectingText.SetActive(false);
 		}
 	}

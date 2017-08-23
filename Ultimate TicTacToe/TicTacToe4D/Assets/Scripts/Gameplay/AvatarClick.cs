@@ -21,7 +21,9 @@ public class AvatarClick : MonoBehaviour
 		if(btnType == 1)
 		{
 			AvatarHandler.Instance.SetAvatarIcon(ID);
-			AudioManager.Instance.PlaySoundEvent(SOUNDID.AVATARSELECT);
+
+			if(AudioManager.Instance)
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.AVATARSELECT);
 		}
 
 		// Buy Page

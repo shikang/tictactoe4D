@@ -230,7 +230,7 @@ public class AvatarHandler : MonoBehaviour
 		GlobalScript.Instance.avatarState = 1;
 		ChangeAllAvatarColor(1);
 
-		if(playSound)
+		if(AudioManager.Instance && playSound)
 			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 	}
 
@@ -238,7 +238,9 @@ public class AvatarHandler : MonoBehaviour
 	{
 		GlobalScript.Instance.avatarState = 2;
 		ChangeAllAvatarColor(2);
-		AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
+
+		if(AudioManager.Instance)
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 	}
 		
 	public void SetAvatarIcon(int i)

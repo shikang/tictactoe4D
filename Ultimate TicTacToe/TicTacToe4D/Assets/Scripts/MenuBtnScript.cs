@@ -42,7 +42,8 @@ public enum BUTTONTYPES
 	NO_LIKE_OUR_FACEBOOK,
 
 	SETTINGS_BGM,	//23
-	SETTINGS_SFX
+	SETTINGS_SFX,
+	SETTINGS_VIBRATION
 };
 
 public enum SCREENS
@@ -74,6 +75,8 @@ public class MenuBtnScript : MonoBehaviour
 	public GameObject BGM_Off;
 	public GameObject SFX_On;
 	public GameObject SFX_Off;
+	public GameObject Vibrate_On;
+	public GameObject Vibrate_Off;
 
 
 	void Start ()
@@ -87,6 +90,7 @@ public class MenuBtnScript : MonoBehaviour
 		SaveLoad.Load();
 		UpdateBGMButton();
 		UpdateSFXButton();
+		UpdateVibrateButton();
 	}
 
 	void Update ()
@@ -122,7 +126,7 @@ public class MenuBtnScript : MonoBehaviour
 	{
 		if(isStartingGame)
 		{
-			if(VibrationManager.HasVibrator())
+			if(GameData.current.hasVibrate && VibrationManager.HasVibrator())
 				VibrationManager.Vibrate(Defines.V_STARTGAME);
 
 			blackScreen.SetActive(true);
@@ -145,14 +149,18 @@ public class MenuBtnScript : MonoBehaviour
 			{
 				BGM_On.SetActive(true);
 				BGM_Off.SetActive(false);
-				AudioManager.Instance.PlaySoundEvent(SOUNDID.BGM);
+
+				if(AudioManager.Instance)
+					AudioManager.Instance.PlaySoundEvent(SOUNDID.BGM);
 			}
 		}
 		else
 		{
 			BGM_On.SetActive(false);
 			BGM_Off.SetActive(true);
-			AudioManager.Instance.PlaySoundEvent(SOUNDID.STOPBGM);
+
+			if(AudioManager.Instance)
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.STOPBGM);
 		}
 	}
 
@@ -162,13 +170,31 @@ public class MenuBtnScript : MonoBehaviour
 		{
 			SFX_On.SetActive(true);
 			SFX_Off.SetActive(false);
-			AudioManager.Instance.SetSFXVol(100.0f);
+
+			if(AudioManager.Instance)
+				AudioManager.Instance.SetSFXVol(100.0f);
 		}
 		else
 		{
 			SFX_On.SetActive(false);
 			SFX_Off.SetActive(true);
-			AudioManager.Instance.SetSFXVol(0.001f);
+
+			if(AudioManager.Instance)
+				AudioManager.Instance.SetSFXVol(0.001f);
+		}
+	}
+
+	void UpdateVibrateButton()
+	{
+		if(GameData.current.hasVibrate)
+		{
+			Vibrate_On.SetActive(true);
+			Vibrate_Off.SetActive(false);
+		}
+		else
+		{
+			Vibrate_On.SetActive(false);
+			Vibrate_Off.SetActive(true);
 		}
 	}
 
@@ -187,7 +213,7 @@ public class MenuBtnScript : MonoBehaviour
 			GlobalScript.Instance.SetSinglePlayerName();
 			GlobalScript.Instance.SetSinglePlayerIcon();
 
-			if(GameData.current.finishedTutorial)
+			if(GameData.current.finishedTutorial && AudioManager.Instance)
 				AudioManager.Instance.PlaySoundEvent(SOUNDID.STARTGAME);
 
 			break;
@@ -201,14 +227,18 @@ public class MenuBtnScript : MonoBehaviour
 			GlobalScript.Instance.avatarState = 1;
 			AvatarHandler.Instance.UpdateUnlockedAvatarsStatus();
 			AvatarHandler.Instance.SetAvatarPlaceHolderText();
-			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
+
+			if(AudioManager.Instance)
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 			break;
 
 		case BUTTONTYPES.MAIN_NETWORK:
 			currScreen = SCREENS.ONLINEPLAY;
 			GlobalScript.Instance.gameMode = 2;
 			Camera.main.GetComponent<MainMenuScript>().ChangeScreen(2);
-			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
+
+			if(AudioManager.Instance)
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 			break;
 
 		case BUTTONTYPES.MAIN_GACHA:
@@ -218,7 +248,9 @@ public class MenuBtnScript : MonoBehaviour
 			Camera.main.GetComponent<MainMenuScript>().Avatar.SetActive(false);
 			Camera.main.GetComponent<MainMenuScript>().Settings.SetActive(false);
 			AvatarHandler.Instance.UpdateUnlockedAvatarsStatus();
-			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
+
+			if(AudioManager.Instance)
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 			break;
 
 		case BUTTONTYPES.MAIN_SETTINGS:
@@ -228,7 +260,9 @@ public class MenuBtnScript : MonoBehaviour
 				currScreen = SCREENS.MAINMENU;
 			isShowSettingsScreen = !isShowSettingsScreen;
 			Camera.main.GetComponent<MainMenuScript>().SettingsScreen.SetActive(isShowSettingsScreen);
-			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
+
+			if(AudioManager.Instance)
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 			break;
 
 		case BUTTONTYPES.MAIN_AVATAR:
@@ -239,7 +273,9 @@ public class MenuBtnScript : MonoBehaviour
 			Camera.main.GetComponent<MainMenuScript>().Settings.SetActive(false);
 			GlobalScript.Instance.avatarState = 3;
 			AvatarHandler.Instance.UpdateUnlockedAvatarsStatus();
-			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
+
+			if(AudioManager.Instance)
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 			break;
 
 		// Back To Main Menu
@@ -258,7 +294,9 @@ public class MenuBtnScript : MonoBehaviour
 			}
 
 			AvatarHandler.Instance.OnClickLocalPlayIcon1(false);
-			AudioManager.Instance.PlaySoundEvent(SOUNDID.BACK);
+
+			if(AudioManager.Instance)
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.BACK);
 
 	        //GlobalScript.Instance.LeaveRoom();
 	        //GlobalScript.Instance.ResetCountdown();
@@ -268,7 +306,9 @@ public class MenuBtnScript : MonoBehaviour
 			isStartingGame = true;
 			GlobalScript.Instance.SetLocalMultiPlayerName();
 			GlobalScript.Instance.SetLocalMultiPlayerIcon();
-			AudioManager.Instance.PlaySoundEvent(SOUNDID.STARTGAME);
+
+			if(AudioManager.Instance)
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.STARTGAME);
 			break;
 
 		case BUTTONTYPES.NETWORK_PUBLICGAME:
@@ -278,23 +318,39 @@ public class MenuBtnScript : MonoBehaviour
 			Camera.main.GetComponent<MainMenuScript>().networkMenuAnimStage = 1;
 			GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().SetAnim(1);
 			GlobalScript.Instance.SetGreyBtns();
-			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
+
+			if(AudioManager.Instance)
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 			break;
 
 		case BUTTONTYPES.NETWORK_PRIVATEGAME:
 			GlobalScript.Instance.FindFriendGame();
 			Camera.main.GetComponent<MainMenuScript>().networkMenuAnimStage = 1;
-			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
+
+			if(AudioManager.Instance)
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 			break;
 
 		case BUTTONTYPES.NETWORK_PRIVATEGAME_SEARCH:
-			GlobalScript.Instance.SearchFriend();
-			Camera.main.GetComponent<MainMenuScript>().Avatar.SetActive(false);
-			Camera.main.GetComponent<MainMenuScript>().Settings.SetActive(false);
-			GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().SearchGrey.SetActive(true);
-			GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().SetAnim(2);
-			GlobalScript.Instance.SetGreyBtns();
-			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
+
+			if(GameObject.Find("Password").GetComponent<InputField>().text == "")
+			{
+				Camera.main.GetComponent<MainMenuScript>().UpdateText.GetComponent<Text>().text = "Password field cannot be blank!";
+				Camera.main.GetComponent<MainMenuScript>().UpdateText.SetActive(true);
+			}
+			else
+			{
+				Camera.main.GetComponent<MainMenuScript>().UpdateText.SetActive(false);
+				GlobalScript.Instance.SearchFriend();
+				Camera.main.GetComponent<MainMenuScript>().Avatar.SetActive(false);
+				Camera.main.GetComponent<MainMenuScript>().Settings.SetActive(false);
+				GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().SearchGrey.SetActive(true);
+				GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().SetAnim(2);
+				GlobalScript.Instance.SetGreyBtns();
+			}
+
+			if(AudioManager.Instance)
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 			break;
 
 		case BUTTONTYPES.SETTINGS_CREDITS:
@@ -304,14 +360,17 @@ public class MenuBtnScript : MonoBehaviour
 				currScreen = SCREENS.SETTINGS_MAIN;
 			isShowCreditsScreen = !isShowCreditsScreen;
 			Camera.main.GetComponent<MainMenuScript>().CreditsPage.SetActive(isShowCreditsScreen);
-			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
+			if(AudioManager.Instance)
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 			break;
 
 		case BUTTONTYPES.SETTINGS_HOWTOPLAY:
 			GameData.current.finishedTutorial = false;
 			SaveLoad.Save();
 			isStartingGame = true;
-			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
+
+			if(AudioManager.Instance)
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 			//isShowHowToPlayScreen = !isShowHowToPlayScreen;
 			//Camera.main.GetComponent<MainMenuScript>().HowToPlayPage.SetActive(isShowHowToPlayScreen);
 			break;
@@ -338,7 +397,9 @@ public class MenuBtnScript : MonoBehaviour
 
 				Adverts.Instance.freeGacha = true;
 			}
-			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
+
+			if(AudioManager.Instance)
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 			break;
 
 		case BUTTONTYPES.NETWORK_BACKTOMAINMENU:
@@ -353,6 +414,7 @@ public class MenuBtnScript : MonoBehaviour
 				GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().SearchGrey.SetActive(false);
 
 				Camera.main.GetComponent<MainMenuScript>().UpdateText.SetActive(false);
+				Camera.main.GetComponent<MainMenuScript>().UpdateConnectingText.SetActive(false);
 				Camera.main.GetComponent<MainMenuScript>().UpdateText_PublicGame.SetActive(false);
 				Camera.main.GetComponent<MainMenuScript>().PasswordText.SetActive(false);
 				Camera.main.GetComponent<MainMenuScript>().PasswordField.SetActive(false);
@@ -367,7 +429,9 @@ public class MenuBtnScript : MonoBehaviour
 				GlobalScript.Instance.LeaveRoom();
 		        GlobalScript.Instance.ResetCountdown();
 				GlobalScript.Instance.ResetGreyBtns();
-				AudioManager.Instance.PlaySoundEvent(SOUNDID.BACK);
+
+				if(AudioManager.Instance)
+					AudioManager.Instance.PlaySoundEvent(SOUNDID.BACK);
 			}
 			else
 			{
@@ -375,7 +439,9 @@ public class MenuBtnScript : MonoBehaviour
 				Camera.main.GetComponent<MainMenuScript>().ChangeScreen(0, true);
 				Camera.main.GetComponent<MainMenuScript>().Avatar.SetActive(true);
 				Camera.main.GetComponent<MainMenuScript>().Settings.SetActive(true);
-				AudioManager.Instance.PlaySoundEvent(SOUNDID.BACK);
+
+				if(AudioManager.Instance)
+					AudioManager.Instance.PlaySoundEvent(SOUNDID.BACK);
 
 		        //GlobalScript.Instance.LeaveRoom();
 		        //GlobalScript.Instance.ResetCountdown();
@@ -385,19 +451,25 @@ public class MenuBtnScript : MonoBehaviour
 		case BUTTONTYPES.SETTIME_1:
 			GlobalScript.Instance.SetTurnTime(1);
 			Camera.main.GetComponent<MainMenuScript>().SetTimerImage(GlobalScript.Instance.gameMode, 1);
-			AudioManager.Instance.PlaySoundEvent(SOUNDID.AVATARSELECT);
+
+			if(AudioManager.Instance)
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.AVATARSELECT);
 			break;
 
 		case BUTTONTYPES.SETTIME_2:
 			GlobalScript.Instance.SetTurnTime(2);
 			Camera.main.GetComponent<MainMenuScript>().SetTimerImage(GlobalScript.Instance.gameMode, 2);
-			AudioManager.Instance.PlaySoundEvent(SOUNDID.AVATARSELECT);
+
+			if(AudioManager.Instance)
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.AVATARSELECT);
 			break;
 
 		case BUTTONTYPES.SETTIME_3:
 			GlobalScript.Instance.SetTurnTime(3);
 			Camera.main.GetComponent<MainMenuScript>().SetTimerImage(GlobalScript.Instance.gameMode, 3);
-			AudioManager.Instance.PlaySoundEvent(SOUNDID.AVATARSELECT);
+
+			if(AudioManager.Instance)
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.AVATARSELECT);
 			break;
 
 		case BUTTONTYPES.SETTINGS_DIABLE_ADS:
@@ -409,43 +481,58 @@ public class MenuBtnScript : MonoBehaviour
 
 			Analytics.CustomEvent("PreBuy_Ads", new Dictionary<string, object>{});
 
-			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
+			if(AudioManager.Instance)
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 			break;
 
 		case BUTTONTYPES.RATE_OUR_APP:
 			PlatformUtilies.Instance.DisplayRateUs();
 			Camera.main.GetComponent<MainMenuScript>().RateAppScreen.SetActive(false);
-			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
+			if(AudioManager.Instance)
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 			break;
 
 		case BUTTONTYPES.NO_RATE_OUR_APP:
 			Camera.main.GetComponent<MainMenuScript>().RateAppScreen.SetActive(false);
-			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
+			if(AudioManager.Instance)
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 			break;
 
 		case BUTTONTYPES.LIKE_OUR_FACEBOOK:
 			PlatformUtilies.Instance.DisplayFacebookPage();
 			Camera.main.GetComponent<MainMenuScript>().LikeFacebookScreen.SetActive(false);
-			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
+			if(AudioManager.Instance)
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 			break;
 
 		case BUTTONTYPES.NO_LIKE_OUR_FACEBOOK:
 			Camera.main.GetComponent<MainMenuScript>().LikeFacebookScreen.SetActive(false);
-			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
+			if(AudioManager.Instance)
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 			break;
 
 		case BUTTONTYPES.SETTINGS_BGM:
 			GameData.current.hasBGM = !GameData.current.hasBGM;
 			SaveLoad.Save();
 			UpdateBGMButton();
-			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
+			if(AudioManager.Instance)
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 			break;
 
 		case BUTTONTYPES.SETTINGS_SFX:
 			GameData.current.hasSFX = !GameData.current.hasSFX;
 			SaveLoad.Save();
 			UpdateSFXButton();
-			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
+			if(AudioManager.Instance)
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
+			break;
+
+		case BUTTONTYPES.SETTINGS_VIBRATION:
+			GameData.current.hasVibrate = !GameData.current.hasVibrate;
+			SaveLoad.Save();
+			UpdateVibrateButton();
+			if(AudioManager.Instance)
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 			break;
 
 		default:

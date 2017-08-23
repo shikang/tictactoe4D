@@ -258,7 +258,7 @@ public class MatchMaker : Photon.PunBehaviour
 
 		if(reallyLeave)
 		{
-			Analytics.CustomEvent("Lobby_LeftRoom", new Dictionary<string, object>{});
+			Analytics.CustomEvent("LobbyLeftRoom", new Dictionary<string, object>{});
 		}
 
 		StartDisconnecting();

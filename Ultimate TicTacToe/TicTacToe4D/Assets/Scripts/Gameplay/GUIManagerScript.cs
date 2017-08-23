@@ -166,6 +166,9 @@ public class GUIManagerScript : MonoBehaviour
 		Defines.Instance.playerScore = 0;
 		isBGSet = false;
 
+		if(NetworkManager.IsConnected())
+			ChangeEmoteButtonColors();
+
 		isCDSoundPlayed6 = isCDSoundPlayed5 = isCDSoundPlayed4 = isCDSoundPlayed3 = isCDSoundPlayed2 = isCDSoundPlayed1 = false;
 
 		if (GetComponent<TurnHandler>() != null)
@@ -289,32 +292,38 @@ public class GUIManagerScript : MonoBehaviour
 
 			if(timerP1 < 6.0f && !isCDSoundPlayed6)
 			{
-				AudioManager.Instance.PlaySoundEvent(SOUNDID.COUNTDOWN);
+				if(AudioManager.Instance)
+					AudioManager.Instance.PlaySoundEvent(SOUNDID.COUNTDOWN);
 				isCDSoundPlayed6 = true;
 			}
 			if(timerP1 < 5.0f && !isCDSoundPlayed5)
 			{
-				AudioManager.Instance.PlaySoundEvent(SOUNDID.COUNTDOWN);
+				if(AudioManager.Instance)
+					AudioManager.Instance.PlaySoundEvent(SOUNDID.COUNTDOWN);
 				isCDSoundPlayed5 = true;
 			}
 			else if(timerP1 < 4.0f && !isCDSoundPlayed4)
 			{
-				AudioManager.Instance.PlaySoundEvent(SOUNDID.COUNTDOWN);
+				if(AudioManager.Instance)
+					AudioManager.Instance.PlaySoundEvent(SOUNDID.COUNTDOWN);
 				isCDSoundPlayed4 = true;
 			}
 			else if(timerP1 < 3.0f && !isCDSoundPlayed3)
 			{
-				AudioManager.Instance.PlaySoundEvent(SOUNDID.COUNTDOWN);
+				if(AudioManager.Instance)
+					AudioManager.Instance.PlaySoundEvent(SOUNDID.COUNTDOWN);
 				isCDSoundPlayed3 = true;
 			}
 			else if(timerP1 < 2.0f && !isCDSoundPlayed2)
 			{
-				AudioManager.Instance.PlaySoundEvent(SOUNDID.COUNTDOWN);
+				if(AudioManager.Instance)
+					AudioManager.Instance.PlaySoundEvent(SOUNDID.COUNTDOWN);
 				isCDSoundPlayed2 = true;
 			}
 			else if(timerP1 < 1.0f && !isCDSoundPlayed1)
 			{
-				AudioManager.Instance.PlaySoundEvent(SOUNDID.COUNTDOWN);
+				if(AudioManager.Instance)
+					AudioManager.Instance.PlaySoundEvent(SOUNDID.COUNTDOWN);
 				isCDSoundPlayed1 = true;
 			}
 
@@ -383,32 +392,38 @@ public class GUIManagerScript : MonoBehaviour
 
 			if(timerP2 < 6.0f && !isCDSoundPlayed6)
 			{
-				AudioManager.Instance.PlaySoundEvent(SOUNDID.COUNTDOWN);
+				if(AudioManager.Instance)
+					AudioManager.Instance.PlaySoundEvent(SOUNDID.COUNTDOWN);
 				isCDSoundPlayed6 = true;
 			}
 			if(timerP2 < 5.0f && !isCDSoundPlayed5)
 			{
-				AudioManager.Instance.PlaySoundEvent(SOUNDID.COUNTDOWN);
+				if(AudioManager.Instance)
+					AudioManager.Instance.PlaySoundEvent(SOUNDID.COUNTDOWN);
 				isCDSoundPlayed5 = true;
 			}
 			else if(timerP2 < 4.0f && !isCDSoundPlayed4)
 			{
-				AudioManager.Instance.PlaySoundEvent(SOUNDID.COUNTDOWN);
+				if(AudioManager.Instance)
+					AudioManager.Instance.PlaySoundEvent(SOUNDID.COUNTDOWN);
 				isCDSoundPlayed4 = true;
 			}
 			else if(timerP2 < 3.0f && !isCDSoundPlayed3)
 			{
-				AudioManager.Instance.PlaySoundEvent(SOUNDID.COUNTDOWN);
+				if(AudioManager.Instance)
+					AudioManager.Instance.PlaySoundEvent(SOUNDID.COUNTDOWN);
 				isCDSoundPlayed3 = true;
 			}
 			else if(timerP2 < 2.0f && !isCDSoundPlayed2)
 			{
-				AudioManager.Instance.PlaySoundEvent(SOUNDID.COUNTDOWN);
+				if(AudioManager.Instance)
+					AudioManager.Instance.PlaySoundEvent(SOUNDID.COUNTDOWN);
 				isCDSoundPlayed2 = true;
 			}
 			else if(timerP2 < 1.0f && !isCDSoundPlayed1)
 			{
-				AudioManager.Instance.PlaySoundEvent(SOUNDID.COUNTDOWN);
+				if(AudioManager.Instance)
+					AudioManager.Instance.PlaySoundEvent(SOUNDID.COUNTDOWN);
 				isCDSoundPlayed1 = true;
 			}
 
