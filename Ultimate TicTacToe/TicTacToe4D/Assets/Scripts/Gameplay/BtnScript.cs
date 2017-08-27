@@ -82,10 +82,19 @@ public class BtnScript : MonoBehaviour
 
             if (NetworkManager.IsConnected())
             {
-				Debug.Log("ttt: : " + GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn);
-                NetworkGameLogic networkLogic = NetworkGameLogic.GetNetworkGameLogic();
-                networkLogic.AfterActionDecision(NetworkGameLogic.GetPlayerNumber(), NetworkGameLogic.AFTERMATH_ACTION.QUIT);
-				GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn = Defines.TURN.DISCONNECTED;
+				Defines.TURN turn = GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn;
+				Debug.Log("ttt: : " + turn);
+				if (turn == Defines.TURN.P1 || turn == Defines.TURN.P2 || turn == Defines.TURN.NOTSTARTED)
+				{
+					NetworkManager.Disconnect();
+				}
+				else
+				{
+					NetworkGameLogic networkLogic = NetworkGameLogic.GetNetworkGameLogic();
+					networkLogic.AfterActionDecision(NetworkGameLogic.GetPlayerNumber(), NetworkGameLogic.AFTERMATH_ACTION.QUIT);
+					GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn = Defines.TURN.DISCONNECTED;
+					NetworkManager.Disconnect();
+				}
             }
 
 			if(AudioManager.Instance)
