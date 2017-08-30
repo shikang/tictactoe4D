@@ -137,6 +137,9 @@ public class MainMenuScript : MonoBehaviour
 
 	void Update ()
 	{
+		if(Input.GetKeyDown(KeyCode.K))
+			AlertBox.SetActive(true);
+
 		/*if(screenState == 1)
 		{
 			foreach(Transform curr in InputP1.GetComponentsInChildren<Transform>())

@@ -544,6 +544,7 @@ public class MenuBtnScript : MonoBehaviour
 
 		case BUTTONTYPES.ALERT_BACK:
 			Camera.main.GetComponent<MainMenuScript>().AlertBox.SetActive(false);
+			BtnClick((int)BUTTONTYPES.NETWORK_BACKTOMAINMENU);
 			break;
 
 		default:

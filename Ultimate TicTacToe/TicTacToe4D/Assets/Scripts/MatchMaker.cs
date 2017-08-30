@@ -188,6 +188,7 @@ public class MatchMaker : Photon.PunBehaviour
 
 	public void ConnectionHasError()
 	{
+		GlobalScript.Instance.LeaveRoom();
 		Camera.main.GetComponent<MainMenuScript>().AlertBox.SetActive(true);
 		Camera.main.GetComponent<MainMenuScript>().AlertBoxLabel.GetComponent<Text>().text = "Connection error! \n Please check your connection =(";
 	}
