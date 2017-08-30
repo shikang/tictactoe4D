@@ -179,7 +179,7 @@ public class GUIManagerScript : MonoBehaviour
 			SetAvatar();
 		}
 
-		if ( !NetworkManager.IsPlayerOne() )
+		if ( NetworkManager.IsConnected() && !NetworkManager.IsPlayerOne() )
 			NetworkGameLogic.GetNetworkGameLogic().SendReadySignal( GlobalScript.Instance.timePerTurn );
 	}
 

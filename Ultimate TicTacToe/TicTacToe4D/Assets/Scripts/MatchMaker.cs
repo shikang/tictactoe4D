@@ -193,7 +193,42 @@ public class MatchMaker : Photon.PunBehaviour
 		Camera.main.GetComponent<MainMenuScript>().AlertBoxLabel.GetComponent<Text>().text = "Connection error! \n Please check your connection =(";
 	}
 
-    /*
+	public override void OnFailedToConnectToPhoton(DisconnectCause cause)
+	{
+		switch (cause)
+		{
+			/// <summary>Server actively disconnected this client.
+			/// Possible cause: The server's user limit was hit and client was forced to disconnect (on connect).</summary>
+			case DisconnectCause.DisconnectByServerUserLimit:
+				ConnectionHasError();
+				break;
+
+			/// <summary>Connection could not be established.
+			/// Possible cause: Local server not running.</summary>
+			case DisconnectCause.ExceptionOnConnect:
+				ConnectionHasError();
+				break;
+
+			/// <summary>Server actively disconnected this client.
+			/// Possible cause: Server's send buffer full (too much data for client).</summary>
+			case DisconnectCause.DisconnectByServerLogic:
+				ConnectionHasError();
+				break;
+
+			/// <summary>Some exception caused the connection to close.</summary>
+			case DisconnectCause.Exception:
+				ConnectionHasError();
+				break;
+
+			/// <summary>(32753) The Authentication ticket expired. Handle this by connecting again (which includes an authenticate to get a fresh ticket).</summary>
+			case DisconnectCause.AuthenticationTicketExpired:
+				ConnectionHasError();
+				break;
+
+		}
+	}
+
+	/*
     public override void OnLeftRoom()
     {
         DebugLog("OnLeftRoom");
@@ -203,7 +238,7 @@ public class MatchMaker : Photon.PunBehaviour
     }
     */
 
-    public override void OnPhotonPlayerDisconnected(PhotonPlayer otherPlayer)
+	public override void OnPhotonPlayerDisconnected(PhotonPlayer otherPlayer)
     {
         if (stopGame != null)
             stopGame.Invoke();

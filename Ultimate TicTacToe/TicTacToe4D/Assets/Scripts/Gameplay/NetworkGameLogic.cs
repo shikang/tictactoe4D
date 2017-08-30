@@ -81,6 +81,11 @@ public class NetworkGameLogic : Photon.PunBehaviour
 		}
 	}
 
+	public override void OnDisconnectedFromPhoton()
+	{
+		GameObject.FindGameObjectsWithTag("GUIManager")[0].GetComponent<TurnHandler>().InformDisconnect();
+	}
+
 	public void OnApplicationPause(bool pause)
 	{
 		if (pause && NetworkManager.IsConnected())
