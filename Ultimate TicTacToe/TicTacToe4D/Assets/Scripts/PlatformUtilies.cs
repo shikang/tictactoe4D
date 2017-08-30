@@ -43,7 +43,8 @@ public class PlatformUtilies : Singleton<PlatformUtilies>
 
 	public void DisplayFacebookPage()
 	{
-		Application.OpenURL("fb://profile/" + FACEBOOK_PAGE_ID);
+		//Application.OpenURL("fb://profile/" + FACEBOOK_PAGE_ID);
+		Application.OpenURL("fb://facewebmodal/f?href=" + FACEBOOK_PAGE);
 		m_NaviToFB = true;
 		m_Timer = 0.0f;
 	}
