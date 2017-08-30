@@ -70,6 +70,7 @@ public class GUIManagerScript : MonoBehaviour
 	public float startTime;
 	public float gameDuration;
 	bool isBGSet;
+	public bool isPaused;
 
 	public GameObject gameBG;
 
@@ -132,6 +133,7 @@ public class GUIManagerScript : MonoBehaviour
 		gridEffect_growStage = 0;
 		startTime = 300.0f;
 		gameDuration = 0.0f;
+		isPaused = false;
 
 		timerP1 = timerP2 = GlobalScript.Instance.timePerTurn;
 		nameP1 = GlobalScript.Instance.nameP1;
@@ -287,7 +289,7 @@ public class GUIManagerScript : MonoBehaviour
 		// Whose Turn
 		if(GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn == Defines.TURN.P1)
 		{
-			if(!TutorialScript.Instance.isTutorial)
+			if(!TutorialScript.Instance.isTutorial && !NetworkManager.IsConnected() && !isPaused)
 				timerP1 -= Time.deltaTime;
 
 			if(timerP1 < 6.0f && !isCDSoundPlayed6)
@@ -387,7 +389,7 @@ public class GUIManagerScript : MonoBehaviour
 		}
 		else if(GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn == Defines.TURN.P2)
 		{
-			if(!TutorialScript.Instance.isTutorial)
+			if(!TutorialScript.Instance.isTutorial  && !NetworkManager.IsConnected() && !isPaused)
 				timerP2 -= Time.deltaTime;
 
 			if(timerP2 < 6.0f && !isCDSoundPlayed6)

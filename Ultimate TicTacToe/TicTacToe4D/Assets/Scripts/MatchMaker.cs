@@ -10,7 +10,6 @@ using UnityEngine.Events;
 public class MatchMaker : Photon.PunBehaviour 
 {
     public GameObject roomInputField;
-    public GameObject MaxCCUText;
 
     private string roomName = "";
     private bool joinedLobby = false;
@@ -37,7 +36,6 @@ public class MatchMaker : Photon.PunBehaviour
         PhotonNetwork.player.name = "Player2";
 
 		GlobalScript.Instance.matchMaker = this.gameObject;
-		MaxCCUText.SetActive(false);
 
 		continueWithGame.AddListener( delegate{ GlobalScript.Instance.FoundFriend(); } );
 		stopGame.AddListener( delegate{ GlobalScript.Instance.ResetCountdown(); } );
@@ -152,7 +150,6 @@ public class MatchMaker : Photon.PunBehaviour
         joinedRoom = true;
         PhotonNetwork.player.name = "Player1";
 
-		MaxCCUText.SetActive(false);
 		Analytics.CustomEvent("LobbyCreateRoom", new Dictionary<string, object>{});
     }
 
@@ -168,7 +165,6 @@ public class MatchMaker : Photon.PunBehaviour
 		GlobalScript.Instance.SetMyPlayerName();
 		GlobalScript.Instance.SetMyPlayerIcon();
 
-		MaxCCUText.SetActive(false);
 		Analytics.CustomEvent("LobbyJoinRoom", new Dictionary<string, object>{});
 
 		ProceedToGame();
@@ -185,8 +181,15 @@ public class MatchMaker : Photon.PunBehaviour
 
 	public void OnPhotonMaxCcuReached()
 	{
-		MaxCCUText.SetActive(true);
+		Camera.main.GetComponent<MainMenuScript>().AlertBox.SetActive(true);
+		Camera.main.GetComponent<MainMenuScript>().AlertBoxLabel.GetComponent<Text>().text = "Server is Full! Please try again later =(";
 		Analytics.CustomEvent("MaxCCUReached", new Dictionary<string, object>{});
+	}
+
+	public void ConnectionHasError()
+	{
+		Camera.main.GetComponent<MainMenuScript>().AlertBox.SetActive(true);
+		Camera.main.GetComponent<MainMenuScript>().AlertBoxLabel.GetComponent<Text>().text = "Connection error! \n Please check your connection =(";
 	}
 
     /*

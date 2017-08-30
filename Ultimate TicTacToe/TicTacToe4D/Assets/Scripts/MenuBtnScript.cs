@@ -44,7 +44,9 @@ public enum BUTTONTYPES
 
 	SETTINGS_BGM,	//23
 	SETTINGS_SFX,
-	SETTINGS_VIBRATION
+	SETTINGS_VIBRATION,
+
+	ALERT_BACK
 };
 
 public enum SCREENS
@@ -78,7 +80,6 @@ public class MenuBtnScript : MonoBehaviour
 	public GameObject SFX_Off;
 	public GameObject Vibrate_On;
 	public GameObject Vibrate_Off;
-
 
 	void Start ()
 	{
@@ -431,7 +432,6 @@ public class MenuBtnScript : MonoBehaviour
 				Camera.main.GetComponent<MainMenuScript>().Settings.SetActive(true);
 
 				GlobalScript.Instance.network_allowButtonClicks = 0;
-				GameObject.FindGameObjectWithTag("MatchMaker").GetComponent<MatchMaker>().MaxCCUText.SetActive(false);
 
 				GlobalScript.Instance.LeaveRoom();
 		        GlobalScript.Instance.ResetCountdown();
@@ -540,6 +540,10 @@ public class MenuBtnScript : MonoBehaviour
 			UpdateVibrateButton();
 			if(AudioManager.Instance)
 				AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
+			break;
+
+		case BUTTONTYPES.ALERT_BACK:
+			Camera.main.GetComponent<MainMenuScript>().AlertBox.SetActive(false);
 			break;
 
 		default:

@@ -12,13 +12,6 @@ public class DevTools : MonoBehaviour
 
 	void Update ()
 	{
-		if(godMode)
-		{
-			if(Input.GetKeyDown(KeyCode.K))
-				AddMoneySmall();
-			else if(Input.GetKeyDown(KeyCode.L))
-				AddMoneyBig();
-		}
 	}
 
 	void AddMoneySmall()

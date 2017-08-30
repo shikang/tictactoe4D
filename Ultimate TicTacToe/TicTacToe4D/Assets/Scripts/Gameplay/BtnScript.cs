@@ -26,6 +26,7 @@ public class BtnScript : MonoBehaviour
 		if(TutorialScript.Instance.isTutorial)
 			return;
 
+		GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().isPaused = true;
 		GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().pausedState = 1;
 		GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().SetCfmAlpha(true);
 		GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().GUIForfeitCoinText.SetActive(true);
@@ -41,6 +42,7 @@ public class BtnScript : MonoBehaviour
 		if(TutorialScript.Instance.isTutorial)
 			return;
 
+		GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().isPaused = true;
 		GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().pausedState = 2;
 		GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().SetCfmAlpha(true);
 		GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().GUIForfeitCoinText.SetActive(true);
@@ -111,6 +113,7 @@ public class BtnScript : MonoBehaviour
 			GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().pausedState = 0;
 			GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().SetCfmAlpha(false);
 			GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().GUICfmText.GetComponent<Text>().text = "";
+			GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().isPaused = false;
 			if(AudioManager.Instance)
 				AudioManager.Instance.PlaySoundEvent(SOUNDID.BACK);
 		}

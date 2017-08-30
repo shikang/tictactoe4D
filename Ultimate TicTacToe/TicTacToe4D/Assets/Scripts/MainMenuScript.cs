@@ -49,8 +49,9 @@ public class MainMenuScript : MonoBehaviour
 	public GameObject RoomNameInput;
 
 	public GameObject DisableAdsButton;
-
 	public GameObject avatarObject;
+	public GameObject AlertBox;
+	public GameObject AlertBoxLabel;
 
     public GameObject PlayerIcon;
 	public int screenState;

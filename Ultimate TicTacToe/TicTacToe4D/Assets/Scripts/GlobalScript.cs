@@ -99,6 +99,8 @@ public class GlobalScript : MonoBehaviour
 
 	void Update ()
 	{
+		//matchMaker.GetComponent<MatchMaker>().ConnectionHasError();
+
 		//if(SceneManager.GetActiveScene().name == "MainMenu" && Camera.main.GetComponent<MainMenuScript>().screenState == 1)
 		//{
 		//	IconP1.GetComponent<Image>().sprite = sAllIcons[playerIcon_1];
