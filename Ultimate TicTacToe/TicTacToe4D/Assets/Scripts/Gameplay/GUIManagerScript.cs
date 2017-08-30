@@ -71,6 +71,7 @@ public class GUIManagerScript : MonoBehaviour
 	public float gameDuration;
 	bool isBGSet;
 	public bool isPaused;
+	public bool isEmoteScreen;
 
 	public GameObject gameBG;
 
@@ -134,6 +135,7 @@ public class GUIManagerScript : MonoBehaviour
 		startTime = 300.0f;
 		gameDuration = 0.0f;
 		isPaused = false;
+		isEmoteScreen = false;
 
 		timerP1 = timerP2 = GlobalScript.Instance.timePerTurn;
 		nameP1 = GlobalScript.Instance.nameP1;
@@ -186,7 +188,10 @@ public class GUIManagerScript : MonoBehaviour
 	void Update()
 	{
 		if(GetComponent<TurnHandler>().turn == Defines.TURN.P1 || GetComponent<TurnHandler>().turn == Defines.TURN.P2)
-			gameDuration += Time.deltaTime;
+		{	
+			if(!isPaused)
+				gameDuration += Time.deltaTime;
+		}
 
 		if(!isBGSet)
 		{
@@ -289,7 +294,7 @@ public class GUIManagerScript : MonoBehaviour
 		// Whose Turn
 		if(GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn == Defines.TURN.P1)
 		{
-			if(!TutorialScript.Instance.isTutorial && !NetworkManager.IsConnected() && !isPaused)
+			if(!TutorialScript.Instance.isTutorial && !isPaused)
 				timerP1 -= Time.deltaTime;
 
 			if(timerP1 < 6.0f && !isCDSoundPlayed6)
@@ -389,7 +394,7 @@ public class GUIManagerScript : MonoBehaviour
 		}
 		else if(GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn == Defines.TURN.P2)
 		{
-			if(!TutorialScript.Instance.isTutorial  && !NetworkManager.IsConnected() && !isPaused)
+			if(!TutorialScript.Instance.isTutorial  && !isPaused)
 				timerP2 -= Time.deltaTime;
 
 			if(timerP2 < 6.0f && !isCDSoundPlayed6)
@@ -752,6 +757,7 @@ public class GUIManagerScript : MonoBehaviour
 	public void HideEmoteMenu()
 	{
 		GUIEmoteScreen.SetActive( false );
+		isEmoteScreen = false;
 	}
 
 	public void ShowP1EmoteSpeech( string emote )

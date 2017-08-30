@@ -23,6 +23,9 @@ public class GridScript : MonoBehaviour
 		if(GlobalScript.Instance.isInputPaused)
 			return;
 
+		if(GetGUIManagerScript().isEmoteScreen)
+			return;
+
 		if( GetBoardScript().gameMode == Defines.GAMEMODE.AI &&
 			GetTurnHandler().turn == GameObject.FindGameObjectWithTag("AIMiniMax").GetComponent<AIMiniMax>().AITurn )
 		{

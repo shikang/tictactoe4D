@@ -544,7 +544,13 @@ public class MenuBtnScript : MonoBehaviour
 
 		case BUTTONTYPES.ALERT_BACK:
 			Camera.main.GetComponent<MainMenuScript>().AlertBox.SetActive(false);
+
+			if(GlobalScript.Instance.network_allowButtonClicks == 1)
+				BtnClick((int)BUTTONTYPES.NETWORK_BACKTOMAINMENU);
 			BtnClick((int)BUTTONTYPES.NETWORK_BACKTOMAINMENU);
+
+			if(AudioManager.Instance)
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 			break;
 
 		default:
