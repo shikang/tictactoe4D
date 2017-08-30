@@ -39,7 +39,6 @@ public class GachaScript : MonoBehaviour
 	public GameObject BuyPage;
 
 	bool isSpecialTextGolding;
-	public bool isFreeRollNotified;
 
 	// Free Roll Stuff
 	public GameObject freeRollButton;
@@ -82,7 +81,6 @@ public class GachaScript : MonoBehaviour
 
 		isGachaing = false;
 		isAnimating = false;
-		isFreeRollNotified = true;
 
 		InitTiming();
 		SetGreyBG(false);
@@ -337,11 +335,6 @@ public class GachaScript : MonoBehaviour
 		if(CanFreeRoll())
 		{
 			freeRollButtonGrey.SetActive(false);
-			if(!isFreeRollNotified)
-			{
-				NotificationManager.SendWithAppIcon(TimeSpan.Zero, "Free roll ready!", "Come and roll for a new Tac!", Color.black);
-				isFreeRollNotified = true;
-			}
 		}
 		else
 		{
@@ -503,7 +496,9 @@ public class GachaScript : MonoBehaviour
 
 	public bool CanFreeRoll()
 	{
-		return DateTime.Now.Subtract(GameData.current.nextFreeRollTime) >= TimeSpan.Zero;
+		if(DateTime.Now > GameData.current.nextFreeRollTime)
+			return true;
+		return false;
 	}
 
 	public void SetGacha()

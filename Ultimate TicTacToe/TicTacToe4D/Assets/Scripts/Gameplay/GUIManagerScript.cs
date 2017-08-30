@@ -166,7 +166,7 @@ public class GUIManagerScript : MonoBehaviour
 		Defines.Instance.playerScore = 0;
 		isBGSet = false;
 
-		if(NetworkManager.IsConnected())
+		if(NetworkManager.IsConnected() && !NetworkManager.IsPlayerOne())
 			ChangeEmoteButtonColors();
 
 		isCDSoundPlayed6 = isCDSoundPlayed5 = isCDSoundPlayed4 = isCDSoundPlayed3 = isCDSoundPlayed2 = isCDSoundPlayed1 = false;

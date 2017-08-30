@@ -2,6 +2,7 @@
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Analytics;
+using System;
 using System.Collections;
 using UnityEngine.Advertisements;
 using System.Collections.Generic;
@@ -196,6 +197,9 @@ public class MenuBtnScript : MonoBehaviour
 			Vibrate_On.SetActive(false);
 			Vibrate_Off.SetActive(true);
 		}
+
+		if(GameData.current.hasVibrate && VibrationManager.HasVibrator())
+			VibrationManager.Vibrate(Defines.V_PLACEICON);
 	}
 
 	// NGUI Mouse Handler
@@ -382,7 +386,10 @@ public class MenuBtnScript : MonoBehaviour
 				var options = new ShowOptions { resultCallback = Adverts.Instance.FreeGachaHandler};
 				Adverts.Instance.ShowAd(AdVidType.video,options);
 				Adverts.Instance.freeGacha = true;
-				GachaScript.Instance.isFreeRollNotified = false;
+
+				GameData.current.nextFreeRollTime = DateTime.Now.Add(TimeSpan.FromHours(4.0));
+				NotificationManager.SendWithAppIcon(TimeSpan.FromHours(4.0), "Free roll ready!", "Come and roll for a new Tac!", Color.black);
+				SaveLoad.Save();
 
 				Analytics.CustomEvent("FreeRoll_Used", new Dictionary<string, object>{});
 				#endif
