@@ -1,5 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.Advertisements;
+using UnityEngine.Analytics;
+using System;
+using System.Collections.Generic;
+using Assets.SimpleAndroidNotifications;
 
 public enum AdVidType
 {
@@ -43,11 +47,11 @@ public class Adverts : MonoBehaviour
 			return;
 		}
 		#if UNITY_ANDROID
-			Advertisement.Initialize("1278938", true);
+			Advertisement.Initialize("1278938", false);
 		#endif
 
 		#if UNITY_IOS
-			Advertisement.Initialize("1278937", true);
+			Advertisement.Initialize("1278937", false);
 		#endif
 		Debug.Log(Advertisement.isInitialized);
 		Debug.Log(Advertisement.testMode);
@@ -112,7 +116,7 @@ public class Adverts : MonoBehaviour
 		if( GameData.current.removeAds)
 			return;
 
-		int val = Random.Range(1,101);
+		int val = UnityEngine.Random.Range(1,101);
 		if(val < showChance)
 		{	//show  the skippable ad
 			ShowAd(AdVidType.video);
@@ -133,6 +137,11 @@ public class Adverts : MonoBehaviour
 		         	//freeGacha = false;
 					GameObject.FindGameObjectWithTag("Gacha").GetComponent<GachaScript>().StartGacha(true);
 					GachaScript.Instance.SetGacha();
+					GameData.current.nextFreeRollTime = DateTime.Now.Add(TimeSpan.FromHours(4.0));
+					NotificationManager.SendWithAppIcon(TimeSpan.FromHours(4.0), "Free roll ready!", "Come and roll for a new Tac!", Color.black);
+					SaveLoad.Save();
+
+					Analytics.CustomEvent("FreeRoll_Used", new Dictionary<string, object>{});
 		         }
 		         //GameData.current.coin += 10;
 		         //SaveLoad.Save();

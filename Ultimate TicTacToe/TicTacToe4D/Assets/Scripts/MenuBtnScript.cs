@@ -387,12 +387,6 @@ public class MenuBtnScript : MonoBehaviour
 				var options = new ShowOptions { resultCallback = Adverts.Instance.FreeGachaHandler};
 				Adverts.Instance.ShowAd(AdVidType.video,options);
 				Adverts.Instance.freeGacha = true;
-
-				GameData.current.nextFreeRollTime = DateTime.Now.Add(TimeSpan.FromHours(4.0));
-				NotificationManager.SendWithAppIcon(TimeSpan.FromHours(4.0), "Free roll ready!", "Come and roll for a new Tac!", Color.black);
-				SaveLoad.Save();
-
-				Analytics.CustomEvent("FreeRoll_Used", new Dictionary<string, object>{});
 				#endif
 
 				#if UNITY_ANDROID && !UNITY_EDITOR
