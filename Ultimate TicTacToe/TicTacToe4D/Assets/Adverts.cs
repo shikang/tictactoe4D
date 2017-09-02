@@ -43,11 +43,11 @@ public class Adverts : MonoBehaviour
 			return;
 		}
 		#if UNITY_ANDROID
-			Advertisement.Initialize("1268576", true);
+			Advertisement.Initialize("1278938", true);
 		#endif
 
 		#if UNITY_IOS
-			Advertisement.Initialize("1268577", true);
+			Advertisement.Initialize("1278937", true);
 		#endif
 		Debug.Log(Advertisement.isInitialized);
 		Debug.Log(Advertisement.testMode);

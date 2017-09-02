@@ -97,6 +97,7 @@ public class MatchMaker : Photon.PunBehaviour
 
     public override void OnJoinedLobby()
     {
+    	Debug.Log("JOINERS");
         base.OnJoinedLobby();
 
         joinedLobby = true;

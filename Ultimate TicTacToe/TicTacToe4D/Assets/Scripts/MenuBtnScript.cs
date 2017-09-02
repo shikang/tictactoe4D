@@ -98,7 +98,6 @@ public class MenuBtnScript : MonoBehaviour
 	void Update ()
 	{
 		UpdateAnim();
-
 		if(!GameData.current.finishedTutorial)
 			BtnClick((int)BUTTONTYPES.MAIN_SINGLEPLAYER);
 
@@ -320,6 +319,7 @@ public class MenuBtnScript : MonoBehaviour
 			GlobalScript.Instance.FindPublicGame();
 			Camera.main.GetComponent<MainMenuScript>().Avatar.SetActive(false);
 			Camera.main.GetComponent<MainMenuScript>().Settings.SetActive(false);
+			Camera.main.GetComponent<MainMenuScript>().noofPlayers.SetActive(true);
 			Camera.main.GetComponent<MainMenuScript>().networkMenuAnimStage = 1;
 			GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().SetAnim(1);
 			GlobalScript.Instance.SetGreyBtns();
@@ -424,9 +424,11 @@ public class MenuBtnScript : MonoBehaviour
 				Camera.main.GetComponent<MainMenuScript>().UpdateText.SetActive(false);
 				Camera.main.GetComponent<MainMenuScript>().UpdateConnectingText.SetActive(false);
 				Camera.main.GetComponent<MainMenuScript>().UpdateText_PublicGame.SetActive(false);
+				Camera.main.GetComponent<MainMenuScript>().UpdateText_Connecting.SetActive(false);
 				Camera.main.GetComponent<MainMenuScript>().PasswordText.SetActive(false);
 				Camera.main.GetComponent<MainMenuScript>().PasswordField.SetActive(false);
 				Camera.main.GetComponent<MainMenuScript>().SearchBtn.SetActive(false);
+				Camera.main.GetComponent<MainMenuScript>().noofPlayers.SetActive(false);
 
 				Camera.main.GetComponent<MainMenuScript>().Avatar.SetActive(true);
 				Camera.main.GetComponent<MainMenuScript>().Settings.SetActive(true);

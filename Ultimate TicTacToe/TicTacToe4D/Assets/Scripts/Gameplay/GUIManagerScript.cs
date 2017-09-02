@@ -220,12 +220,7 @@ public class GUIManagerScript : MonoBehaviour
 		else if(GetComponent<TurnHandler>().turn == Defines.TURN.GAMEOVER)
 		{
 			GUICenterText.SetActive(false);
-			if(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().gameWinner == 0)
-				GUICenterText.GetComponent<Text>().text = "Draw!";
-			else if(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().gameWinner == 1)
-				GUICenterText.GetComponent<Text>().text = nameP1 + " wins!";
-			else if(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().gameWinner == 2)
-				GUICenterText.GetComponent<Text>().text = nameP2 + " wins!";
+			GUICenterText.GetComponent<Text>().text = GetWinName();
 
 			if(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().showWinScreen)
 			{
@@ -363,7 +358,7 @@ public class GUIManagerScript : MonoBehaviour
 			GUINameP2.GetComponent<Text>().color = Color.grey;
 			GUITimerP2.GetComponent<Text>().color = Color.grey;
 
-			GUITurn.GetComponent<Text>().text = nameP1 + "'s Turn";
+			GUITurn.GetComponent<Text>().text = GetTurnName();
 			//GUITurn.GetComponent<Text>().color = Defines.ICON_COLOR_P1;
 
 			// Icon Frame Animation during the player's turn
@@ -462,7 +457,7 @@ public class GUIManagerScript : MonoBehaviour
 			else
 				GUITimerP2.GetComponent<Text>().color = Defines.ICON_COLOR_P2;
 
-			GUITurn.GetComponent<Text>().text = nameP2 + "'s Turn";
+			GUITurn.GetComponent<Text>().text = GetTurnName();
 			//GUITurn.GetComponent<Text>().color = Defines.ICON_COLOR_P2;
 
 			// Icon Frame Animation during the player's turn
@@ -958,5 +953,61 @@ public class GUIManagerScript : MonoBehaviour
 	public bool IsNetworkReady()
 	{
 		return !NetworkManager.IsConnected() || networkStart;
+	}
+
+	string GetTurnName()
+	{
+		if(NetworkManager.IsConnected())
+		{
+			if( (GetComponent<TurnHandler>().turn == Defines.TURN.P1 && NetworkManager.IsPlayerOne()) ||
+				GetComponent<TurnHandler>().turn == Defines.TURN.P2 && !NetworkManager.IsPlayerOne())
+			{
+				return "YOUR TURN!";
+			}
+			return "Opponent's Turn";
+		}
+		else if(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().gameMode == Defines.GAMEMODE.AI)
+		{
+			if(GetComponent<TurnHandler>().turn == Defines.TURN.P1)
+				return "YOUR TURN!";
+			return "Opponent's Turn";
+		}
+		else
+		{
+			if(GetComponent<TurnHandler>().turn == Defines.TURN.P1)
+				return nameP1 + "'s Turn";
+			return nameP2 + "'s Turn";
+		}
+		return "";
+	}
+
+	string GetWinName()
+	{
+		if(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().gameWinner == 0)
+			return "DRAW!";
+
+		else if(NetworkManager.IsConnected())
+		{
+			if( (GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().gameWinner == 1 && NetworkManager.IsPlayerOne()) ||
+				(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().gameWinner == 2 && !NetworkManager.IsPlayerOne()))
+			{
+				return "YOU WIN!";
+			}
+			return "Opponent Wins!";
+		}
+
+		else if(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().gameMode == Defines.GAMEMODE.AI)
+		{
+			if(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().gameWinner == 1)
+				return "YOU WIN!";
+			return "Opponent Wins!";
+		}
+		else
+		{
+			if(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().gameWinner == 1)
+				return nameP1 + " Wins!";
+			return nameP2 + " Wins!";
+		}
+		return "";
 	}
 }

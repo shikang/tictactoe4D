@@ -105,6 +105,7 @@ public class BtnScript : MonoBehaviour
 
 			if(AudioManager.Instance)
 				AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
+			BGManager.Instance.partsParent.SetActive(false);
 			BackToMainMenu(1, false);
             Adverts.Instance.RandomShowAd();
         }

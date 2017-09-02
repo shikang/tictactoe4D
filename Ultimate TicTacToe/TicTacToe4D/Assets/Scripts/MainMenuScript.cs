@@ -38,6 +38,7 @@ public class MainMenuScript : MonoBehaviour
 	public GameObject FindFriendBtn;
 	public GameObject JoinPublicBtn;
 	public GameObject SearchGrey;
+	public GameObject BackGrey;
 
 	public GameObject Avatar;
 	public GameObject Settings;
@@ -52,6 +53,7 @@ public class MainMenuScript : MonoBehaviour
 	public GameObject avatarObject;
 	public GameObject AlertBox;
 	public GameObject AlertBoxLabel;
+	public GameObject noofPlayers;
 
     public GameObject PlayerIcon;
 	public int screenState;
@@ -137,9 +139,6 @@ public class MainMenuScript : MonoBehaviour
 
 	void Update ()
 	{
-		if(Input.GetKeyDown(KeyCode.K))
-			AlertBox.SetActive(true);
-
 		/*if(screenState == 1)
 		{
 			foreach(Transform curr in InputP1.GetComponentsInChildren<Transform>())
@@ -157,13 +156,6 @@ public class MainMenuScript : MonoBehaviour
 		if(moveScreen)
 		{
 			UpdateScreenPos();
-		}
-		else
-		{
-			if(Input.GetKeyDown(KeyCode.Escape))
-			{
-				Application.Quit();
-			}
 		}
 
         //Debug.Log(blackOverlayImage.color.a + "," + isFading + "," + faderDuration);
@@ -204,6 +196,8 @@ public class MainMenuScript : MonoBehaviour
 
         currentFadeTime += Time.deltaTime;
         currentMoveTime += Time.deltaTime;
+
+		noofPlayers.GetComponent<Text>().text = PhotonNetwork.countOfPlayersOnMaster + " players in lobby";
 
 		SpinIcons();
     }

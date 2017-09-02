@@ -119,6 +119,7 @@ public class GlobalScript : MonoBehaviour
 			Debug.Log("Counting downing");
 			GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().UpdateText.GetComponent<Text>().text =
 			GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().UpdateText_PublicGame.GetComponent<Text>().text = "Game Starting...";
+			GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainMenuScript>().BackGrey.SetActive(true);
 			UpdateCountdownToPlay();
 		}
 	}
