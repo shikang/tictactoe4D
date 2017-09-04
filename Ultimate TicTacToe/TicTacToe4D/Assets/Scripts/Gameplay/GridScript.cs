@@ -59,10 +59,10 @@ public class GridScript : MonoBehaviour
 		// Special Case: Tutorials
 		if(TutorialScript.Instance.isTutorial)
 		{
-			if( TutorialScript.Instance.tStage == TUTORIALSTAGE.PLACE_TOPLEFT_P ||
+			if( (TutorialScript.Instance.tStage == TUTORIALSTAGE.PLACE_TOPLEFT_P ) ||
 				TutorialScript.Instance.tStage == TUTORIALSTAGE.ICON_HIGHLIGHTED )
 			{
-				if(GetBoardScript().activeBigGrid == 0 && gridID == 5)
+				if(GetBoardScript().activeBigGrid == 0 && gridID == 5 && parentGrid.GetComponent<BigGridScript>().bigGridID == 0)
 				{
 					if(gridState == 0)
 					{
@@ -87,7 +87,7 @@ public class GridScript : MonoBehaviour
 
 			else if(TutorialScript.Instance.tStage == TUTORIALSTAGE.PLACE_BOTLEFT)
 			{
-				if(GetBoardScript().activeBigGrid == 6 && gridID == 2)
+				if(GetBoardScript().activeBigGrid == 6 && gridID == 2 && parentGrid.GetComponent<BigGridScript>().bigGridID == 6)
 				{
 					if(gridState == 0)
 						HighlightGrid();
@@ -106,7 +106,7 @@ public class GridScript : MonoBehaviour
 
 			else if(TutorialScript.Instance.tStage == TUTORIALSTAGE.PLACE_BOTRIGHT_P2)
 			{
-				if(GetBoardScript().activeBigGrid == 10 && gridID == 1)
+				if(GetBoardScript().activeBigGrid == 10 && gridID == 1 && parentGrid.GetComponent<BigGridScript>().bigGridID == 8)
 				{
 					if(gridState == 0)
 						HighlightGrid();

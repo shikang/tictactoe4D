@@ -134,39 +134,60 @@ public class AIMiniMax : MonoBehaviour
 		// Highlight grid
 		else if(AIStage == 2)
 		{
-			// choose biggrid
-			if(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().activeBigGrid == 10)
+			if( TutorialScript.Instance.isTutorial)
 			{
-				do
+				if( TutorialScript.Instance.tStage == TUTORIALSTAGE.PLACE_MIDRIGHT_C)
 				{
-					currentBigGrid = UnityEngine.Random.Range(0, 9);
+					currentBigGrid = 5;
+					FinalGrid = 6;
+					GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().bigGrids[currentBigGrid].
+															GetComponent<BigGridScript>().grids[FinalGrid].
+															GetComponent<GridScript>().HighlightGrid();
 				}
-				while(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().bigGrids[currentBigGrid].GetComponent<BigGridScript>().gridWinner != 0);
+				else if( TutorialScript.Instance.tStage == TUTORIALSTAGE.PLACE_TOPRIGHT_C)
+				{
+					currentBigGrid = 2;
+					FinalGrid = 7;
+					GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().bigGrids[currentBigGrid].
+															GetComponent<BigGridScript>().grids[FinalGrid].
+															GetComponent<GridScript>().HighlightGrid();
+				}
 			}
 			else
 			{
-				currentBigGrid = GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().activeBigGrid;
-			}
-			FinalGrid = ChooseGrid();
-
-			// Chance to screw it up and randomly place.
-			int chance = UnityEngine.Random.Range(0, 100);
-			if(chance < 15)
-			{
-				do
+				// choose biggrid
+				if(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().activeBigGrid == 10)
 				{
-					FinalGrid = UnityEngine.Random.Range(0, 9);
+					do
+					{
+						currentBigGrid = UnityEngine.Random.Range(0, 9);
+					}
+					while(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().bigGrids[currentBigGrid].GetComponent<BigGridScript>().gridWinner != 0);
 				}
-				while(IsGridOccupied(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().
-											bigGrids[currentBigGrid].GetComponent<BigGridScript>().grids[FinalGrid]));
+				else
+				{
+					currentBigGrid = GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().activeBigGrid;
+				}
+				FinalGrid = ChooseGrid();
+
+				// Chance to screw it up and randomly place.
+				int chance = UnityEngine.Random.Range(0, 100);
+				if(chance < 15)
+				{
+					do
+					{
+						FinalGrid = UnityEngine.Random.Range(0, 9);
+					}
+					while(IsGridOccupied(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().
+												bigGrids[currentBigGrid].GetComponent<BigGridScript>().grids[FinalGrid]));
+				}
+
+				// Final selection
+				//Debug.Log("cBigGrid, finalGrid: " + currentBigGrid + ", " + FinalGrid) ;
+				GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().bigGrids[currentBigGrid].
+															GetComponent<BigGridScript>().grids[FinalGrid].
+															GetComponent<GridScript>().HighlightGrid();
 			}
-
-			// Final selection
-			//Debug.Log("cBigGrid, finalGrid: " + currentBigGrid + ", " + FinalGrid) ;
-			GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().bigGrids[currentBigGrid].
-														GetComponent<BigGridScript>().grids[FinalGrid].
-														GetComponent<GridScript>().HighlightGrid();
-
 			AIStage = 4;
 		}
 

@@ -225,7 +225,6 @@ public class TutorialScript : MonoBehaviour
 		currBigGrid = GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().bigGrids[2].GetComponent<BigGridScript>();
 		currBigGrid.grids[0].GetComponent<GridScript>().PlaceOnGrid(1);
 		currBigGrid.grids[2].GetComponent<GridScript>().PlaceOnGrid(1);
-		currBigGrid.grids[3].GetComponent<GridScript>().PlaceOnGrid(1);
 		currBigGrid.grids[4].GetComponent<GridScript>().PlaceOnGrid(2);
 		currBigGrid.grids[5].GetComponent<GridScript>().PlaceOnGrid(1);
 		currBigGrid.grids[6].GetComponent<GridScript>().PlaceOnGrid(2);
