@@ -261,6 +261,7 @@ public class GridScript : MonoBehaviour
 		GetGUIManagerScript().gridEffect.transform.position = transform.position;
 
 		PlaceOnGrid((int)GetTurnHandler().turn);
+		parentGrid.GetComponent<BigGridScript>().gridsPlaced++;
 		parentGrid.GetComponent<BigGridScript>().ProcessBigGridCompleted(GetTurnHandler().turn);
 		GetTurnHandler().ChangeTurn();
 

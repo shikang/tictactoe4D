@@ -18,19 +18,6 @@ public class AIMiniMax : MonoBehaviour
 	int depth;
 	int terminalValue;
 	public int FinalGrid;
-	/*
-	public int FinalGrid
-	{
-		get
-		{
-			return FinalGrid;
-		}
-		set
-		{
-			FinalGrid = value;
-		}
-	}
-	*/
 
 	public int currentBigGrid;
 	int EmptyCell;
@@ -49,11 +36,6 @@ public class AIMiniMax : MonoBehaviour
 	int AIStage;
 	float AI_ThinkingTimerMax;
 	float AI_ThinkingTimerCurr;
-
-	bool findBestGridFinished = false;
-	bool miniMaxFinished = false;
-	int[] tmpval = new int[9];
-	int[] tmppos = new int[9];
 
 	void Start()
 	{
@@ -77,9 +59,6 @@ public class AIMiniMax : MonoBehaviour
 		PlayerTurn = Defines.TURN.P1;
 
 		fakeTimesCurr = 0;
-
-		findBestGridFinished = false;
-		miniMaxFinished = false;
 	}
 
 	void Update()
@@ -114,10 +93,15 @@ public class AIMiniMax : MonoBehaviour
 			GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn != AITurn)
 			return;
 
+		if( GameObject.FindGameObjectWithTag("GUIManager") &&
+		   (GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn == Defines.TURN.GAMEOVER ||
+			GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().isPaused))
+			return;
+
 		// Set timer: How long AI takes to highlight a grid
 		if(AIStage == 0)
 		{
-			AI_ThinkingTimerMax = UnityEngine.Random.Range(0.5f, 1.7f);
+			AI_ThinkingTimerMax = UnityEngine.Random.Range(0.6f, 2.0f);
 			//AI_ThinkingTimerMax = 0.0f;
 			AI_ThinkingTimerCurr = 0.0f;
 			AIStage = 1;
@@ -132,51 +116,64 @@ public class AIMiniMax : MonoBehaviour
 		}
 
 		// Highlight grid
-		else if(AIStage == 2)
+		/*else if(AIStage == 2)
 		{
 			// Free to go any big grid
 			if(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().activeBigGrid == 10)
 			{
-				//currentBigGrid = FindBestBigGrid();
-				//findBestGridFinished = true;
-				
-				findBestGridFinished = false;
-				AIStage = 7;
-				StartCoroutine( FindBestBigGrid2() );
-				
+				currentBigGrid = UnityEngine.Random.Range(0, 9);//FindBestBigGrid();
 			}
 			else
 			{
 				currentBigGrid = GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().activeBigGrid;
-				findBestGridFinished = true;
 			}
-			if (findBestGridFinished)
-			{
-				AIStage = 3;
-				miniMaxFinished = false;
-				StartCoroutine(MiniMax());
-				if (miniMaxFinished)
-					AIStage = 4;
-				//AIStage = 4;
-			}
-		}
+			MiniMax();
+			AIStage = 4;
+		}*/
 
-		// MiniMax
-		else if (AIStage == 3)
+		// Highlight grid
+		else if(AIStage == 2)
 		{
-			//StartCoroutine( MiniMax() );
-
-			if (miniMaxFinished)
+			// choose biggrid
+			if(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().activeBigGrid == 10)
 			{
-				AIStage = 4;
+				do
+				{
+					currentBigGrid = UnityEngine.Random.Range(0, 9);
+				}
+				while(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().bigGrids[currentBigGrid].GetComponent<BigGridScript>().gridWinner != 0);
 			}
+			else
+			{
+				currentBigGrid = GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().activeBigGrid;
+			}
+			FinalGrid = ChooseGrid();
+
+			// Chance to screw it up and randomly place.
+			int chance = UnityEngine.Random.Range(0, 100);
+			if(chance < 15)
+			{
+				do
+				{
+					FinalGrid = UnityEngine.Random.Range(0, 9);
+				}
+				while(IsGridOccupied(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().
+											bigGrids[currentBigGrid].GetComponent<BigGridScript>().grids[FinalGrid]));
+			}
+
+			// Final selection
+			//Debug.Log("cBigGrid, finalGrid: " + currentBigGrid + ", " + FinalGrid) ;
+			GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().bigGrids[currentBigGrid].
+														GetComponent<BigGridScript>().grids[FinalGrid].
+														GetComponent<GridScript>().HighlightGrid();
+
+			AIStage = 4;
 		}
 
 		// Set timer: How long AI takes to confirm a highlighted grid
 		else if(AIStage == 4)
 		{
-			MiniMaxPart2();
-			AI_ThinkingTimerMax = UnityEngine.Random.Range(0.5f, 2.0f);
+			AI_ThinkingTimerMax = UnityEngine.Random.Range(0.6f, 2.0f);
 			//AI_ThinkingTimerMax = 0.0f;
 			AI_ThinkingTimerCurr = 0.0f;
 			AIStage = 5;
@@ -198,22 +195,182 @@ public class AIMiniMax : MonoBehaviour
 					GetComponent<GridScript>().ConfirmPlacement();
 			AIStage = 0;
 		}
-		else if(AIStage == 7)
-		{
-			//StartCoroutine( FindBestBigGrid2() );
-			if (findBestGridFinished)
-			{
-				AIStage = 3;
-				miniMaxFinished = false;
-				StartCoroutine(MiniMax());
-				if (miniMaxFinished)
-					AIStage = 4;
-				//AIStage = 4;
-			}
-		}
 	}
 
-	public IEnumerator /*bool*/ MiniMax()
+	public int ChooseGrid()
+	{
+		int resultGrid;
+		GameObject [] currBigGrid = new GameObject[9];
+		currBigGrid = GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().bigGrids[currentBigGrid].GetComponent<BigGridScript>().grids;
+
+		// If left 1 empty grid, or if only got 1 or less placed grids, random place.
+		if(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().bigGrids[currentBigGrid].GetComponent<BigGridScript>().gridsPlaced < 2 ||
+			GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().bigGrids[currentBigGrid].GetComponent<BigGridScript>().gridsPlaced == 7)
+		{
+			//Debug.Log("AI: 1st Random Placement");
+			do
+			{
+				resultGrid = UnityEngine.Random.Range(0, 9);
+			}
+			while(IsGridOccupied(currBigGrid[resultGrid]));
+			return resultGrid;
+		}
+
+		// Win if AI can win
+		resultGrid = CheckForWinBigGrid(2, 1, currBigGrid);
+		if(resultGrid != -1)
+		{
+			//Debug.Log("AI: AI Can win");
+			return resultGrid;
+		}
+
+		// If cannot win, block if player is gonna win
+		else if(resultGrid == -1)
+		{
+			resultGrid = CheckForWinBigGrid(1, 2, currBigGrid);
+			if(resultGrid != -1)
+			{
+				//Debug.Log("AI: Stop player from winning");
+				return  resultGrid;
+			}
+		}
+
+		// Loop through all cells; if empty and same row/column/diag, place. If more than 1 like that, roll dice to see which to choose.
+		int mainRowVal;
+		int mainColVal;
+		int subRowVal;
+		int subColVal;
+
+		for(int i = 0; i < 9; ++i)
+		{
+			if(currBigGrid[i].GetComponent<GridScript>().gridState == 2)
+			{
+				mainRowVal = i/3;
+				mainColVal = i%3;
+
+				for(int j = 0; j < 9; ++j)
+				{
+					if(i != j)
+					{
+						// Check horizontal, vertical and diagonal
+						subRowVal = j/3;
+						subColVal = j%3;
+
+						if( !IsGridOccupied(currBigGrid[j]) && ( (mainRowVal == subRowVal) ||
+																 (mainColVal == subColVal) ||
+																 (mainRowVal == mainColVal && subRowVal == subColVal) ||
+																 (mainRowVal == (2-mainColVal) && subRowVal == (2-subColVal)) ) )
+						{
+							// First one to meet condition; Just assign.
+							if(resultGrid == -1)
+								resultGrid = j;
+							// More than one meets condition; roll a dice.
+							else
+								resultGrid = UnityEngine.Random.Range(0, 2) == 0 ? resultGrid : j;
+
+							//Debug.Log("AI: Met same-something condition");
+						}
+					}
+				}
+				return resultGrid;
+			}
+		}
+
+		//If the above loop cannot find own grid, then just random place a grid
+		do
+		{
+			resultGrid = UnityEngine.Random.Range(0, 9);
+			//Debug.Log("AI: 2nd Random Placement");
+		}
+		while(IsGridOccupied(currBigGrid[resultGrid]));
+
+		return resultGrid;
+	}
+
+	int GetGridFromXY(int row, int col)
+	{
+		return row*3+col;
+	}
+
+	int CheckForWinBigGrid(int currTurn, int oppTurn, GameObject [] currBigGrid)
+	{
+		int gridCount = 0;
+		int emptyCell = -1;
+
+		// Check horizontal
+		for(int i = 0; i < 3; ++i)
+		{
+			for(int j = 0; j < 3; ++j)
+			{
+				if(currBigGrid[GetGridFromXY(i, j)].GetComponent<GridScript>().gridState == currTurn)
+					++gridCount;
+				else if(!IsGridOccupied(currBigGrid[GetGridFromXY(i, j)]))
+					emptyCell = GetGridFromXY(i, j);
+			}
+
+			if(gridCount == 2 && emptyCell != -1 && currBigGrid[emptyCell].GetComponent<GridScript>().gridState != oppTurn)
+				return emptyCell;
+
+			gridCount = 0;
+			emptyCell = -1;
+		}
+
+		// Check vertical
+		for(int i = 0; i < 3; ++i)
+		{
+			for(int j = 0; j < 3; ++j)
+			{
+				if(currBigGrid[GetGridFromXY(j, i)].GetComponent<GridScript>().gridState == currTurn)
+					++gridCount;
+				else if(!IsGridOccupied(currBigGrid[GetGridFromXY(i, j)]))
+					emptyCell = GetGridFromXY(j, i);
+			}
+
+			if(gridCount == 2 && emptyCell != -1 && currBigGrid[emptyCell].GetComponent<GridScript>().gridState != oppTurn)
+				return emptyCell;
+
+			gridCount = 0;
+			emptyCell = -1;
+		}
+
+		// Check diagonal
+		for(int i = 0; i < 3; ++i)
+		{
+			if(currBigGrid[GetGridFromXY(i, i)].GetComponent<GridScript>().gridState == currTurn)
+				++gridCount;
+			else if(!IsGridOccupied(currBigGrid[GetGridFromXY(i, i)]))
+				emptyCell = GetGridFromXY(i, i);
+		}
+
+		if(gridCount == 2 && emptyCell != -1 && currBigGrid[emptyCell].GetComponent<GridScript>().gridState != oppTurn)
+			return emptyCell;
+
+		gridCount = 0;
+		emptyCell = -1;
+
+		// Check diagonal
+		for(int i = 0; i < 3; ++i)
+		{
+			if(currBigGrid[GetGridFromXY(i, 2-i)].GetComponent<GridScript>().gridState == currTurn)
+				++gridCount;
+			else if(!IsGridOccupied(currBigGrid[GetGridFromXY(i, 2-i)]))
+				emptyCell = GetGridFromXY(i, 2-i);
+		}
+		if(gridCount == 2 && emptyCell != -1 && currBigGrid[emptyCell].GetComponent<GridScript>().gridState != oppTurn)
+			return emptyCell;
+
+		return -1;
+	}
+
+	bool IsGridOccupied(GameObject leGrid)
+	{
+		if( leGrid.GetComponent<GridScript>().gridState == 1 ||
+			leGrid.GetComponent<GridScript>().gridState == 2 )
+			return true;
+		return false;
+	}
+
+	public bool MiniMax()
 	{
 		// Terminate if game ends.
 		int m_iUtility = 0;
@@ -225,21 +382,19 @@ public class AIMiniMax : MonoBehaviour
 			}
 			if(terminalValue == 0)
 			{
-				//return false;
-				miniMaxFinished = true;
-				yield break;
+				return false;
 			}
-			miniMaxFinished = true;
-			yield break;
+			return true;
 		}
 
 		MaxVal = -INFINITE;
 		//minVals.Clear();
 		//posVals.Clear();
 		//Debug.Log("Start");
+		int changecount = 0;
 		int maxEmptySlots=0;
-		//int []tmpval = new int[9];
-		//int []tmppos = new int[9];
+		int []tmpval = new int[9];
+		int []tmppos = new int[9];
 		for(int i = 0; i < 9; ++i)
 		{
 			/* Places a node on the first empty spot and tests MiniMax.
@@ -269,8 +424,6 @@ public class AIMiniMax : MonoBehaviour
 			{
 				tmpval[i] = -INFINITE;
 			}
-
-			yield return 0;
 		}
 
 		//Debug.Log("Min: "+MinVal+"\nChangeCount: " + changecount);
@@ -320,17 +473,11 @@ public class AIMiniMax : MonoBehaviour
 		//Debug.Log("Empty Slots: " + maxEmptySlots);
 		//if some or all of the positions are equally viable, they will have the same values
 		//so we randomnize it between them
-		miniMaxFinished = true;
-		//return true;
-	}
-
-	void MiniMaxPart2()
-	{
-		int changecount = 0;
+		changecount=0;
 		Debug.Log("Finalgrid: " + FinalGrid);
-		for (int k = 0; k < 9; ++k)
+		for (int k =0; k < 9; ++k)
 		{
-			if (k == FinalGrid)
+			if(k == FinalGrid)
 				continue;
 			//we check if there are duplicate values
 			else if (tmpval[FinalGrid] == tmpval[k])
@@ -340,20 +487,21 @@ public class AIMiniMax : MonoBehaviour
 				++changecount;
 			}
 		}
-		Debug.Log("Changecount: " + changecount);
+		Debug.Log("Changecount: "+changecount);
 		//this means there is at least 1 duplicate
-		if (changecount > 0)
+		if(changecount >0)
 		{
 			tmppos[changecount] = FinalGrid;
 			++changecount;
 			Debug.Log("Randomizing because there are duplicate max vals");
-			int rand = UnityEngine.Random.Range(0, changecount + 1);
+			int rand = UnityEngine.Random.Range(0,changecount+1);
 			Debug.Log("Rand: " + rand);
 			FinalGrid = tmppos[rand];
 			Debug.Log("Randomed placement: " + FinalGrid);
 		}
 		Place(FinalGrid, AITurn);
 		GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().bigGrids[currentBigGrid].GetComponent<BigGridScript>().grids[FinalGrid].GetComponent<GridScript>().HighlightGrid();
+		return true;
 	}
 	bool RemoveLargerNum(int val)
 	{
@@ -508,58 +656,6 @@ public class AIMiniMax : MonoBehaviour
 			bestID = UnityEngine.Random.Range(0,9);
 
 		return bestID;
-	}
-
-	IEnumerator FindBestBigGrid2()
-	{
-		//Debug.Log("COMEHERE");	
-		// The big grid that the AI has most chance to win.
-		int[] vals;
-		vals = new int[9];
-		int bestID = -1;
-		int bestVal = -1;
-		int sameweight = 0;
-
-		for (int i = 0; i < 9; ++i)
-		{
-			BigGridScript go = GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().bigGrids[i].GetComponent<BigGridScript>();
-			//Debug.Log(go.gridWinner);
-			//this is so that we do not place into won already grids?
-			if (go.gridWinner == 0)
-			{
-				int val = EvaluationTest(go, false);
-				vals[i] = val;
-				//Debug.Log(i + ": " + val);
-				if (bestVal < val)
-				{
-					bestID = i;
-					bestVal = val;
-				}
-				else if (bestVal == val)
-					++sameweight;
-			}
-			else
-			{
-				vals[i] = -1;   // completed grids should have no chance.
-			}
-			yield return 0;
-		}
-		/*string s="";
-		for(int j =0 ; j <9 ; ++j)
-		{
-			s += "[" + vals[j] + "] ";
-			if(j%3 == 2)
-				s+= "\n";
-		}
-		Debug.Log(s);*/
-		//Debug.Log("Same weight: " + sameweight);
-		//if this number is 8, it means all the board have the same chance of winning
-		//so we will random a board between all of them
-		if (sameweight == 8)
-			bestID = UnityEngine.Random.Range(0, 9);
-
-		currentBigGrid = bestID;
-		findBestGridFinished = true;
 	}
 
 	void Place(int gridID, Defines.TURN turn)

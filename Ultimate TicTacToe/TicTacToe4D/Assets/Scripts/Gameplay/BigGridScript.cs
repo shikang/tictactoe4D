@@ -30,6 +30,7 @@ public class BigGridScript : MonoBehaviour
 	public int gridWinner;	// 0 = Not Done, 1 = Cross, 2 = Circle, 3 = Draw
 	public WINMETHOD winMethod;	
 	public bool begin = false;
+	public int gridsPlaced;		// No. of filled grids in the big grid
 
 	int pos1 =-1;
 	int pos2 =-1;
@@ -78,6 +79,7 @@ public class BigGridScript : MonoBehaviour
 		gridWinner = 0;
 		sWinIcon.transform.localScale = new Vector3(1.8f, 1.8f, 1.0f);
 		winMethod = WINMETHOD.NIL;
+		gridsPlaced = 0;
 	}
 
 	void Update ()
@@ -136,6 +138,8 @@ public class BigGridScript : MonoBehaviour
 		{
 			if(GameData.current.hasVibrate && VibrationManager.HasVibrator())
 				VibrationManager.Vibrate(Defines.V_WINBIGGRID);
+
+			GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().bigGridsCompleted++;
 
 			if( !(TutorialScript.Instance.isTutorial && bigGridID == 7) && !(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().IsBigGridCompleted()) )
 			{

@@ -126,6 +126,10 @@ public class BtnScript : MonoBehaviour
 
 	public void BtnNewGame()
 	{
+		BGManager.Instance.partsParent.SetActive(false);
+		if(AudioManager.Instance)
+			AudioManager.Instance.PlaySoundEvent(SOUNDID.BGM);
+
         // New Game
         if (NetworkManager.IsConnected())
         {
@@ -137,16 +141,15 @@ public class BtnScript : MonoBehaviour
         {
             SceneManager.LoadScene("GameScene");
         }
-		if(AudioManager.Instance)
-			AudioManager.Instance.PlaySoundEvent(SOUNDID.BGM);
 		//Adverts.Instance.RandomShowAd();
     }
 
 	public void BtnConfirmMainMenu()
 	{
+		BGManager.Instance.partsParent.SetActive(false);
 		NetworkManager.LeaveRoom();
 		BackToMainMenu();
-		//Adverts.Instance.RandomShowAd();
+		Adverts.Instance.RandomShowAd();
 		if(AudioManager.Instance)
 			AudioManager.Instance.PlaySoundEvent(SOUNDID.CLICK);
 	}

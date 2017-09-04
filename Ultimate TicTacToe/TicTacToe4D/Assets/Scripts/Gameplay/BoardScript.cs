@@ -33,11 +33,12 @@ public class BoardScript : MonoBehaviour
 	public int			activeBigGrid;	// 0-8 = respective grids, 10 = all available
     public Defines.GAMEMODE 	gameMode;
     public bool			showWinScreen;
+    public int			bigGridsCompleted;
 
     float jerkTimerP1;
 	float jerkTimerP2;
 
-    WINMETHOD winMethod = WINMETHOD.NIL;
+    WINMETHOD winMethod;
     int pos1,pos2,pos3;
     bool begin = false;
     float time= 0.8f;
@@ -65,6 +66,7 @@ public class BoardScript : MonoBehaviour
 	{
 		depth = 22.0f;
 		isTouched = false;
+		winMethod = WINMETHOD.NIL;
 
         // Check if connected
         if (NetworkManager.IsConnected())
@@ -94,6 +96,7 @@ public class BoardScript : MonoBehaviour
 		currHighlighted_Grid = 10;
 		showWinScreen = false;
 		GlobalScript.Instance.isInputPaused = false;
+		bigGridsCompleted = 0;
 	}
 
 	void Update ()
@@ -115,7 +118,7 @@ public class BoardScript : MonoBehaviour
 			time -= Time.deltaTime;
 			if(time <=0 && time > -1)
 				time = 0;
-
+			
 			if(time ==0)
 			{
 				time = -1;
@@ -144,7 +147,7 @@ public class BoardScript : MonoBehaviour
 			else if(bigGrids[pos2].GetComponentInChildren<Shaker>().IsShakeComplete())
 				bigGrids[pos3].GetComponentInChildren<Shaker>().StartShaking(0.5f);
 
-			else if(bigGrids[pos3].GetComponentInChildren<Shaker>().IsShakeComplete())
+			if(bigGrids[pos3].GetComponentInChildren<Shaker>().IsShakeComplete())
 			{
 				SetWinner(gameWinner);
 				showWinScreen = true;
@@ -275,13 +278,24 @@ public class BoardScript : MonoBehaviour
 		else if(IsDraw()) // Draw. All boards filled
 		{
 			SetWinner(0);
+			GameObject.FindGameObjectWithTag("GUIManager").GetComponent<TurnHandler>().turn = Defines.TURN.GAMEOVER;
+
 			showWinScreen = true;
+			begin = false;
+			GlobalScript.Instance.isInputPaused = true;
+			GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManagerScript>().UpdateAnalyticsGameEnd(true);
 
 			if(GameData.current.hasVibrate && VibrationManager.HasVibrator())
 			{
 				long [] pattern;
 				pattern = new long[]{0, 200, 200, 200, 200, 200};
 				VibrationManager.Vibrate(pattern, -1);
+			}
+
+			if(AudioManager.Instance)
+			{
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.STOPBGM);
+				AudioManager.Instance.PlaySoundEvent(SOUNDID.WIN_GAME);
 			}
 		}
 	}
