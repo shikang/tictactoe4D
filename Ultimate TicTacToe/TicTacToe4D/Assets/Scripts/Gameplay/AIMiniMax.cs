@@ -168,11 +168,10 @@ public class AIMiniMax : MonoBehaviour
 				{
 					currentBigGrid = GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().activeBigGrid;
 				}
-				FinalGrid = ChooseGrid();
 
 				// Chance to screw it up and randomly place.
 				int chance = UnityEngine.Random.Range(0, 100);
-				if(chance < 15)
+				if(chance < 5)
 				{
 					do
 					{
@@ -180,6 +179,10 @@ public class AIMiniMax : MonoBehaviour
 					}
 					while(IsGridOccupied(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().
 												bigGrids[currentBigGrid].GetComponent<BigGridScript>().grids[FinalGrid]));
+				}
+				else
+				{
+					FinalGrid = ChooseGrid();
 				}
 
 				// Final selection
@@ -329,7 +332,7 @@ public class AIMiniMax : MonoBehaviour
 					emptyCell = GetGridFromXY(i, j);
 			}
 
-			if(gridCount == 2 && emptyCell != -1 && currBigGrid[emptyCell].GetComponent<GridScript>().gridState != oppTurn)
+			if(gridCount == 2 && emptyCell != -1 && currBigGrid[emptyCell].GetComponent<GridScript>().gridState != oppTurn && SafeToSend(emptyCell))	
 				return emptyCell;
 
 			gridCount = 0;
@@ -347,7 +350,7 @@ public class AIMiniMax : MonoBehaviour
 					emptyCell = GetGridFromXY(j, i);
 			}
 
-			if(gridCount == 2 && emptyCell != -1 && currBigGrid[emptyCell].GetComponent<GridScript>().gridState != oppTurn)
+			if(gridCount == 2 && emptyCell != -1 && currBigGrid[emptyCell].GetComponent<GridScript>().gridState != oppTurn && SafeToSend(emptyCell))
 				return emptyCell;
 
 			gridCount = 0;
@@ -363,7 +366,7 @@ public class AIMiniMax : MonoBehaviour
 				emptyCell = GetGridFromXY(i, i);
 		}
 
-		if(gridCount == 2 && emptyCell != -1 && currBigGrid[emptyCell].GetComponent<GridScript>().gridState != oppTurn)
+		if(gridCount == 2 && emptyCell != -1 && currBigGrid[emptyCell].GetComponent<GridScript>().gridState != oppTurn && SafeToSend(emptyCell))
 			return emptyCell;
 
 		gridCount = 0;
@@ -377,7 +380,7 @@ public class AIMiniMax : MonoBehaviour
 			else if(!IsGridOccupied(currBigGrid[GetGridFromXY(i, 2-i)]))
 				emptyCell = GetGridFromXY(i, 2-i);
 		}
-		if(gridCount == 2 && emptyCell != -1 && currBigGrid[emptyCell].GetComponent<GridScript>().gridState != oppTurn)
+		if(gridCount == 2 && emptyCell != -1 && currBigGrid[emptyCell].GetComponent<GridScript>().gridState != oppTurn && SafeToSend(emptyCell))
 			return emptyCell;
 
 		return -1;
@@ -389,6 +392,87 @@ public class AIMiniMax : MonoBehaviour
 			leGrid.GetComponent<GridScript>().gridState == 2 )
 			return true;
 		return false;
+	}
+
+	bool SafeToSend(int dest)
+	{
+		if(GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().bigGrids[dest].GetComponent<BigGridScript>().gridWinner != 0)
+			return false;
+
+		GameObject [] cGrid = new GameObject[9];
+		cGrid = GameObject.FindGameObjectWithTag("Board").GetComponent<BoardScript>().bigGrids[dest].GetComponent<BigGridScript>().grids;
+
+		int enemyCount = 0;
+		int myCount = 0;
+		int rr;
+		int rate = 0;
+		//Debug.Log("AI: Check send fail");
+
+		// If have 2 in a row and last one is empty, then cannot send there.
+		// Check horizontal
+		for(int i = 0; i < 3; ++i)
+		{
+			for(int j = 0; j < 3; ++j)
+			{
+				if(cGrid[GetGridFromXY(i, j)].GetComponent<GridScript>().gridState == 1)
+					++enemyCount;
+				else if(cGrid[GetGridFromXY(i, j)].GetComponent<GridScript>().gridState == 0)
+					++myCount;
+			}
+
+			if(enemyCount == 2 && myCount > 0)
+				return UnityEngine.Random.Range(0, 100) < rate ? true : false;
+
+			enemyCount = 0;
+			myCount = 0;
+		}
+
+		// Check vertical
+		for(int i = 0; i < 3; ++i)
+		{
+			for(int j = 0; j < 3; ++j)
+			{
+				if(cGrid[GetGridFromXY(j, i)].GetComponent<GridScript>().gridState == 1)
+					++enemyCount;
+				else if(cGrid[GetGridFromXY(j, i)].GetComponent<GridScript>().gridState == 0)
+					++myCount;
+			}
+
+			if(enemyCount == 2 && myCount > 0)
+				return UnityEngine.Random.Range(0, 100) < rate ? true : false;
+
+			enemyCount = 0;
+			myCount = 0;
+		}
+
+		// Check diagonal
+		for(int i = 0; i < 3; ++i)
+		{
+			if(cGrid[GetGridFromXY(i, i)].GetComponent<GridScript>().gridState == 1)
+				++enemyCount;
+			else if(cGrid[GetGridFromXY(i, i)].GetComponent<GridScript>().gridState == 0)
+				++myCount;
+		}
+
+		if(enemyCount == 2 && myCount > 0)
+			return UnityEngine.Random.Range(0, 100) < rate ? true : false;
+
+		enemyCount = 0;
+		myCount = 0;
+
+		// Check diagonal
+		for(int i = 0; i < 3; ++i)
+		{
+			if(cGrid[GetGridFromXY(i, 2-i)].GetComponent<GridScript>().gridState == 1)
+				++enemyCount;
+			else if(cGrid[GetGridFromXY(i, i)].GetComponent<GridScript>().gridState == 0)
+				++myCount;
+		}
+		if(enemyCount == 2 && myCount > 0)
+			return UnityEngine.Random.Range(0, 100) < rate ? true : false;
+
+		//Debug.Log("AI: Safe to Send");
+		return true;
 	}
 
 	public bool MiniMax()

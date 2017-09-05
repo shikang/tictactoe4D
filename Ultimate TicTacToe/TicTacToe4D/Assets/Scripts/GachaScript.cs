@@ -98,10 +98,24 @@ public class GachaScript : MonoBehaviour
 			UpdateGacha();
 
 		if(isAnimating)
+		{
 			UpdateAnimation(IconFX);
+		}
+		else
+		{
+			IconFX.GetComponent<Image>().color = Color.white;
+			IconFX.transform.localScale = new Vector3(0.5f, 0.5f, 1.0f);
+		}
 
 		if(isAnimatingBuy)
+		{
 			UpdateAnimation(BuyIconFX);
+		}
+		else
+		{
+			BuyIconFX.GetComponent<Image>().color = Color.white;
+			BuyIconFX.transform.localScale = new Vector3(0.5f, 0.5f, 1.0f);
+		}
 
 		UpdateGreyBG();
 		UpdateFreeRoll();
@@ -298,7 +312,7 @@ public class GachaScript : MonoBehaviour
 		if(curr.GetComponent<Image>().color.a <= 0f)
 		{
 			curr.transform.localScale = new Vector3(0.08f, 0.08f, 0.08f);
-			curr.GetComponent<Image>().color = Defines.ICON_COLOR_P1;
+			//curr.GetComponent<Image>().color = Defines.ICON_COLOR_P1;
 			curr.SetActive(false);
 
 			isAnimating = isAnimatingBuy = false;
